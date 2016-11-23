@@ -1,4 +1,4 @@
-package com.hm.project_glue;
+package com.hm.project_glue.SignUp;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.hm.project_glue.R;
 
 /**
  * A simple {@link Fragment} subclass.
