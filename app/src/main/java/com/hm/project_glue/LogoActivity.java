@@ -26,7 +26,5 @@ public class LogoActivity extends AppCompatActivity {
                 finish();
             }
         }, 1000); // 1000ms
-
     }
-
 }

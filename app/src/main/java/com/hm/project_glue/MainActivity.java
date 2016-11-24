@@ -8,6 +8,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        // 임시로 레이아웃을 fragment_sign_up로 변경
+        setContentView(R.layout.fragment_sign_up);
     }
 }
