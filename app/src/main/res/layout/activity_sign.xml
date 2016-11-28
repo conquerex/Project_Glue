@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_sign"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="0dp"
+    tools:context="com.hm.project_glue.sign.SignActivity"
+    android:background="@drawable/signbackground"
+    android:layout_marginEnd="0dp"
+    android:layout_marginLeft="0dp"
+    android:layout_marginRight="0dp"
+    android:layout_marginTop="0dp"
+    android:layout_marginBottom="0dp"
+    android:layout_marginStart="0dp"
+    android:fadeScrollbars="true"
+    android:scrollbars="none">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:padding="15dp"
+        android:paddingBottom="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_height="match_parent"
+        android:id="@+id/relativeLayout1">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout1"
+            android:layout_below="@+id/imageView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:paddingTop="20dp">
+
+            <Button
+                android:layout_width="35dp"
+                android:id="@+id/btnloginicon"
+                android:background="@drawable/signidicon"
+                android:layout_height="35dp" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="15"
+                android:id="@+id/etId"
+                android:layout_weight="1"
+                android:layout_marginLeft="20dp"
+                android:hint="Input ID"
+                android:textColor="@android:color/white"
+                android:clickable="false"
+                android:layout_marginRight="20dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearLayout1"
+            android:id="@+id/linearLayout2">
+
+
+            <Button
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:id="@+id/btnpasswdicon"
+                android:background="@drawable/loginpassicon" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="20"
+                android:id="@+id/etPasswd"
+                android:layout_weight="1"
+                android:layout_marginLeft="20dp"
+                android:hint="Input Password"
+                android:textColor="@android:color/white"
+                android:clickable="false"
+                android:layout_marginRight="20dp"
+                android:allowUndo="false" />
+        </LinearLayout>
+
+        <Button
+            android:text="SIGN IN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearLayout2"
+            android:id="@+id/btnSignIn" />
+
+        <Button
+            android:text="SIGN UP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnSignIn"
+            android:id="@+id/btnSignUp" />
+
+        <Button
+            android:text="ID/PW 찾기"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnFindId"
+            android:layout_below="@+id/btnSignUp"
+            android:background="?attr/actionBarItemBackground"
+            android:textColor="@color/windowBackground"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+        <ImageView
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/gluelogo"
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:paddingBottom="20dp" />
+
+        <TextView
+            android:text="우리들만의 사진 다이어리"
+            android:layout_width="wrap_content"
+
+            android:layout_above="@+id/linearLayout1"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/tvLogo"
+            android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
+            android:layout_height="wrap_content" />
+
+
+    </RelativeLayout>
+
+</ScrollView>

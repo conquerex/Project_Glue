@@ -8,7 +8,7 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context="com.hm.project_glue.MainActivity">
+    tools:context="com.hm.project_glue.main.MainActivity">
 
     <TabHost
         android:layout_width="match_parent"
