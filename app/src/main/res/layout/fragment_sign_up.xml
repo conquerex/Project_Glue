@@ -1,13 +1,204 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hm.project_glue.SignUp.SignUpFragment">
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:background="@color/windowBackground"
+    tools:context="com.hm.project_glue.sign.signup.SignUpFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- ID 입력란 -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="160dp"
+        android:id="@+id/layoutId"
+        android:orientation="horizontal">
+        <TextView
+            android:text="ID"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:gravity="center"
+            android:id="@+id/tvId"
+            android:textSize="20sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-</FrameLayout>
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.7"
+            android:inputType="textPersonName"
+            android:layout_toRightOf="@+id/tvId"
+            android:id="@+id/editText"
+            android:hint="4글자 이상 입력"
+            android:textSize="15sp"/>
+    </LinearLayout>
+
+    <!-- 패스워드 입력란 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layoutPassword"
+        android:layout_alignTop="@id/layoutId"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal" >
+        <TextView
+            android:text="비밀번호"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:gravity="center"
+            android:id="@+id/tvPassword"
+            android:textSize="20sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.7"
+            android:inputType="textPassword"
+            android:layout_toRightOf="@+id/tvPassword"
+            android:id="@+id/etPassword"
+            android:hint="숫자와 영문 조합. 6글자 이상"
+            android:textSize="15sp"/>
+    </LinearLayout>
+
+    <!-- 패스워드 재입력 입력란 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layoutRePassword"
+        android:layout_alignTop="@id/layoutPassword"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal" >
+        <TextView
+            android:text="재입력"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:gravity="center"
+            android:id="@+id/tvRePassword"
+            android:textSize="20sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.7"
+            android:inputType="textPassword"
+            android:layout_toRightOf="@+id/tvRePassword"
+            android:id="@+id/etRePassword"
+            android:hint="위와 같은 패스워드를 입력"
+            android:textSize="15sp"/>
+    </LinearLayout>
+
+    <!-- 이름 입력란 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layoutName"
+        android:layout_alignTop="@id/layoutRePassword"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal" >
+        <TextView
+            android:text="이름"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:gravity="center"
+            android:id="@+id/tvName"
+            android:textSize="20sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.7"
+            android:inputType="textPersonName"
+            android:layout_toRightOf="@+id/tvName"
+            android:id="@+id/etName"
+            android:hint="이름 입력"
+            android:textSize="15sp"/>
+    </LinearLayout>
+
+    <!-- 휴대폰 번호 입력란 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layoutPhone"
+        android:layout_alignTop="@id/layoutName"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal" >
+        <TextView
+            android:text="휴대전화"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:gravity="center"
+            android:id="@+id/tvPhone"
+            android:textSize="20sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.7"
+            android:inputType="number"
+            android:layout_toRightOf="@+id/tvPhone"
+            android:id="@+id/etPhone"
+            android:hint="휴대전화번호를 숫자로만 입력"
+            android:textSize="15sp"/>
+    </LinearLayout>
+
+    <!-- 이메일 입력란 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layoutEmail"
+        android:layout_alignTop="@id/layoutPhone"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal" >
+        <TextView
+            android:text="E-mail"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:gravity="center"
+            android:id="@+id/tvEmail"
+            android:textSize="20sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.7"
+            android:inputType="textEmailAddress"
+            android:layout_toRightOf="@+id/tvEmail"
+            android:id="@+id/etEmail"
+            android:hint="이메일 입력"
+            android:textSize="15sp"/>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/layoutEmail"
+        android:layout_marginTop="50dp"
+        android:id="@+id/btnSignUpSubmit"
+        android:text="회원가입"/>
+
+
+</RelativeLayout>
