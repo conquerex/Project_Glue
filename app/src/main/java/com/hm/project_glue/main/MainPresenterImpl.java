@@ -14,7 +14,7 @@ public class MainPresenterImpl implements MainPresenter {
         this.activity = activity;
         this.mainModel = new MainModel();
 
-        
+
 
     }
 
