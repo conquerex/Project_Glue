@@ -1,20 +1,23 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.hm.project_glue.sign.signin.SignInFragment">
 
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:padding="15dp"
         android:paddingBottom="15dp"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/relativeLayout1"
         android:background="@drawable/signbackground">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
 
         <LinearLayout
@@ -82,7 +85,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/linearLayout2"
-            android:id="@+id/btnSignIn" />
+            android:id="@+id/btnSignIn"
+             />
 
         <Button
             android:text="SIGN UP"
@@ -90,17 +94,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/btnSignIn"
             android:id="@+id/btnSignUp" />
-
-        <Button
-            android:text="ID/PW 찾기"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnFindId"
-            android:layout_below="@+id/btnSignUp"
-            android:background="?attr/actionBarItemBackground"
-            android:textColor="@color/windowBackground"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
 
         <ImageView
             android:layout_height="wrap_content"
@@ -121,6 +114,17 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
             android:layout_height="wrap_content" />
 
+        <Button
+            android:text="ID/PW 찾기"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnFindId"
+            android:textColor="@color/windowBackground"
+            android:layout_below="@+id/btnSignUp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="?attr/actionBarItemBackground" />
 
-    </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
 </FrameLayout>

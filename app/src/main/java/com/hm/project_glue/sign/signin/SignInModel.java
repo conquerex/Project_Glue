@@ -17,7 +17,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class SignInModel {
     private static final String TAG = "ResponseCode : ";
-    private final String SERVER_URL = "http://dummy-dev.ap-northeast-2.elasticbeanstalk.com/group/";
+    private final static String SERVER_URL = "http://dummy-dev.ap-northeast-2.elasticbeanstalk.com/group/";
 
     public void signIn(String id, String pw)  {
         HashMap userInfoMap =   new HashMap();

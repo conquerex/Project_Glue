@@ -32,10 +32,8 @@ public class SignInFragment extends Fragment implements SignInPresenter.View {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         signInPresenter = new SignInPresenterImpl(SignInFragment.this);
         signInPresenter.setView(this);
-
 
     }
 
@@ -47,23 +45,19 @@ public class SignInFragment extends Fragment implements SignInPresenter.View {
         etId = (EditText) view.findViewById(R.id.etId);
         etPasswd = (EditText) view.findViewById(R.id.etPasswd);
         btnSignIn = (Button) view.findViewById(R.id.btnSignIn);
+        btnSignIn.setEnabled(false);
         btnSignUp = (Button) view.findViewById(R.id.btnSignUp);
         btnFindId = (Button) view.findViewById(R.id.btnFindId);
 
 
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i("test","click");
-               ((SignActivity)getActivity()).goToSignUpFragment();
-            }
+        btnSignUp.setOnClickListener(v -> {
+            Log.i("test","click");
+            ((SignActivity)getActivity()).goToSignUpFragment();
+
         });
-        btnSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signInPresenter.signIn();
-            }
-        });
+        btnSignIn.setOnClickListener(v -> signInPresenter.signIn());
+        signInPresenter.observableInit();
+
         return view;
     }
 

@@ -1,11 +1,14 @@
 package com.hm.project_glue.sign;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.hm.project_glue.R;
 import com.hm.project_glue.sign.signin.SignInFragment;
@@ -69,7 +72,15 @@ public class SignActivity extends AppCompatActivity {
         transaction.add(R.id.fragment,signUpFragment);
         transaction.addToBackStack(null);
         transaction.commit();
+        keyBoardOff();
         Log.i("test","goToSignUpFragment");
+    }
+
+    public void keyBoardOff() {  // 키보드 내리기
+        View view = getCurrentFocus();
+        InputMethodManager mgr = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        mgr.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
     }
 
 
