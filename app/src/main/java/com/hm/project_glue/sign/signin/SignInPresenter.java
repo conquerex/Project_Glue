@@ -7,7 +7,7 @@ package com.hm.project_glue.sign.signin;
 public interface SignInPresenter {
 
     void setView(SignInPresenter.View view);
-
+    void signIn();
     public interface View {
 
     }

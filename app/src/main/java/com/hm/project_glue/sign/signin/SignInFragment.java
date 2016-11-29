@@ -10,12 +10,14 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.hm.project_glue.R;
+import com.hm.project_glue.sign.SignActivity;
 
 
 public class SignInFragment extends Fragment implements SignInPresenter.View {
     Button btnSignIn, btnSignUp, btnFindId;
     EditText etId, etPasswd;
     private SignInPresenter signInPresenter;
+
 
     public SignInFragment() {
 
@@ -53,13 +55,13 @@ public class SignInFragment extends Fragment implements SignInPresenter.View {
             @Override
             public void onClick(View view) {
                 Log.i("test","click");
-//                goToSignUpFragment();
+               ((SignActivity)getActivity()).goToSignUpFragment();
             }
         });
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                signInPresenter.signIn();
             }
         });
         return view;

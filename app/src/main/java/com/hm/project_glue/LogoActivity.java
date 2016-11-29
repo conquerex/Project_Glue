@@ -18,7 +18,9 @@ public class LogoActivity extends AppCompatActivity {
     private final int mHandlerTime = 2000;
     SharedPreferences loginCheck;
     SharedPreferences.Editor editor;
-    boolean test = false;
+
+    //TODO 로그인 로직 테스트 수정
+    boolean test = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

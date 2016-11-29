@@ -66,7 +66,7 @@ public class SignActivity extends AppCompatActivity {
 
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.fragment,signUpFragment);
+        transaction.add(R.id.fragment,signUpFragment);
         transaction.addToBackStack(null);
         transaction.commit();
         Log.i("test","goToSignUpFragment");
