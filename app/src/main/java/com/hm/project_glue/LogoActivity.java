@@ -18,6 +18,7 @@ public class LogoActivity extends AppCompatActivity {
     private final int mHandlerTime = 2000;
     SharedPreferences loginCheck;
     SharedPreferences.Editor editor;
+    boolean test = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,8 @@ public class LogoActivity extends AppCompatActivity {
                 firstRunFlag = firstRunCheck();
                 signFlag = localLogInCheck();
 
-                if (firstRunFlag||!signFlag){ // 최초실행 or 로그인 기록
+//                if (firstRunFlag||!signFlag){ // 최초실행 or 로그인 기록
+                if(test){
                     Intent intent = new Intent(LogoActivity.this, SignActivity.class);
                     startActivity(intent);
                 }else { // !최초실행 or !로그인기록
