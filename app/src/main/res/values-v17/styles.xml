@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <style name="SignUpTextViewTheme">
+                <item name="android:layout_width">0dp</item>
+                <item name="android:layout_height">match_parent</item>
+                <item name="android:layout_weight">0.3</item>
+                <item name="android:textSize">20sp</item>
+                <item name="android:textColor">@android:color/white</item>
+                <item name="android:gravity">center</item>
+                <item name="android:layout_alignParentTop">true</item>
+                <item name="android:layout_alignParentLeft">true</item>
+                <item name="android:layout_alignParentStart">true</item>
+        </style>
+</resources>
