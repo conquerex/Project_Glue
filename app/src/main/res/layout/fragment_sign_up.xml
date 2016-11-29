@@ -37,6 +37,8 @@
             android:inputType="textPersonName"
             android:layout_toRightOf="@+id/tvId"
             android:id="@+id/editText"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/darker_gray"
             android:hint="4글자 이상 입력"
             android:textSize="15sp"/>
     </LinearLayout>

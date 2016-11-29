@@ -19,6 +19,13 @@
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:windowBackground">@drawable/signbackground</item>
     </style>
-
+    <style name="SignUpTheme" >
+        <item name="android:layout_width"></item>
+        <item name="android:layout_height"></item>
+        <item name="android:layout_weight"></item>
+        <item name="android:textSize">@android:color/white</item>
+        <item name="android:textColor"></item>
+        <item name="android:textColorHint">@android:color/darker_gray</item>
+    </style>
 
 </resources>
