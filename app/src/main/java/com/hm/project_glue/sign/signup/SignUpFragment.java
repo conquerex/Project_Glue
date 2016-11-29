@@ -6,8 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.hm.project_glue.R;
+
 
 
 public class SignUpFragment extends Fragment {
@@ -16,9 +16,10 @@ public class SignUpFragment extends Fragment {
 
     }
 
-
     public static SignUpFragment newInstance() {
         SignUpFragment fragment = new SignUpFragment();
+
+
         return fragment;
     }
 
@@ -31,9 +32,11 @@ public class SignUpFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         Log.i("test","fragment_sign_up-onCreateView");
         return inflater.inflate(R.layout.fragment_sign_up, container, false);
     }
+
 
 
 }
