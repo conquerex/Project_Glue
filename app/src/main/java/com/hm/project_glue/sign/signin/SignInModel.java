@@ -19,34 +19,31 @@ public class SignInModel {
     private static final String TAG = "ResponseCode : ";
     private final static String SERVER_URL = "http://dummy-dev.ap-northeast-2.elasticbeanstalk.com/group/";
 
+    public void facebookSignIn(){
+
+
+
+    }
+
     public void signIn(String id, String pw)  {
         HashMap userInfoMap =   new HashMap();
-
-
         userInfoMap.put("id", id);
         userInfoMap.put("pw", pw);
-
         new AsyncTask<Map, Void, String>(){
-
             @Override
             protected String doInBackground(Map... params) {
                 String result = "";
-
                 try {
                     result = postData(SERVER_URL, params[0]);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
                 return result;
             }
-
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-
             }
-
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
@@ -58,7 +55,6 @@ public class SignInModel {
 //                }
 //                editor.commit();
 //                textResult.setText(sb.toString());
-//
 //                progress.dismiss();
             }
         }.execute(userInfoMap);

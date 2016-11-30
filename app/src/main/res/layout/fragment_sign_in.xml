@@ -68,7 +68,7 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
+                android:inputType="textCapCharacters|number"
                 android:ems="20"
                 android:id="@+id/etPasswd"
                 android:layout_weight="1"
@@ -78,22 +78,45 @@
                 android:clickable="false"
                 android:layout_marginRight="20dp"
                 android:allowUndo="false" />
+
         </LinearLayout>
 
-        <Button
-            android:text="SIGN IN"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/linearLayout2"
-            android:id="@+id/btnSignIn"
-             />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_below="@+id/linearLayout2"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/linearsignin"
+                android:layout_marginBottom="5dp">
 
-        <Button
+                <Button
+                    android:text="SIGN IN"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:id="@+id/btnSignIn"
+                    android:background="@color/windowBackground"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:id="@+id/btnFacebook"
+                    android:layout_weight="5"
+                    android:background="@drawable/facebook_icon"
+                    android:layout_marginLeft="5dp"
+                    android:layout_height="45dp" />
+
+            </LinearLayout>
+
+            <Button
             android:text="SIGN UP"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/btnSignIn"
-            android:id="@+id/btnSignUp" />
+            android:layout_height="45dp"
+            android:layout_below="@+id/linearsignin"
+            android:id="@+id/btnSignUp"
+            android:background="@color/windowBackground"
+            android:layout_marginBottom="5dp" />
 
         <ImageView
             android:layout_height="wrap_content"
