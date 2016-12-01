@@ -14,7 +14,7 @@ import com.hm.project_glue.sign.SignActivity;
 
 
 public class SignInFragment extends Fragment implements SignInPresenter.View {
-    Button btnSignIn, btnSignUp, btnFindId;
+    Button btnSignIn, btnSignUp, btnFindId, btnFacebook,btnTmp;
     EditText etId, etPasswd;
     private SignInPresenter signInPresenter;
 
@@ -32,7 +32,6 @@ public class SignInFragment extends Fragment implements SignInPresenter.View {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         signInPresenter = new SignInPresenterImpl(SignInFragment.this);
         signInPresenter.setView(this);
 
@@ -47,23 +46,26 @@ public class SignInFragment extends Fragment implements SignInPresenter.View {
         etId = (EditText) view.findViewById(R.id.etId);
         etPasswd = (EditText) view.findViewById(R.id.etPasswd);
         btnSignIn = (Button) view.findViewById(R.id.btnSignIn);
+        btnSignIn.setEnabled(false);
         btnSignUp = (Button) view.findViewById(R.id.btnSignUp);
         btnFindId = (Button) view.findViewById(R.id.btnFindId);
+        btnFacebook = (Button) view.findViewById(R.id.btnFacebook);
+        btnTmp = (Button) view.findViewById(R.id.btnTmp);
 
+        //TODO TMP
+        btnTmp.setOnClickListener(v -> {
+            Log.i("test","click");
+//            ((SignActivity)getActivity()).tmpLogOut();
 
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i("test","click");
-               ((SignActivity)getActivity()).goToSignUpFragment();
-            }
         });
-        btnSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signInPresenter.signIn();
-            }
+        btnSignUp.setOnClickListener(v -> {
+            Log.i("test","click");
+            ((SignActivity)getActivity()).goToSignUpFragment();
         });
+        btnSignIn.setOnClickListener(v -> signInPresenter.signIn());
+        btnFacebook.setOnClickListener(v -> ((SignActivity)getActivity()).facebookLoginOnClick(getView()));
+        signInPresenter.observableInit();
+
         return view;
     }
 

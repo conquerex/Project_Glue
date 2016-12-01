@@ -1,18 +1,23 @@
 package com.hm.project_glue.sign.signin;
 
-/**
- * Created by HM on 2016-11-28.
- */
+
+import com.jakewharton.rxbinding.widget.RxTextView;
+import com.jakewharton.rxbinding.widget.TextViewTextChangeEvent;
+
+import rx.Observable;
 
 public class SignInPresenterImpl implements SignInPresenter {
 
     private SignInFragment fragment;
     private SignInModel signInModel;
     private SignInPresenter.View view;
+    private final int ID_MIN_LENGTH = 5;
+    private final int PW_MIN_LENGTH = 8;
 
     public SignInPresenterImpl(SignInFragment fragment){
         this.fragment = fragment;
-        signInModel = new SignInModel();
+        signInModel = new SignInModel(fragment.getContext());
+
 
     }
 
@@ -36,4 +41,26 @@ public class SignInPresenterImpl implements SignInPresenter {
         String pw = fragment.etPasswd.getText().toString();
         signInModel.signIn(id, pw);
     }
+
+    @Override
+    public void observableInit() {
+        Observable<TextViewTextChangeEvent> idObs
+                =  RxTextView.textChangeEvents(fragment.etId);
+        Observable<TextViewTextChangeEvent> passObs
+                =  RxTextView.textChangeEvents(fragment.etPasswd);
+
+        Observable.combineLatest(idObs,passObs,
+                (idChanges,passChanges) -> {
+                    boolean idCheck = idChanges.text().length() >= ID_MIN_LENGTH;
+                    boolean passCheck = passChanges.text().length() >= PW_MIN_LENGTH;
+                    return idCheck && passCheck;
+                })
+                .subscribe(
+                        checkFlag -> fragment.btnSignIn.setEnabled(checkFlag)
+                );
+    }
+
+
+
+
 }

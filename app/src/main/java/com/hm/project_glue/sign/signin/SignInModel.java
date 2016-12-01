@@ -1,8 +1,11 @@
 package com.hm.project_glue.sign.signin;
 
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.hm.project_glue.R;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -17,48 +20,43 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class SignInModel {
     private static final String TAG = "ResponseCode : ";
-    private final String SERVER_URL = "http://dummy-dev.ap-northeast-2.elasticbeanstalk.com/group/";
+    private static String SERVER_URL;
+
+    public SignInModel(Context context){
+        SERVER_URL = context.getResources().getString(R.string.SIGN_URL);
+    }
 
     public void signIn(String id, String pw)  {
         HashMap userInfoMap =   new HashMap();
-
-
         userInfoMap.put("id", id);
         userInfoMap.put("pw", pw);
 
         new AsyncTask<Map, Void, String>(){
-
             @Override
             protected String doInBackground(Map... params) {
                 String result = "";
-
                 try {
                     result = postData(SERVER_URL, params[0]);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
                 return result;
             }
-
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-
             }
-
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
 //                StringBuffer sb=  new StringBuffer();
-//                List<HttpCookie> cookies =  Remote.cookieManager.getCookieStore().getCookies();
+//                List<HttpCookie> cookies =  cookieManager.getCookieStore().getCookies();
 //                for( HttpCookie cookie : cookies){
 //                    sb.append(cookie.getName()+"="+cookie.getValue()+"\n");
 //                    editor.putString(cookie.getName(),cookie.getValue());
 //                }
 //                editor.commit();
 //                textResult.setText(sb.toString());
-//
 //                progress.dismiss();
             }
         }.execute(userInfoMap);

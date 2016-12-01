@@ -1,5 +1,7 @@
 package com.hm.project_glue.main;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,19 +12,26 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.hm.project_glue.R;
 import com.hm.project_glue.main.home.HomeFragment;
 import com.hm.project_glue.main.info.InfoFragment;
 import com.hm.project_glue.main.list.ListFragment;
 import com.hm.project_glue.main.msg.MsgFragment;
+import com.hm.project_glue.sign.SignActivity;
 
 public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener{
-
+    private CallbackManager callbackManager;
     HomeFragment home;
     MsgFragment msg;
     InfoFragment info;
     ListFragment list;
     PagerAdapter adapter;
+    SharedPreferences loginCheck;
+    SharedPreferences.Editor editor;
+    private final String PreferenceName ="localLoginCheck";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +46,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         tab.addTab(tab.newTab().setText("MAP"));
         tab.addTab(tab.newTab().setText("ETC"));
         tab.addTab(tab.newTab().setText("settings"));
-
+        loginCheck = getSharedPreferences(PreferenceName, 0);
+        editor = loginCheck.edit();
         adapter = new MainPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);
 
@@ -84,5 +94,27 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         public int getCount() {
             return FRAGMENT_COUNT;
         }
+    }
+
+    public void moveActivity(){
+        Intent i = new Intent(MainActivity.this, SignActivity.class);
+        startActivity(i);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+    // Facebook 로그아웃 및 프리퍼런스 값 초기화
+    public void tmpLogOut() {
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
+
+        LoginManager.getInstance().logOut();
+        editor.putString("user", "");
+        editor.putString("token", "");
+        editor.putBoolean("SIGN", false);
+        editor.commit();
     }
 }

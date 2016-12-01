@@ -8,6 +8,8 @@ public interface SignInPresenter {
 
     void setView(SignInPresenter.View view);
     void signIn();
+    void observableInit();
+
     public interface View {
 
     }
