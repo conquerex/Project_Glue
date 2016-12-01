@@ -14,7 +14,7 @@ import com.hm.project_glue.sign.SignActivity;
 
 
 public class SignInFragment extends Fragment implements SignInPresenter.View {
-    Button btnSignIn, btnSignUp, btnFindId, btnFacebook;
+    Button btnSignIn, btnSignUp, btnFindId, btnFacebook,btnTmp;
     EditText etId, etPasswd;
     private SignInPresenter signInPresenter;
 
@@ -50,11 +50,17 @@ public class SignInFragment extends Fragment implements SignInPresenter.View {
         btnSignUp = (Button) view.findViewById(R.id.btnSignUp);
         btnFindId = (Button) view.findViewById(R.id.btnFindId);
         btnFacebook = (Button) view.findViewById(R.id.btnFacebook);
+        btnTmp = (Button) view.findViewById(R.id.btnTmp);
 
+        //TODO TMP
+        btnTmp.setOnClickListener(v -> {
+            Log.i("test","click");
+//            ((SignActivity)getActivity()).tmpLogOut();
+
+        });
         btnSignUp.setOnClickListener(v -> {
             Log.i("test","click");
             ((SignActivity)getActivity()).goToSignUpFragment();
-
         });
         btnSignIn.setOnClickListener(v -> signInPresenter.signIn());
         btnFacebook.setOnClickListener(v -> ((SignActivity)getActivity()).facebookLoginOnClick(getView()));

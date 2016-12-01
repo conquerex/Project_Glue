@@ -14,13 +14,9 @@ public class LogoActivity extends AppCompatActivity {
     Handler mHandler;
     Context context;
     private boolean signFlag = false;
-    private boolean firstRunFlag = false;
     private final int mHandlerTime = 2000;
     SharedPreferences loginCheck;
-    SharedPreferences.Editor editor;
-
-    //TODO 로그인 로직 테스트 수정
-    boolean test = true;
+    private final String PreferenceName ="localLoginCheck";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,34 +24,27 @@ public class LogoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_logo);
         context = this;
         mHandler = new Handler();
-        loginCheck = getSharedPreferences("localLoginCheck", 0);
-        editor = loginCheck.edit();
+        loginCheck = getSharedPreferences(PreferenceName, 0);
 
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
 
-                firstRunFlag = firstRunCheck();
                 signFlag = localLogInCheck();
 
-//                if (firstRunFlag||!signFlag){ // 최초실행 or 로그인 기록
-                if(test){
-                    Intent intent = new Intent(LogoActivity.this, SignActivity.class);
-                    startActivity(intent);
-                }else { // !최초실행 or !로그인기록
+                if(signFlag){
                     Intent intent = new Intent(LogoActivity.this, MainActivity.class);
                     startActivity(intent);
+                }else {
+                    Intent intent = new Intent(LogoActivity.this, SignActivity.class);
+                    startActivity(intent);
                 }
-//                Toast.makeText(context, "Logo Test", Toast.LENGTH_SHORT).show();
 
                 finish();
             }
         }, mHandlerTime); // 2000ms
+    }
 
-    }
-    protected boolean firstRunCheck(){
-        return loginCheck.getBoolean("firstRun",true);
-    }
     protected boolean localLogInCheck(){
         return loginCheck.getBoolean("SIGN", false);
     }

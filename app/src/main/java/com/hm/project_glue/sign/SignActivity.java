@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.facebook.CallbackManager;
-import com.facebook.FacebookActivity;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
@@ -21,6 +20,7 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.hm.project_glue.R;
+import com.hm.project_glue.main.MainActivity;
 import com.hm.project_glue.sign.signin.SignInFragment;
 import com.hm.project_glue.sign.signup.SignUpFragment;
 
@@ -36,13 +36,15 @@ public class SignActivity extends AppCompatActivity {
     SignInFragment signInFragment;
     SignUpFragment signUpFragment;
     private CallbackManager callbackManager;
+    private final String PreferenceName ="localLoginCheck";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign);
         signInFragment = SignInFragment.newInstance();
         signUpFragment = SignUpFragment.newInstance();
-        loginCheck = getSharedPreferences("localLoginCheck", 0);
+        loginCheck = getSharedPreferences(PreferenceName, 0);
         editor = loginCheck.edit();
 
 
@@ -70,17 +72,14 @@ public class SignActivity extends AppCompatActivity {
     }
 
     public void setOne(){
-
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.fragment,signInFragment);
         transaction.addToBackStack(null);
         transaction.commit();
-
     }
 
     public void goToSignUpFragment(){
-
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.fragment,signUpFragment);
@@ -97,11 +96,19 @@ public class SignActivity extends AppCompatActivity {
 
     }
 
+    // 로그인 토큰 프리퍼런스 저장
+    public void savePreferences(String user, String token){
+        editor.putString("user", user);
+        editor.putString("token", token);
+        editor.putBoolean("SIGN", true);
+        editor.commit();
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
+
 
     public void facebookLoginOnClick(View v){
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -109,6 +116,7 @@ public class SignActivity extends AppCompatActivity {
 
         LoginManager.getInstance().logInWithReadPermissions(SignActivity.this,
                 Arrays.asList("public_profile", "email"));
+
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 
             @Override
@@ -120,15 +128,19 @@ public class SignActivity extends AppCompatActivity {
                     @Override
                     public void onCompleted(JSONObject user, GraphResponse response) {
                         if (response.getError() != null) {
-
+                            Log.i("response.getError", "user: " + user.toString());
+                            Log.i("response.getError","AccessToken: " + result.getAccessToken().getToken());
                         } else {
                             Log.i("TAG", "user: " + user.toString());
                             Log.i("TAG", "AccessToken: " + result.getAccessToken().getToken());
+
+                            savePreferences(user.toString(),result.getAccessToken().getToken());
                             setResult(RESULT_OK);
 
-                            Intent i = new Intent(SignActivity.this, FacebookActivity.class);
+                            Intent i = new Intent(SignActivity.this, MainActivity.class);
                             startActivity(i);
-                            finish();
+                            Log.i("TAG", "startActivity");
+//                            finish();
                         }
                     }
                 });
@@ -150,5 +162,6 @@ public class SignActivity extends AppCompatActivity {
             }
         });
     }
+
 
 }

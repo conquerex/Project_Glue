@@ -16,7 +16,7 @@ public class SignInPresenterImpl implements SignInPresenter {
 
     public SignInPresenterImpl(SignInFragment fragment){
         this.fragment = fragment;
-        signInModel = new SignInModel();
+        signInModel = new SignInModel(fragment.getContext());
 
 
     }

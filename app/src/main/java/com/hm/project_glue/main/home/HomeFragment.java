@@ -6,15 +6,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.hm.project_glue.R;
+import com.hm.project_glue.main.MainActivity;
 import com.hm.project_glue.main.OnFragmentInteractionListener;
 
 
 public class HomeFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
-
+    Button btnLogout;
     public HomeFragment() {
 
     }
@@ -35,7 +37,19 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        btnLogout = (Button) view.findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).tmpLogOut();
+                ((MainActivity)getActivity()).moveActivity();
+            }
+        });
+
+
+        return view;
     }
 
     @Override

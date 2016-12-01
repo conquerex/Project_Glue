@@ -1,8 +1,11 @@
 package com.hm.project_glue.sign.signin;
 
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.hm.project_glue.R;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -17,18 +20,17 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class SignInModel {
     private static final String TAG = "ResponseCode : ";
-    private final static String SERVER_URL = "http://dummy-dev.ap-northeast-2.elasticbeanstalk.com/group/";
+    private static String SERVER_URL;
 
-    public void facebookSignIn(){
-
-
-
+    public SignInModel(Context context){
+        SERVER_URL = context.getResources().getString(R.string.SIGN_URL);
     }
 
     public void signIn(String id, String pw)  {
         HashMap userInfoMap =   new HashMap();
         userInfoMap.put("id", id);
         userInfoMap.put("pw", pw);
+
         new AsyncTask<Map, Void, String>(){
             @Override
             protected String doInBackground(Map... params) {
@@ -48,7 +50,7 @@ public class SignInModel {
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
 //                StringBuffer sb=  new StringBuffer();
-//                List<HttpCookie> cookies =  Remote.cookieManager.getCookieStore().getCookies();
+//                List<HttpCookie> cookies =  cookieManager.getCookieStore().getCookies();
 //                for( HttpCookie cookie : cookies){
 //                    sb.append(cookie.getName()+"="+cookie.getValue()+"\n");
 //                    editor.putString(cookie.getName(),cookie.getValue());
