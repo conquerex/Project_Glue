@@ -7,4 +7,11 @@ package com.hm.project_glue.sign.signup;
 public interface SignUpPresenter {
     // 회원가입 기능
     void signUp();
+
+    void setView(SignUpPresenter.View view);
+
+    // setView로 부르기 위해 임시로 만든 View
+    public interface View {
+
+    }
 }

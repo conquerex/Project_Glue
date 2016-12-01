@@ -11,10 +11,11 @@ import android.widget.EditText;
 
 import com.hm.project_glue.R;
 
-public class SignUpFragment extends Fragment implements SignUpPresenter {
+public class SignUpFragment extends Fragment implements SignUpPresenter.View {
 
     Button btnSuSignUp;
     EditText etSuId, etSuPw, etSuPwRe, etSuEmail, etSuPhone, etSuName;
+    private SignUpPresenter signUpPresenter;
 
     public SignUpFragment() {
 
@@ -29,6 +30,12 @@ public class SignUpFragment extends Fragment implements SignUpPresenter {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // MVP 패턴을 위해 View와 Presenter가 서로 참조할 수 있도록 함
+        // View(SignUpFragment), Presenter(SignUpPresenter)
+        // Presnter를 생성
+        signUpPresenter = new SignUpPresenterImpl(SignUpFragment.this);
+        // View 에서 발생하는 이벤트를 Presenter로 전달
+        signUpPresenter.setView(this);
     }
 
     @Override
@@ -46,16 +53,11 @@ public class SignUpFragment extends Fragment implements SignUpPresenter {
         btnSuSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                signUpPresenter.signUp();
             }
         });
 
         Log.i("test","fragment_sign_up-onCreateView");
         return view;
-    }
-
-    @Override
-    public void signUp() {
-
     }
 }

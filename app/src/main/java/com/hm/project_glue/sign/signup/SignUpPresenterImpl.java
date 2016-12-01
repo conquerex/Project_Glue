@@ -10,6 +10,11 @@ public class SignUpPresenterImpl implements SignUpPresenter {
     private SignUpFragment signUpFragment;
     // SignUp Model
     private SignUpModel signUpModel;
+    private SignUpPresenter.View view;
+
+    public SignUpPresenterImpl(SignUpFragment signUpFragment) {
+        this.signUpFragment = signUpFragment;
+    }
 
     @Override
     public void signUp() {
@@ -20,5 +25,11 @@ public class SignUpPresenterImpl implements SignUpPresenter {
         String name = signUpFragment.etSuName.getText().toString();
         String phone = signUpFragment.etSuPhone.getText().toString();
         signUpModel.signUp(id, pw, pwre, email, name, phone);
+    }
+
+    @Override
+    public void setView(View view) {
+        // Presenter로 전달할 View 정의
+        this.view = view;
     }
 }
