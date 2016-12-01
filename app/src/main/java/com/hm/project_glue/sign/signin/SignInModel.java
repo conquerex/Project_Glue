@@ -19,17 +19,17 @@ import java.util.Map;
 import javax.net.ssl.HttpsURLConnection;
 
 public class SignInModel {
-    private static final String TAG = "ResponseCode : ";
+    private static final String TAG = "SIGNIN";
     private static String SERVER_URL;
 
     public SignInModel(Context context){
-        SERVER_URL = context.getResources().getString(R.string.SIGN_URL);
+        SERVER_URL = context.getResources().getString(R.string.SIGNIN_URL);
     }
 
     public void signIn(String id, String pw)  {
         HashMap userInfoMap =   new HashMap();
-        userInfoMap.put("id", id);
-        userInfoMap.put("pw", pw);
+        userInfoMap.put("phone_number", id);
+        userInfoMap.put("password", pw);
 
         new AsyncTask<Map, Void, String>(){
             @Override
@@ -78,13 +78,14 @@ public class SignInModel {
 
         for(String key : keyset){
             String param = key + "=" + params.get(key)+"&";
-            Log.i("POST value : ", param);
+            Log.i(TAG, "POST value:"+param);
             os.write(param.getBytes());
         }
         os.flush();
         os.close();
 
         int responseCode = conn.getResponseCode();
+        Log.i(TAG, "responseCode:" + responseCode);
         // 200
         if (responseCode == HttpsURLConnection.HTTP_OK) {
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -97,7 +98,7 @@ public class SignInModel {
             Log.i(TAG, "" + responseCode);
         }
 
-
+        Log.i(TAG, "result:" + result.toString());
         return result.toString();
     }
 
