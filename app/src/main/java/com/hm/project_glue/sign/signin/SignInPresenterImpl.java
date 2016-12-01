@@ -1,23 +1,32 @@
 package com.hm.project_glue.sign.signin;
 
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.hm.project_glue.R;
+import com.hm.project_glue.sign.SignActivity;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.jakewharton.rxbinding.widget.TextViewTextChangeEvent;
 
 import rx.Observable;
 
 public class SignInPresenterImpl implements SignInPresenter {
-
+    private static String token ="";
     private SignInFragment fragment;
     private SignInModel signInModel;
     private SignInPresenter.View view;
     private final int ID_MIN_LENGTH = 5;
     private final int PW_MIN_LENGTH = 8;
+    private final static String TAG ="TEST";
+    Context context;
 
     public SignInPresenterImpl(SignInFragment fragment){
         this.fragment = fragment;
         signInModel = new SignInModel(fragment.getContext());
-
+        context = fragment.getActivity();
 
     }
 
@@ -36,12 +45,41 @@ public class SignInPresenterImpl implements SignInPresenter {
     }
 
     @Override
-    public void signIn() {
+    public void signIn(Activity activity) {
+
         String id = fragment.etId.getText().toString();
         String pw = fragment.etPasswd.getText().toString();
-        signInModel.signIn(id, pw);
+        token = signInModel.signIn(id, pw);
+        if(!token.equals("")) {
+            SharedPreferences loginCheck = activity.getSharedPreferences("localLoginCheck", 0);
+            SharedPreferences.Editor editor = loginCheck.edit();
+            editor.putString("id", id);
+            editor.putString("token", token);
+            editor.putBoolean("SIGN", true);
+            editor.commit();
+
+            ((SignActivity)activity).moveActivity();
+        }
+        else{
+            failAlert();
+            fragment.etId.setText("");
+            fragment.etPasswd.setText("");
+            fragment.etId.requestFocus();
+        }
+
     }
 
+
+    public void failAlert(){
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        alert.setTitle(R.string.loginfailtitle); // "로그인실패"
+        alert.setMessage(R.string.loginfailmessage); // "아이디와 ..."
+//        alert.setIcon(R.drawable.ic_launcher);
+        alert.setNegativeButton(R.string.ok, null); // "확인"
+        alert.show();
+
+    }
     @Override
     public void observableInit() {
         Observable<TextViewTextChangeEvent> idObs

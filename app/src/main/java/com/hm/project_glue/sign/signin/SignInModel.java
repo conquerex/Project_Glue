@@ -7,6 +7,9 @@ import android.util.Log;
 
 import com.hm.project_glue.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -21,12 +24,13 @@ import javax.net.ssl.HttpsURLConnection;
 public class SignInModel {
     private static final String TAG = "SIGNIN";
     private static String SERVER_URL;
-
+    String token = "";
     public SignInModel(Context context){
         SERVER_URL = context.getResources().getString(R.string.SIGNIN_URL);
     }
 
-    public void signIn(String id, String pw)  {
+    public String signIn(String id, String pw)  {
+
         HashMap userInfoMap =   new HashMap();
         userInfoMap.put("phone_number", id);
         userInfoMap.put("password", pw);
@@ -37,6 +41,7 @@ public class SignInModel {
                 String result = "";
                 try {
                     result = postData(SERVER_URL, params[0]);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -45,10 +50,20 @@ public class SignInModel {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+
             }
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
+
+                try {
+
+                    JSONObject jObject = new JSONObject(result);
+                    token = jObject.getString("token");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 //                StringBuffer sb=  new StringBuffer();
 //                List<HttpCookie> cookies =  cookieManager.getCookieStore().getCookies();
 //                for( HttpCookie cookie : cookies){
@@ -60,6 +75,7 @@ public class SignInModel {
 //                progress.dismiss();
             }
         }.execute(userInfoMap);
+        return token;
     }
     public static String postData (String webURL, Map params) throws Exception {
 

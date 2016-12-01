@@ -4,4 +4,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="facebook_app_id">1339929686038834</string>
+    <string name="loginfailtitle">로그인 실패</string>
+    <string name="loginfailmessage">아아디와 패스워드를 확인하세요.</string>
+    <string name="ok">확인</string>
 </resources>
