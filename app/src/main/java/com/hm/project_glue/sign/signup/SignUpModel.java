@@ -39,12 +39,38 @@ public class SignUpModel {
         hashMap.put("name", name);
         hashMap.put("email", email);
 
+        // AsyncTask클래스는 항상 Subclassing 해서 사용 해야 함.
+        // UI 처리 및 Background 작업 등 을 하나의 클래스에서 작업 할 수 있게 지원
+        // 파라미터 타입은 작업 실행 시에 송신 : Map (doInBackground 파라미터 타입이, execute 메소드 인자값)
+        // doInBackground 작업 시 진행 단위의 타입 : Void (onProgressUpdate 파라미터 타입)
+        // doInBackground 리턴값 : String (onPostExecute 파라미터 타입)
+        // 인자를 사용하지 않은 경우 Void Type 으로 지정
         new AsyncTask<Map, Void, String>(){
             @Override
-            protected String doInBackground(Map... maps) {
-                return null;
+            // doInBackground : Background 작업을 진행
+            // doInBackground의 매개값 : Map
+            protected String doInBackground(Map... params) {
+                String result = "";
+                try {
+                    // SERVER_URL에서 보낸 값을 받음
+                    result = postData(SERVER_URL, params[0]);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                return result;
             }
-        };
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+            }
+        }.execute(hashMap);
     }
 
     public static String postData (String webURL, Map params) throws Exception{
