@@ -22,7 +22,7 @@
         <EditText
             android:inputType="textPersonName"
             android:layout_toRightOf="@+id/tvId"
-            android:id="@+id/editText"
+            android:id="@+id/etId"
             android:hint="5글자 이상"
             style="@style/SignUpEditTextTheme"/>
     </LinearLayout>

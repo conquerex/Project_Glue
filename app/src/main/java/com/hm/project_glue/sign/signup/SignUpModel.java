@@ -26,19 +26,20 @@ import javax.net.ssl.HttpsURLConnection;
  */
 
 public class SignUpModel {
-    private static final String TAG = "ResponseCode : ";
+    private static final String TAG = "SignUpModel";
     private final String SERVER_URL = "http://dummy-dev.ap-northeast-2.elasticbeanstalk.com/group/";
 
     public void signUp(String id, String pw, String pwre,
                        String email, String name, String phone) {
         HashMap hashMap = new HashMap();
-        hashMap.put("id", id);
+
+        // hashMap.put("id", id);
+        hashMap.put("title", id);
         hashMap.put("pw", pw);
         hashMap.put("pwre", pwre);
         hashMap.put("phone", phone);
         hashMap.put("name", name);
         hashMap.put("email", email);
-
         // AsyncTask클래스는 항상 Subclassing 해서 사용 해야 함.
         // UI 처리 및 Background 작업 등 을 하나의 클래스에서 작업 할 수 있게 지원
         // 파라미터 타입은 작업 실행 시에 송신 : Map (doInBackground 파라미터 타입이, execute 메소드 인자값)
@@ -51,6 +52,7 @@ public class SignUpModel {
             // doInBackground의 매개값 : Map
             protected String doInBackground(Map... params) {
                 String result = "";
+                Log.i(TAG, "----------- doInBackground ");
                 try {
                     // SERVER_URL에서 보낸 값을 받음
                     result = postData(SERVER_URL, params[0]);
@@ -78,7 +80,7 @@ public class SignUpModel {
         StringBuilder result = new StringBuilder();
         String dataLine;
         URL url = new URL(webURL);
-        Log.i("URL Test","-------- " + url.toString());
+        Log.i(TAG, "----------- URL ---- "+ url.toString());
 
         // HttpURLConnection 객체 생성
         HttpURLConnection conn = (HttpURLConnection)url.openConnection();
@@ -91,18 +93,16 @@ public class SignUpModel {
         // content-type : request 메세지에 포함되어야 하는 정보가 있을 때, 데이터 타입 정의
         // application/x-www-form-urlencoded 방식을 선택하면, key-value 형태로 인코딩
         conn.setRequestProperty("content-type", "application/x-www-form-urlencoded");
-        // OutputStream 혹은 InputStream으로 POST 데이터를 넘겨주겠다는 옵션
+        // Server 통신에서 입력/출력 가능한 상태로 만듬
         conn.setDoOutput(true);
         conn.setDoInput(true);
-        // Body에 Data를 담기위해 InputStream/OutputStream 객체를 생성
+        // Body에 Data를 담기위해 OutputStream 객체를 생성
         OutputStream os = conn.getOutputStream();
-        InputStream is = conn.getInputStream();
-
         // Map의 key, value를 담아냄
         ArrayList<String> keyset = new ArrayList<>(params.keySet());
         for(String key : keyset){
             String param = key + "=" + params.get(key) + "&";
-            Log.i("POST value : ", param);
+            Log.i(TAG, "----------- POST value ---- "+ param);
             // Request Body에 Data 셋팅
             os.write(param.getBytes());
         }
@@ -111,18 +111,23 @@ public class SignUpModel {
         // OutputStream 종료
         os.close();
 
-        // 실제 서버로 Request 요청 하는 부분 (응답 코드를 받는다. 200 성공, 나머지 에러)
+        // Body에 Data를 담기위해 InputStream 객체를 생성
+        InputStream is = conn.getInputStream();
+        // 실제 서버로 Request 요청 하는 부분 (응답 코드를 받는다. 200 혹은 201 성공, 나머지 에러)
         int responseCode = conn.getResponseCode();
-        if(responseCode == HttpsURLConnection.HTTP_OK){
+
+        if(responseCode == HttpURLConnection.HTTP_OK
+                || responseCode == HttpURLConnection.HTTP_CREATED){
             // 스트림을 직접 읽으면 느리고 비효율적
             // 버퍼(BufferedReader)를 지원하는 보조 스트림 객체로 감싸서 사용
+            Log.i(TAG, "----------- if ---- "+ responseCode);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             // 입력받은 값이 null이 아니면 result에 담음
             while ((dataLine = br.readLine()) != null){
                 result.append(dataLine);
             }
         } else {
-            Log.i(TAG, "responseCode ------ " + responseCode);
+            Log.i(TAG, "----------- responseCode ---- "+ responseCode);
         }
 
         return result.toString();

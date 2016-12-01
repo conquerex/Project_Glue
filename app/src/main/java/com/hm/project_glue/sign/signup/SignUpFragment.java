@@ -12,7 +12,7 @@ import android.widget.EditText;
 import com.hm.project_glue.R;
 
 public class SignUpFragment extends Fragment implements SignUpPresenter.View {
-
+    private static final String TAG = "SignUpFragment";
     Button btnSuSignUp;
     EditText etSuId, etSuPw, etSuPwRe, etSuEmail, etSuPhone, etSuName;
     private SignUpPresenter signUpPresenter;
@@ -48,16 +48,17 @@ public class SignUpFragment extends Fragment implements SignUpPresenter.View {
         etSuName = (EditText)view.findViewById(R.id.etName);
         etSuPhone = (EditText)view.findViewById(R.id.etPhone);
         etSuEmail = (EditText)view.findViewById(R.id.etEmail);
+        btnSuSignUp = (Button)view.findViewById(R.id.btnSignUpSubmit);
 
         // 회원가입 버튼 클릭
         btnSuSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.i(TAG, "----------- onClick");
                 signUpPresenter.signUp();
             }
         });
-
-        Log.i("test","fragment_sign_up-onCreateView");
+        Log.i(TAG, "----------- fragment_sign_up-onCreateView");
         return view;
     }
 }
