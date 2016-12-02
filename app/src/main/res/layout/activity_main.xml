@@ -9,21 +9,22 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context="com.hm.project_glue.main.MainActivity">
+    tools:context="com.hm.project_glue.main.MainActivity"
+    android:background="@color/windowBackground">
 
 
     <android.support.design.widget.TabLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:elevation="@dimen/activity_vertical_margin"
+        android:elevation="4dp"
         android:id="@+id/tabLayout"
         android:background="@color/colorPrimary"
         app:tabTextColor="@android:color/darker_gray"
         app:tabIndicatorColor="?attr/colorButtonNormal"
-        app:tabSelectedTextColor="@android:color/white">
+        app:tabSelectedTextColor="@android:color/white"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
 
     </android.support.design.widget.TabLayout>

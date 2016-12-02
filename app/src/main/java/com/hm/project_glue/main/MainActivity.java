@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     ListFragment list;
     PagerAdapter adapter;
     Networking networking;
+    TabLayout tab;
     private final String PreferenceName ="localLoginCheck";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +41,43 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         msg  =  MsgFragment.newInstance();
         info =  InfoFragment.newInstance();
         list =  ListFragment.newInstance();
-        TabLayout tab = (TabLayout) findViewById(R.id.tabLayout);
+        tab = (TabLayout) findViewById(R.id.tabLayout);
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
-        tab.addTab(tab.newTab().setIcon(getResources().getDrawable(R.drawable.signidicon)));
-        tab.addTab(tab.newTab().setText("MAP"));
-        tab.addTab(tab.newTab().setText("ETC"));
-        tab.addTab(tab.newTab().setText("settings"));
+        tab.addTab(tab.newTab().setIcon(R.mipmap.ic_supervisor_account_gray_36dp));
+        tab.addTab(tab.newTab().setIcon(R.mipmap.ic_photo_library_gray_36dp));
+        tab.addTab(tab.newTab().setIcon(R.mipmap.ic_sms_gray_36dp));
+        tab.addTab(tab.newTab().setIcon(R.mipmap.ic_account_circle_gray_36dp));
+        tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab selectedtab) {
+                tab.getTabAt(0).setIcon(R.mipmap.ic_supervisor_account_gray_36dp);
+                tab.getTabAt(1).setIcon(R.mipmap.ic_photo_library_gray_36dp);
+                tab.getTabAt(2).setIcon(R.mipmap.ic_sms_gray_36dp);
+                tab.getTabAt(3).setIcon(R.mipmap.ic_account_circle_gray_36dp);
+                switch (selectedtab.getPosition()) {
+                    case 0 : selectedtab.setIcon(R.mipmap.ic_supervisor_account_white_36dp);
+                        break;
+                    case 1 : selectedtab.setIcon(R.mipmap.ic_photo_library_white_36dp);
+                        break;
+                    case 2 : selectedtab.setIcon(R.mipmap.ic_sms_white_36dp);
+                        break;
+                    case 3 : selectedtab.setIcon(R.mipmap.ic_account_circle_white_36dp);
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+
 
         adapter = new MainPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);

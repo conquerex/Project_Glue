@@ -2,6 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:elevation="0dp"
@@ -15,7 +16,8 @@
         card_view:cardElevation="@dimen/com_facebook_auth_dialog_corner_radius_oversized"
         android:elevation="2dp"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:layout_margin="7dp">
 
         <LinearLayout
             android:orientation="vertical"
@@ -29,8 +31,9 @@
                 android:layout_height="20dp"
                 android:id="@+id/tvListCardGroupName"
                 android:textColor="@color/com_facebook_button_background_color_focused_disabled"
-                android:layout_margin="5dp"
-                android:layout_marginLeft="5dp" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp" />
 
             <View
                 android:layout_width="fill_parent"
@@ -95,19 +98,25 @@
                 card_view:srcCompat="@mipmap/sample"
                 android:id="@+id/imgListCardMainImg"
                 android:scaleType="centerCrop"
-                android:layout_height="200dp" />
+                android:layout_height="200dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" />
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:padding="5dp">
+                android:background="@color/windowBackground"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingRight="5dp">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    card_view:srcCompat="@mipmap/ic_favorite_border_gray_24dp"
+                    card_view:srcCompat="@mipmap/ic_thumb_up_gray_24dp"
                     android:id="@+id/imageView7" />
 
                 <TextView
@@ -116,8 +125,24 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/textView10"
                     android:elevation="0dp"
-                    android:textColor="@color/glueGray"
+                    android:textColor="@color/glueDarkGray"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    card_view:srcCompat="@mipmap/ic_comment_gray_24dp"
+                    android:id="@+id/imageView8" />
+
+                <TextView
+                    android:text="댓글 달기"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView11"
+                    android:layout_weight="1"
                     android:layout_marginLeft="5dp" />
+
             </LinearLayout>
 
         </LinearLayout>

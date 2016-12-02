@@ -59,8 +59,8 @@ public class ListFragment extends Fragment implements ListPresenter.View {
 
         for( int i = 1 ; i <= 10 ; i ++ ) {
             data = new RecyclerData();
-            data.contents = i+" "+"ë‚´ìš©ì…ë‹ˆë‹¤ ë‚´ìš©ì…ë‹ˆë‹¤ ë‚´ìš©ì…ë‹ˆë‹¤. ";
-            data.groupName = i+"name";
+            data.contents = i+" "+"MarkdownÀº ÅØ½ºÆ® ±â¹İÀÇ ¸¶Å©¾÷¾ğ¾î·Î 2004³â Á¸±×·ç¹ö¿¡ ÀÇÇØ ¸¸µé¾îÁ³À¸¸ç ½±°Ô ¾²°í ÀĞÀ» ¼ö ÀÖÀ¸¸ç HTML·Î º¯È¯ÀÌ °¡´ÉÇÏ´Ù. Æ¯¼ö±âÈ£¿Í ¹®ÀÚ¸¦ ÀÌ¿ëÇÑ ¸Å¿ì °£´ÜÇÑ ±¸Á¶ÀÇ ¹®¹ıÀ» »ç¿ëÇÏ¿© À¥¿¡¼­µµ º¸´Ù ºü¸£°Ô ÄÁÅÙÃ÷¸¦ ÀÛ¼ºÇÏ°í º¸´Ù Á÷°üÀûÀ¸·Î ÀÎ½ÄÇÒ ¼ö ÀÖ´Ù. ¸¶Å©´Ù¿îÀÌ ÃÖ±Ù °¢±¤¹Ş±â ½ÃÀÛÇÑ ÀÌÀ¯´Â ±êÇé(https://github.com) ´öºĞÀÌ´Ù. ±êÇéÀÇ ÀúÀå¼ÒRepository¿¡ °üÇÑ Á¤º¸¸¦ ±â·ÏÇÏ´Â README.md´Â ±êÇéÀ» »ç¿ëÇÏ´Â »ç¶÷ÀÌ¶ó¸é ´©±¸³ª °¡Àå ¸ÕÀú Á¢ÇÏ°Ô µÇ´Â ¸¶Å©´Ù¿î ¹®¼­¿´´Ù. ¸¶Å©´Ù¿îÀ» ÅëÇØ¼­ ¼³Ä¡¹æ¹ı, ¼Ò½ºÄÚµå ¼³¸í, ÀÌ½´ µîÀ» °£´ÜÇÏ°Ô ±â·ÏÇÏ°í °¡µ¶¼ºÀ» ³ôÀÏ ¼ö ÀÖ´Ù´Â °­Á¡ÀÌ ºÎ°¢µÇ¸é¼­ Á¡Á¡ ¿©·¯ °÷À¸·Î ÆÛÁ®°¡°Ô µÈ´Ù.";
+            data.groupName = i+"³îÀÚGroup";
             data.mainImg = R.mipmap.sample;
             data.img = R.drawable.com_facebook_button_icon;
             data.time = "2016/12/02";
@@ -77,7 +77,7 @@ public class ListFragment extends Fragment implements ListPresenter.View {
     }
 
 
-    // TODO ë¦¬ì‚¬ì´í´ëŸ¬ ë·° ì–´í…í„°
+    // TODO ¸®»çÀÌÅ¬·¯ ºä ¾îÅÜÅÍ
 
     public static class RecyclerCardAdapter extends RecyclerView.Adapter<RecyclerCardAdapter.ViewHolder>{
 
@@ -85,7 +85,7 @@ public class ListFragment extends Fragment implements ListPresenter.View {
         int itemLayout;
         Context context;
 
-        // ìƒì„±ì
+        // »ı¼ºÀÚ
         public RecyclerCardAdapter(ArrayList<RecyclerData> datas, int itemLayout, Context context){
             this.datas = datas;
             this.itemLayout = itemLayout;
@@ -93,7 +93,7 @@ public class ListFragment extends Fragment implements ListPresenter.View {
         }
 
 
-        // view ë¥¼ ë§Œë“¤ì–´ì„œ í™€ë”ì— ì €ì¥í•˜ëŠ” ì—­í• 
+        // view ¸¦ ¸¸µé¾î¼­ È¦´õ¿¡ ÀúÀåÇÏ´Â ¿ªÇÒ
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -102,7 +102,7 @@ public class ListFragment extends Fragment implements ListPresenter.View {
             return new ViewHolder(view);
         }
 
-        // listView getView ë¥¼ ëŒ€ì²´í•˜ëŠ” í•¨ìˆ˜
+        // listView getView ¸¦ ´ëÃ¼ÇÏ´Â ÇÔ¼ö
         @Override
         public void onBindViewHolder(ViewHolder holder, final int position) {
             RecyclerData data = datas.get(position);
@@ -110,7 +110,7 @@ public class ListFragment extends Fragment implements ListPresenter.View {
 
             holder.listCardItem.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) { //í´ë¦­ì‹œ
+                public void onClick(View view) { //Å¬¸¯½Ã
 //                    Intent intent = new Intent(context, DetailActivity.class);
 //                    intent.putExtra("position", position);
 //                    //intent.putExtra("OBJECT",data);
@@ -119,7 +119,15 @@ public class ListFragment extends Fragment implements ListPresenter.View {
             });
             holder.imgListCardGroupImg.setBackgroundResource(data.img);
             holder.imgListCardMainImg.setBackgroundResource(data.mainImg);
-            holder.tvListCardContents.setText(data.contents);
+
+            if(data.contents.length() >= 20){
+                String str = data.contents.substring(0,19)+"\n"+"´õ º¸±â...";
+                holder.tvListCardContents.setText(str);
+            }
+            else{
+                holder.tvListCardContents.setText(data.contents);
+            }
+
             holder.tvListCardGroupName.setText(data.groupName);
             holder.tvListCardTime.setText(data.time);
             holder.itemView.setTag(data);
