@@ -1,7 +1,5 @@
 package com.hm.project_glue.sign.signin;
 
-import android.app.Activity;
-
 /**
  * Created by HM on 2016-11-28.
  */
@@ -9,7 +7,7 @@ import android.app.Activity;
 public interface SignInPresenter {
 
     void setView(SignInPresenter.View view);
-    void signIn(Activity activity);
+    void signIn();
     void observableInit();
 
     public interface View {

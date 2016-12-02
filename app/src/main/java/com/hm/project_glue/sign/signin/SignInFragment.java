@@ -59,7 +59,7 @@ public class SignInFragment extends Fragment implements SignInPresenter.View {
             ((SignActivity)getActivity()).goToSignUpFragment();
         });
 
-        btnSignIn.setOnClickListener(v -> signInPresenter.signIn(getActivity()));
+        btnSignIn.setOnClickListener(v -> signInPresenter.signIn());
         btnFacebook.setOnClickListener(v -> ((SignActivity)getActivity()).facebookLoginOnClick(getView()));
         signInPresenter.observableInit();
 
