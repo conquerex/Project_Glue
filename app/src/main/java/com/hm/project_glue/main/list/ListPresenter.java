@@ -5,4 +5,8 @@ package com.hm.project_glue.main.list;
  */
 
 public interface ListPresenter {
+    void setView(ListPresenter.View view);
+    public interface View {
+
+    }
 }

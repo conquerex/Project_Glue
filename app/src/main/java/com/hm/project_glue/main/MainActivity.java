@@ -1,7 +1,6 @@
 package com.hm.project_glue.main;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -16,6 +15,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.hm.project_glue.R;
+import com.hm.project_glue.Util.Networking;
 import com.hm.project_glue.main.home.HomeFragment;
 import com.hm.project_glue.main.info.InfoFragment;
 import com.hm.project_glue.main.list.ListFragment;
@@ -29,13 +29,13 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     InfoFragment info;
     ListFragment list;
     PagerAdapter adapter;
-    SharedPreferences loginCheck;
-    SharedPreferences.Editor editor;
+    Networking networking;
     private final String PreferenceName ="localLoginCheck";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        networking = new Networking(this);
         home =  HomeFragment.newInstance();
         msg  =  MsgFragment.newInstance();
         info =  InfoFragment.newInstance();
@@ -46,8 +46,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         tab.addTab(tab.newTab().setText("MAP"));
         tab.addTab(tab.newTab().setText("ETC"));
         tab.addTab(tab.newTab().setText("settings"));
-        loginCheck = getSharedPreferences(PreferenceName, 0);
-        editor = loginCheck.edit();
+
         adapter = new MainPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);
 
@@ -106,15 +105,15 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
     // Facebook 로그아웃 및 프리퍼런스 값 초기화
-    public void tmpLogOut() {
 
+    public void logOut() {
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().logOut();    // 페이스북 로그아웃
+        networking.logout();                    //프리퍼런스 초기화
+    }
 
-        LoginManager.getInstance().logOut();
-        editor.putString("user", "");
-        editor.putString("token", "");
-        editor.putBoolean("SIGN", false);
-        editor.commit();
+    public void tmpLogOut() { // TODO 머지하고 삭제
+
     }
 }

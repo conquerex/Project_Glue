@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#7333b1</color>
     <color name="colorAccent">#FF4081</color>
     <color name="windowBackground">#f1f5f7</color>
+    <color name="glueButton">#42bd41</color>
+    <color name="glueGray">#b7b7b7</color>
 </resources>

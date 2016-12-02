@@ -35,7 +35,6 @@ public class SignInPresenterImpl implements SignInPresenter {
         signInModel = new SignInModel(fragment.getContext());
         context = fragment.getActivity();
 
-
     }
 
 //    public void progress() {

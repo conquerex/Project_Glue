@@ -7,4 +7,5 @@
     <string name="loginfailtitle">로그인 실패</string>
     <string name="loginfailmessage">아아디와 패스워드를 확인하세요.</string>
     <string name="ok">확인</string>
+    <string name="like">좋아요</string>
 </resources>
