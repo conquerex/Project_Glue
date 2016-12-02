@@ -2,7 +2,6 @@ package com.hm.project_glue.sign.signin;
 
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.hm.project_glue.R;
@@ -13,59 +12,25 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
 public class SignInModel {
-    private static final String TAG = "ResponseCode : ";
-    private static String SERVER_URL;
+    private static final String TAG = "TEST";
+    private static String SIGNIN_URL = "";
+
 
     public SignInModel(Context context){
-        SERVER_URL = context.getResources().getString(R.string.SIGN_URL);
+        SIGNIN_URL = context.getResources().getString(R.string.SIGNIN_URL);
     }
 
-    public void signIn(String id, String pw)  {
-        HashMap userInfoMap =   new HashMap();
-        userInfoMap.put("id", id);
-        userInfoMap.put("pw", pw);
 
-        new AsyncTask<Map, Void, String>(){
-            @Override
-            protected String doInBackground(Map... params) {
-                String result = "";
-                try {
-                    result = postData(SERVER_URL, params[0]);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return result;
-            }
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-            @Override
-            protected void onPostExecute(String result) {
-                super.onPostExecute(result);
-//                StringBuffer sb=  new StringBuffer();
-//                List<HttpCookie> cookies =  cookieManager.getCookieStore().getCookies();
-//                for( HttpCookie cookie : cookies){
-//                    sb.append(cookie.getName()+"="+cookie.getValue()+"\n");
-//                    editor.putString(cookie.getName(),cookie.getValue());
-//                }
-//                editor.commit();
-//                textResult.setText(sb.toString());
-//                progress.dismiss();
-            }
-        }.execute(userInfoMap);
-    }
-    public static String postData (String webURL, Map params) throws Exception {
+    public static String postData (Map params) throws Exception {
 
         StringBuilder result = new StringBuilder();
         String dataLine;
-        URL url = new URL(webURL);
+        URL url = new URL(SIGNIN_URL);
         Log.i("URL TEST : ",url.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
@@ -78,13 +43,14 @@ public class SignInModel {
 
         for(String key : keyset){
             String param = key + "=" + params.get(key)+"&";
-            Log.i("POST value : ", param);
+            Log.i(TAG, "POST value:"+param);
             os.write(param.getBytes());
         }
         os.flush();
         os.close();
 
         int responseCode = conn.getResponseCode();
+        Log.i(TAG, "responseCode:" + responseCode);
         // 200
         if (responseCode == HttpsURLConnection.HTTP_OK) {
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -97,7 +63,7 @@ public class SignInModel {
             Log.i(TAG, "" + responseCode);
         }
 
-
+        Log.i(TAG, "result:" + result.toString());
         return result.toString();
     }
 

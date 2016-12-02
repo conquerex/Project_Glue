@@ -30,13 +30,12 @@ import java.util.Arrays;
 
 
 public class SignActivity extends AppCompatActivity {
-
-    SharedPreferences loginCheck;
-    SharedPreferences.Editor editor;
     SignInFragment signInFragment;
     SignUpFragment signUpFragment;
     private CallbackManager callbackManager;
-    private final String PreferenceName ="localLoginCheck";
+    SharedPreferences loginCheck;
+    SharedPreferences.Editor editor;
+    private final String preferenceName ="localLoginCheck";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,31 +43,9 @@ public class SignActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign);
         signInFragment = SignInFragment.newInstance();
         signUpFragment = SignUpFragment.newInstance();
-        loginCheck = getSharedPreferences(PreferenceName, 0);
+        loginCheck = getSharedPreferences(preferenceName,0);
         editor = loginCheck.edit();
-
-
-        init();
         setOne();
-    }
-    private void init(){
-        boolean firstRun;
-        firstRun = loginCheck.getBoolean("firstRun", true);
-        if(firstRun) {
-            editor.putBoolean("firstRun", false);
-            editor.commit();
-        }
-
-    }
-    private void setAutoLogin() {
-        String localID, localPW;
-//        localID = etId.getText().toString();
-//        localPW = etPasswd.getText().toString();
-//        editor.putString("ID", localID);
-//        editor.putString("PW", localPW);
-        editor.putBoolean("SIGN", true);
-        editor.commit();
-        Log.i("setAutoLogin","commit");
     }
 
     public void setOne(){
@@ -93,9 +70,14 @@ public class SignActivity extends AppCompatActivity {
         View view = getCurrentFocus();
         InputMethodManager mgr = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         mgr.hideSoftInputFromWindow(view.getWindowToken(), 0);
-
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
     // 로그인 토큰 프리퍼런스 저장
     public void savePreferences(String user, String token){
         editor.putString("user", user);
@@ -103,13 +85,10 @@ public class SignActivity extends AppCompatActivity {
         editor.putBoolean("SIGN", true);
         editor.commit();
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+    public void moveActivity(){
+        Intent i = new Intent(SignActivity.this, MainActivity.class);
+        startActivity(i);
     }
-
-
     public void facebookLoginOnClick(View v){
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
@@ -128,19 +107,19 @@ public class SignActivity extends AppCompatActivity {
                     @Override
                     public void onCompleted(JSONObject user, GraphResponse response) {
                         if (response.getError() != null) {
-                            Log.i("response.getError", "user: " + user.toString());
-                            Log.i("response.getError","AccessToken: " + result.getAccessToken().getToken());
+
                         } else {
                             Log.i("TAG", "user: " + user.toString());
                             Log.i("TAG", "AccessToken: " + result.getAccessToken().getToken());
 
+                            //TODO 페북 토큰을 서버에 전달 후 서버에서 다시 발급한 토큰을 프리퍼런스에 저장해야함.
                             savePreferences(user.toString(),result.getAccessToken().getToken());
                             setResult(RESULT_OK);
 
                             Intent i = new Intent(SignActivity.this, MainActivity.class);
                             startActivity(i);
-                            Log.i("TAG", "startActivity");
-//                            finish();
+
+
                         }
                     }
                 });
@@ -153,12 +132,12 @@ public class SignActivity extends AppCompatActivity {
             @Override
             public void onError(FacebookException error) {
                 Log.e("test", "Error: " + error);
-                //finish();
+
             }
 
             @Override
             public void onCancel() {
-                //finish();
+
             }
         });
     }

@@ -14,7 +14,7 @@ public class LogoActivity extends AppCompatActivity {
     Handler mHandler;
     Context context;
     private boolean signFlag = false;
-    private final int mHandlerTime = 2000;
+    private final int mHandlerTime = 1200;
     SharedPreferences loginCheck;
     private final String PreferenceName ="localLoginCheck";
 

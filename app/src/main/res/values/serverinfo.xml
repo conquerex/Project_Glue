@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="SIGN_URL">http://dummy-dev.ap-northeast-2.elasticbeanstalk.com/group/</string>
-
+    <string name="SIGNIN_URL">https://glue-dev.muse9.net/member/login/</string>
+    <string name="SIGNUP_URL">http://glue-dev.muse9.net/member/signup/</string>
 </resources>
