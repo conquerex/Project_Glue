@@ -2,6 +2,7 @@ package com.hm.project_glue.sign.signin;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +15,9 @@ import com.hm.project_glue.sign.SignActivity;
 
 
 public class SignInFragment extends Fragment implements SignInPresenter.View {
-    Button btnSignIn, btnSignUp, btnFindId, btnFacebook;
-    EditText etId, etPasswd;
+    private Button btnSignIn, btnSignUp, btnFindId, btnFacebook;
+    private EditText etId, etPasswd;
     private SignInPresenter signInPresenter;
-
-
 
     public SignInFragment() {
 
@@ -26,7 +25,6 @@ public class SignInFragment extends Fragment implements SignInPresenter.View {
 
     public static SignInFragment newInstance() {
         SignInFragment fragment = new SignInFragment();
-
         return fragment;
     }
 
@@ -35,8 +33,6 @@ public class SignInFragment extends Fragment implements SignInPresenter.View {
         super.onCreate(savedInstanceState);
         signInPresenter = new SignInPresenterImpl(SignInFragment.this);
         signInPresenter.setView(this);
-
-
     }
 
     @Override
@@ -65,8 +61,48 @@ public class SignInFragment extends Fragment implements SignInPresenter.View {
 
         return view;
     }
+    @Override
+    public String getIdText() {
+        return etId.getText().toString();
+    }
+    @Override
+    public String getPwText() {
+        return etPasswd.getText().toString();
+    }
+    @Override
+    public EditText getEditTextId() {
+        return etId;
+    }
+    @Override
+    public EditText getEditTextPw() {
+        return etPasswd;
+    }
 
 
+    @Override
+    public void setButtonEnabled(boolean flag) {
+        btnSignIn.setEnabled(flag);
+    }
 
+    @Override
+    public void reSetEditText() {
+        etId.setText("");
+        etPasswd.setText("");
+        etId.requestFocus();
+    }
+
+    @Override
+    public void failAlert(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+        alert.setTitle(R.string.loginfailtitle); // "로그인실패"
+        alert.setMessage(R.string.loginfailmessage); // "아이디와 ..."
+        alert.setNegativeButton(R.string.ok, null); // "확인"
+        alert.show();
+    }
+
+    @Override
+    public void moveActivity() {
+        ((SignActivity)getActivity()).moveActivity();
+    }
 
 }

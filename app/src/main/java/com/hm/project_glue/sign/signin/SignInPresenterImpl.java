@@ -1,15 +1,11 @@
 package com.hm.project_glue.sign.signin;
 
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.hm.project_glue.R;
-import com.hm.project_glue.sign.SignActivity;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.jakewharton.rxbinding.widget.TextViewTextChangeEvent;
 
@@ -36,7 +32,10 @@ public class SignInPresenterImpl implements SignInPresenter {
         context = fragment.getActivity();
 
     }
-
+    @Override
+    public void setView(View view) {
+        this.view = view;
+    }
 //    public void progress() {
 //        progress = new ProgressDialog(MainActivity.this);
 //        progress.setTitle("다운로드");
@@ -49,8 +48,8 @@ public class SignInPresenterImpl implements SignInPresenter {
     public void signIn(){
 
         HashMap userInfoMap = new HashMap();
-        String id = fragment.etId.getText().toString();
-        String pw = fragment.etPasswd.getText().toString();
+        String id = view.getIdText();
+        String pw = view.getPwText();
         userInfoMap.put("phone_number", id);
         userInfoMap.put("password", pw);
 
@@ -70,26 +69,19 @@ public class SignInPresenterImpl implements SignInPresenter {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-
                 progress = new ProgressDialog(context);
-//                progress.setTitle("LOGIN");
                 progress.setMessage("Loging....");
                 progress.setProgressStyle((ProgressDialog.STYLE_SPINNER));
                 progress.setCancelable(false);
                 progress.show();
-
             }
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
                 String token ="";
                 try {
-
                     JSONObject jObject = new JSONObject(result);
                     token = jObject.getString("token");
-
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -98,22 +90,13 @@ public class SignInPresenterImpl implements SignInPresenter {
                 if(!token.equals("")) { // 로그인 성공
                     Log.i(TAG,"if:"+token);
                     // Preferences 에 token 저장
-                    SharedPreferences loginCheck = fragment.getActivity().getSharedPreferences("localLoginCheck", 0);
-                    SharedPreferences.Editor editor = loginCheck.edit();
-                    editor.putString("id", id);
-                    editor.putString("token", token);
-                    editor.putBoolean("SIGN", true);
-                    editor.commit();
-
-                    // Activity 이동
-                    ((SignActivity)fragment.getActivity()).moveActivity();
+                    signInModel.savePreferences(id, token);
+                    view.moveActivity();
                 }
                 else{// 로그인 실패
                     Log.i(TAG,"else:"+token);
-                    failAlert();
-                    fragment.etId.setText("");
-                    fragment.etPasswd.setText("");
-                    fragment.etId.requestFocus();
+                    view.failAlert();
+                    view.reSetEditText();
                 }
 
             }
@@ -121,30 +104,13 @@ public class SignInPresenterImpl implements SignInPresenter {
 
 
     }
-    @Override
-    public void setView(View view) {
-        this.view = view;
-    }
 
-
-
-
-    public void failAlert(){
-
-        AlertDialog.Builder alert = new AlertDialog.Builder(context);
-        alert.setTitle(R.string.loginfailtitle); // "로그인실패"
-        alert.setMessage(R.string.loginfailmessage); // "아이디와 ..."
-//        alert.setIcon(R.drawable.ic_launcher);
-        alert.setNegativeButton(R.string.ok, null); // "확인"
-        alert.show();
-
-    }
     @Override
     public void observableInit() {
         Observable<TextViewTextChangeEvent> idObs
-                =  RxTextView.textChangeEvents(fragment.etId);
+                =  RxTextView.textChangeEvents(view.getEditTextId());
         Observable<TextViewTextChangeEvent> passObs
-                =  RxTextView.textChangeEvents(fragment.etPasswd);
+                =  RxTextView.textChangeEvents(view.getEditTextPw());
 
         Observable.combineLatest(idObs,passObs,
                 (idChanges,passChanges) -> {
@@ -153,11 +119,8 @@ public class SignInPresenterImpl implements SignInPresenter {
                     return idCheck && passCheck;
                 })
                 .subscribe(
-                        checkFlag -> fragment.btnSignIn.setEnabled(checkFlag)
+                        checkFlag -> view.setButtonEnabled(checkFlag)
                 );
     }
-
-
-
 
 }
