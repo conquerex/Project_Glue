@@ -21,6 +21,8 @@ import com.hm.project_glue.R;
 import com.hm.project_glue.main.OnFragmentInteractionListener;
 import java.util.ArrayList;
 
+import static com.hm.project_glue.main.MainActivity.metrics;
+
 
 public class HomeFragment extends Fragment implements HomePresenter.View{
     private static final String TAG = "HomeFragment";
@@ -55,8 +57,9 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        for(int i = 0 ; i < 5 ; i++){
+        for(int i = 0 ; i < 9 ; i++){
             HomeModel data = new HomeModel(R.drawable.sample_card_img2, "Sample ----- " + i);
+            // 테스트용 data
 //            data.homeCardImage = R.drawable.sample_card_img2;
 //            data.homeCardTitle = "Sample ----- " + i;
             Log.i(TAG, "----------- data.homeCardTitle ---- "+ i);
@@ -73,7 +76,6 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
     }
 
     private static class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder>{
-
         ArrayList<HomeModel> datas;
         int itemLayout;
         Context context;
@@ -88,6 +90,12 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
                 cardView   = (CardView) itemView.findViewById(R.id.homeCardView);
                 ivHomeCard = (ImageView)itemView.findViewById(R.id.ivHomeCard);
                 tvHomeCard = (TextView) itemView.findViewById(R.id.tvHomeCard);
+
+                int px = Math.round(3 * (metrics.xdpi / metrics.DENSITY_DEFAULT));
+
+                ViewGroup.LayoutParams params =  cardView.getLayoutParams();
+                params.width = (metrics.widthPixels / 2)-(px * 2);
+                params.height = params.width;
             }
         }
 
@@ -106,19 +114,18 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             final HomeModel data = datas.get(position);
-            holder.ivHomeCard.setBackgroundResource(data.homeCardImage);
 
-            holder.ivHomeCard.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context,"이미지가 클릭됨!!",Toast.LENGTH_SHORT).show();
-                }
-            });
+//            holder.ivHomeCard.setOnClickListener(new View.OnClickListener(){
+//                @Override
+//                public void onClick(View v) {
+//                    Toast.makeText(context,"이미지가 클릭됨!!",Toast.LENGTH_SHORT).show();
+//                }
+//            });
 
             Log.i(TAG, "----------- onBindViewHolder ---- "+ data);
             holder.tvHomeCard.setText(data.homeCardTitle);
+            holder.ivHomeCard.setImageResource(data.homeCardImage);
             holder.cardView.setTag(data);
-
             setAnimation(holder.cardView, position);
         }
 

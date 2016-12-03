@@ -4,13 +4,10 @@
     android:layout_height="match_parent"
     tools:context="com.hm.project_glue.main.home.HomeFragment"
     android:background="@color/windowBackground">
-
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/homeRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
-
 </RelativeLayout>

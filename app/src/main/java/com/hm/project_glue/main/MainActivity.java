@@ -1,5 +1,6 @@
 package com.hm.project_glue.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -24,6 +27,7 @@ import com.hm.project_glue.sign.SignActivity;
 
 public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener{
     private CallbackManager callbackManager;
+    public static DisplayMetrics metrics;
     HomeFragment home;
     MsgFragment msg;
     InfoFragment info;
@@ -32,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     SharedPreferences loginCheck;
     SharedPreferences.Editor editor;
     private final String PreferenceName ="localLoginCheck";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +58,11 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab));
         tab.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager));
+
+        metrics = new DisplayMetrics();
+        WindowManager windowManager = (WindowManager)getApplicationContext()
+                .getSystemService(Context.WINDOW_SERVICE);
+        windowManager.getDefaultDisplay().getMetrics(metrics);
     }
 
     // instanceof <-- Fragment 확인
@@ -107,7 +117,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     }
     // Facebook 로그아웃 및 프리퍼런스 값 초기화
     public void tmpLogOut() {
-
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
 
