@@ -5,8 +5,8 @@ package com.hm.project_glue.main.home;
  */
 
 public class HomeModel {
-    private int homeCardImage;
-    private String homeCardTitle;
+    public int homeCardImage;
+    public String homeCardTitle;
 
     public HomeModel(int homeCardImage, String homeCardTitle) {
         this.homeCardImage = homeCardImage;

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,14 +20,13 @@ import android.widget.Toast;
 import com.hm.project_glue.R;
 import com.hm.project_glue.main.OnFragmentInteractionListener;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class HomeFragment extends Fragment implements HomePresenter.View{
+    private static final String TAG = "HomeFragment";
     private LinearLayoutManager linearLayoutManager;
     private RecyclerView recyclerView;
-    private ArrayList<HomeModel> items;
-    private HomeModel[] item;
+    private ArrayList<HomeModel> datas;
 
     private OnFragmentInteractionListener mListener;
     public HomeFragment() {
@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        items = new ArrayList<>();
+        datas = new ArrayList<>();
 
         linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView = (RecyclerView)view.findViewById(R.id.homeRecyclerView);
@@ -56,9 +56,19 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
         recyclerView.setLayoutManager(linearLayoutManager);
 
         for(int i = 0 ; i < 5 ; i++){
-            item[i] = new HomeModel(R.drawable.sample_card_img2, "sample - " + i);
-            items.add(item[i]);
+            HomeModel data = new HomeModel(R.drawable.sample_card_img2, "Sample ----- " + i);
+//            data.homeCardImage = R.drawable.sample_card_img2;
+//            data.homeCardTitle = "Sample ----- " + i;
+            Log.i(TAG, "----------- data.homeCardTitle ---- "+ i);
+            datas.add(data);
         }
+
+        HomeRecyclerAdapter adapter = new HomeRecyclerAdapter(datas,
+                R.layout.fragment_home_item, recyclerView.getContext());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+
         return view;
     }
 
@@ -75,6 +85,7 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
 
             public ViewHolder(View itemView) {
                 super(itemView);
+                cardView   = (CardView) itemView.findViewById(R.id.homeCardView);
                 ivHomeCard = (ImageView)itemView.findViewById(R.id.ivHomeCard);
                 tvHomeCard = (TextView) itemView.findViewById(R.id.tvHomeCard);
             }
@@ -95,7 +106,7 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             final HomeModel data = datas.get(position);
-            holder.ivHomeCard.setBackgroundResource(data.getHomeCardImage());
+            holder.ivHomeCard.setBackgroundResource(data.homeCardImage);
 
             holder.ivHomeCard.setOnClickListener(new View.OnClickListener(){
                 @Override
@@ -104,10 +115,9 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
                 }
             });
 
-            Log.i("Exception"," ::::::: "+data.getHomeCardTitle());
-            holder.tvHomeCard.setText(data.getHomeCardTitle());
+            Log.i(TAG, "----------- onBindViewHolder ---- "+ data);
+            holder.tvHomeCard.setText(data.homeCardTitle);
             holder.cardView.setTag(data);
-
 
             setAnimation(holder.cardView, position);
         }
