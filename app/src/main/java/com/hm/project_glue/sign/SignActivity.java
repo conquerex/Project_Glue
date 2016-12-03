@@ -63,7 +63,6 @@ public class SignActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.commit();
         keyBoardOff();
-        Log.i("test","goToSignUpFragment");
     }
 
     public void keyBoardOff() {  // 키보드 내리기

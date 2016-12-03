@@ -1,6 +1,5 @@
 package com.hm.project_glue;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,26 +10,23 @@ import com.hm.project_glue.main.MainActivity;
 import com.hm.project_glue.sign.SignActivity;
 
 public class LogoActivity extends AppCompatActivity {
-    Handler mHandler;
-    Context context;
+    private Handler mHandler;
     private boolean signFlag = false;
     private final int mHandlerTime = 1200;
-    SharedPreferences loginCheck;
-    private final String PreferenceName ="localLoginCheck";
+    private SharedPreferences loginCheck;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logo);
-        context = this;
         mHandler = new Handler();
-        loginCheck = getSharedPreferences(PreferenceName, 0);
 
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-
-                signFlag = localLogInCheck();
+                loginCheck = getSharedPreferences("localLoginCheck", 0);
+                signFlag = loginCheck.getBoolean("SIGN",false);
 
                 if(signFlag){
                     Intent intent = new Intent(LogoActivity.this, MainActivity.class);
@@ -42,12 +38,7 @@ public class LogoActivity extends AppCompatActivity {
 
                 finish();
             }
-        }, mHandlerTime); // 2000ms
+        }, mHandlerTime);
     }
-
-    protected boolean localLogInCheck(){
-        return loginCheck.getBoolean("SIGN", false);
-    }
-
 
 }

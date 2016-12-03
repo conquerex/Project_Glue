@@ -21,8 +21,8 @@ public class Networking {
     public static String getToken(){        // 프리퍼런스의 현재 토큰 가져오기
         return loginCheck.getString("token","");
     }
-    public void logout(){
 
+    public void logout(){
         editor.putString("user", "");
         editor.putString("token", "");
         editor.putBoolean("SIGN", false);

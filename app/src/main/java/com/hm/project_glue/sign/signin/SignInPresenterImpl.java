@@ -18,7 +18,7 @@ import java.util.Map;
 import rx.Observable;
 
 public class SignInPresenterImpl implements SignInPresenter {
-    private SignInFragment fragment;
+
     private SignInModel signInModel;
     private SignInPresenter.View view;
     private final int ID_MIN_LENGTH = 5;
@@ -27,7 +27,6 @@ public class SignInPresenterImpl implements SignInPresenter {
     Context context;
 
     public SignInPresenterImpl(SignInFragment fragment){
-        this.fragment = fragment;
         signInModel = new SignInModel(fragment.getContext());
         context = fragment.getActivity();
 

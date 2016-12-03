@@ -6,6 +6,7 @@ package com.hm.project_glue.main.list;
 
 public interface ListPresenter {
     void setView(ListPresenter.View view);
+    void getPostJson(String GroupId);
     public interface View {
 
     }

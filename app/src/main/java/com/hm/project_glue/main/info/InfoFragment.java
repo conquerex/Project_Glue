@@ -6,8 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.hm.project_glue.R;
+import com.hm.project_glue.main.MainActivity;
 import com.hm.project_glue.main.OnFragmentInteractionListener;
 
 public class InfoFragment extends Fragment {
@@ -33,7 +35,12 @@ public class InfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_info, container, false);
+        View view = inflater.inflate(R.layout.fragment_info, container, false);
+        Button btnTmp = (Button)view.findViewById(R.id.btntmp);
+        btnTmp.setOnClickListener(v ->
+            ((MainActivity)getActivity()).tmpLogOut()
+        );
+        return view;
     }
 
     @Override

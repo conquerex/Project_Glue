@@ -25,7 +25,8 @@ public class SignInModel {
 
     public SignInModel(Context context){
         this.context = context;
-        SIGNIN_URL = context.getResources().getString(R.string.SIGNIN_URL);
+        SIGNIN_URL = context.getResources().getString(R.string.BASE_URL)+
+                context.getResources().getString(R.string.SIGNIN_URL);
     }
     public void savePreferences(String id, String token) {
         SharedPreferences loginCheck = context.getSharedPreferences("localLoginCheck", 0);

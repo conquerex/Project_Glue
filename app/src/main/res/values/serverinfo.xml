@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="SIGNIN_URL">https://glue-dev.muse9.net/member/login/</string>
-    <string name="SIGNUP_URL">http://glue-dev.muse9.net/member/signup/</string>
+    <string name="BASE_URL">https://glue-dev.muse9.net</string>
+    <string name="SIGNIN_URL">/member/login/</string>
+    <string name="SIGNUP_URL">/member/signup/</string>
+    <string name="GET_LIST_URL">/posts/post_list/</string>
 </resources>

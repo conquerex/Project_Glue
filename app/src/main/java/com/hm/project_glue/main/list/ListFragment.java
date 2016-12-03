@@ -46,6 +46,7 @@ public class ListFragment extends Fragment implements ListPresenter.View {
         super.onCreate(savedInstanceState);
         listPresenter = new ListPresenterImpl(ListFragment.this);
         listPresenter.setView(this);
+        listPresenter.getPostJson("3");
 
     }
 
