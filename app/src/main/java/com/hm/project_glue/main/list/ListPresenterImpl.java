@@ -1,14 +1,13 @@
 package com.hm.project_glue.main.list;
 
 import android.content.Context;
-import android.os.AsyncTask;
+import android.util.Log;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.List;
 
-import java.util.HashMap;
-import java.util.Map;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by HM on 2016-11-29.
@@ -33,66 +32,32 @@ public class ListPresenterImpl implements ListPresenter {
     }
 
 
-    public void getPostJson(String groupId) {
-        HashMap userInfoMap = new HashMap();
+    public void callHttp(String group){
 
-
-        new AsyncTask<Map, Void, String>() {
-
-
+        final Call<PostData> postData = ListRestAdapter.getInstance().getData(group);
+        postData.enqueue(new Callback<PostData>() {
             @Override
-            protected String doInBackground(Map... params) {
-                String result = "";
-                try {
-                    result = ListModel.groupPostListData(groupId, params[0]);
+            public void onResponse(Call<PostData> call, Response<PostData> response) {
+                if(response.isSuccessful()) {
+                    PostData data = response.body();
+                    List<PostData.Photos> list = data.getPhotos();
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    for(PostData row : rows ){
+                        Log.i("result : ", row.getROAD_NM());
+                    }
+
+                }else{
+                    Log.e("ERROR : ",response.message());
                 }
-                return result;
             }
 
             @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
+            public void onFailure(Call<PostData> call, Throwable t) {
 
             }
 
-            @Override
-            protected void onPostExecute(String result) {
-                super.onPostExecute(result);
-
-                try {
-                    String arrayResult = "{\"array\":"+result+"}";
-                    JSONObject jsonResult = new JSONObject(arrayResult);
-                    JSONArray jsonArray = jsonResult.getJSONArray("array");
-
-                    int length = jsonArray.length();
-//                    for(int i=0; i < length; i ++){
-//                        PostData data = new PostData();
-//                        JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-//
-//                        data.content = jsonObject.getString("content");
-//                        data.group = jsonObject.getString("group");
-//                        data.uploaded_user = jsonObject.getString("uploaded_user");
-//                        data.photos = jsonObject.get("photos");
-//
-//
-//
-////
-////                        sb.append(trainName + "\n");
-//
-//                    }
-
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-        }.execute(userInfoMap);
+        });
+    }
     }
 
 }
