@@ -23,12 +23,16 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/ivHomeCard"
                 android:scaleType="centerInside"
+                android:layout_weight="0.99"
                 android:background="@color/cardview_dark_background"
                 android:src="@drawable/gluelogo"/>
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:textSize="15dp"
+                android:layout_weight="0.01"
                 android:id="@+id/tvHomeCard" />
         </LinearLayout>
     </android.support.v7.widget.CardView>

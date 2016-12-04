@@ -96,6 +96,7 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
                 ViewGroup.LayoutParams params =  cardView.getLayoutParams();
                 params.width = (metrics.widthPixels / 2)-(px * 2);
                 params.height = params.width;
+
             }
         }
 
