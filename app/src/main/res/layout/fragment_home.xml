@@ -4,14 +4,34 @@
     android:layout_height="match_parent"
     tools:context="com.hm.project_glue.main.home.HomeFragment"
     android:background="@color/windowBackground">
-
-    <!-- TODO: Update blank fragment layout -->
-
-    <Button
-        android:text="logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnLogout"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/homeRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/homeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/homeFrameLayout" />
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:fabSize="mini"
+            app:srcCompat="@color/colorPrimary"
+            android:id="@+id/floatingActionButton"
+            android:src="@android:drawable/ic_menu_add"
+            android:layout_margin="20dp"
+            app:layout_anchor="@id/homeFrameLayout"
+            app:layout_anchorGravity="right|end|bottom"/>
+
+    </android.support.design.widget.CoordinatorLayout>
 </RelativeLayout>

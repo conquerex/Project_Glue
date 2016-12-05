@@ -6,5 +6,8 @@ package com.hm.project_glue.main.home;
 
 public class HomePresenterImpl implements HomePresenter {
 
+    @Override
+    public void setView(View view) {
 
+    }
 }
