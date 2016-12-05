@@ -67,8 +67,12 @@ public class SignActivity extends AppCompatActivity {
 
     public void keyBoardOff() {  // 키보드 내리기
         View view = getCurrentFocus();
-        InputMethodManager mgr = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        mgr.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        // 회원가입 작성 도중 Back 후 다시 회원가입 버튼 클릭시
+        // View.getWindowToken()으로 인해 NullPointerException이 나타남
+        if(view != null || view.getWindowToken() != null){
+            InputMethodManager mgr = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            mgr.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
 

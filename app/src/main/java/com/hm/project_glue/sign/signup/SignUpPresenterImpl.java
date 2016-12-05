@@ -1,5 +1,6 @@
 package com.hm.project_glue.sign.signup;
 
+import android.content.Context;
 import android.util.Log;
 
 /**
@@ -25,6 +26,7 @@ public class SignUpPresenterImpl implements SignUpPresenter {
 
     @Override
     public void signUp() {
+        Context context = signUpFragment.getContext();
         String id = signUpFragment.etSuId.getText().toString();
         String pw = signUpFragment.etSuPw.getText().toString();
         String pwre = signUpFragment.etSuPwRe.getText().toString();
@@ -33,7 +35,7 @@ public class SignUpPresenterImpl implements SignUpPresenter {
         String phone = signUpFragment.etSuPhone.getText().toString();
         Log.i(TAG, "----------- id ------- "+ id);
         Log.i(TAG, "----------- email ---- "+ email);
-        signUpModel.signUp(id, pw, pwre, email, name, phone);
+        signUpModel.signUp(id, pw, pwre, email, name, phone, context);
     }
 
     @Override

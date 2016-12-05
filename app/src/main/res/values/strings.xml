@@ -6,6 +6,20 @@
     <string name="facebook_app_id">1339929686038834</string>
     <string name="loginfailtitle">로그인 실패</string>
     <string name="loginfailmessage">아아디와 패스워드를 확인하세요.</string>
+    <string name="signupSuccessMessage">정상적으로 회원가입이 되었습니다.</string>
+    <string name="signupFailMessage">정상적으로 회원가입이 되지 않았습니다.</string>
     <string name="ok">확인</string>
     <string name="like">좋아요</string>
+
+    <string name="signUpIdInputChk">ID를 입력하세요.</string>
+    <string name="signUpPwInputChk">패스워드를 입력하세요.</string>
+    <string name="signUpPwReInputChk">패스워드 재입력을 입력하세요.</string>
+    <string name="signUpPhoneInputChk">전화번호를 입력하세요.</string>
+    <string name="signUpEmailInputChk">E-mail을 입력하세요.</string>
+    <string name="signUpNameInputChk">이름을 입력하세요.</string>
+    <string name="signUpIdLengthChk">ID를 5글자 이상 입력하세요.</string>
+    <string name="signUpPwLengthChk">패스워드를 8글자 이상 입력하세요.</string>
+    <string name="signUpPwReLengthChk">패스워드 재입력을 8글자 이상 입력하세요.</string>
+    <string name="signUpPwNoEqual">비밀번호가 일치하지 않습니다.</string>
+
 </resources>
