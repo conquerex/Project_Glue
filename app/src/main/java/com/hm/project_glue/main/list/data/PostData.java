@@ -1,65 +1,60 @@
 package com.hm.project_glue.main.list.data;
 
+import java.util.List;
+
 /**
- * Created by HM on 2016-12-03.
- */
-
-public class Remote {
-
-
-    public class PostData
+* Created by HM on 2016-12-03.
+*/
+public class PostData
+{
+    private List<Results> results;
+    private String previous;
+    private String count;
+    private String next;
+    public List<Results> getResults ()
     {
-        private Photos[] photos;
-        private String content;
-        private String uploaded_user;
-        private String group;
-
-        public Photos[] getPhotos ()
-        {
-            return photos;
-        }
-
-        public void setPhotos (Photos[] photos)
-        {
-            this.photos = photos;
-        }
-
-        public String getContent ()
-        {
-            return content;
-        }
-
-        public void setContent (String content)
-        {
-            this.content = content;
-        }
-
-        public String getUploaded_user ()
-        {
-            return uploaded_user;
-        }
-
-        public void setUploaded_user (String uploaded_user)
-        {
-            this.uploaded_user = uploaded_user;
-        }
-
-        public String getGroup ()
-        {
-            return group;
-        }
-
-        public void setGroup (String group)
-        {
-            this.group = group;
-        }
-
-        @Override
-        public String toString()
-        {
-            return "ClassPojo [photos = "+photos+", content = "+content+", uploaded_user = "+uploaded_user+", group = "+group+"]";
-        }
+        return results;
     }
+
+    public void setResults (List<Results> results)
+    {
+        this.results = results;
+    }
+
+    public String getPrevious ()
+    {
+        return previous;
+    }
+
+    public void setPrevious (String previous)
+    {
+        this.previous = previous;
+    }
+
+    public String getCount ()
+    {
+        return count;
+    }
+
+    public void setCount (String count)
+    {
+        this.count = count;
+    }
+
+    public String getNext ()
+{
+    return next;
+}
+
+    public void setNext (String next)
+    {
+        this.next = next;
+    }
+
+
+
+
+
     public class Photos
     {
         private Photo photo;
@@ -149,4 +144,9 @@ public class Remote {
         }
     }
 
+
+
 }
+
+
+

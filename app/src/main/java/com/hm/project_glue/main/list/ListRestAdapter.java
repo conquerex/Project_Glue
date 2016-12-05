@@ -29,11 +29,18 @@ public class ListRestAdapter {
     public static final int CONNECT_TIMEOUT = 3;
     public static final int WRITE_TIMEOUT = 5;
     public static final int READ_TIMEOUT = 3;
-    private static final String SERVER_URL = "";
+    private static String TAG = "TEST";
+//    private static String SERVER_URL = "";
+    private static String group = "3";
     private static OkHttpClient client;
     private static IServerListData service;
 
+
+
+
     public synchronized static IServerListData getInstance(){
+       String  SERVER_URL = "https://glue-dev.muse9.net";
+
 
         if(service == null) {
             // 통신 로그를 확인하기 위한 interceptor 설정
