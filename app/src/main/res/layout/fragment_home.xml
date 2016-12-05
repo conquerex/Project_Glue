@@ -28,7 +28,7 @@
             app:fabSize="mini"
             app:srcCompat="@color/colorPrimary"
             android:id="@+id/floatingActionButton"
-            android:src="@android:drawable/ic_menu_add"
+            android:src="@mipmap/ic_group_add_white_36dp"
             android:layout_margin="20dp"
             app:layout_anchor="@id/homeFrameLayout"
             app:layout_anchorGravity="right|end|bottom"/>

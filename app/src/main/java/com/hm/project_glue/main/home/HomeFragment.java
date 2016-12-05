@@ -1,7 +1,10 @@
 package com.hm.project_glue.main.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,8 +20,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hm.project_glue.LogoActivity;
 import com.hm.project_glue.R;
 import com.hm.project_glue.main.OnFragmentInteractionListener;
+import com.hm.project_glue.main.list.ListFragment;
+
 import java.util.ArrayList;
 
 import static com.hm.project_glue.main.MainActivity.metrics;
@@ -51,6 +57,19 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         datas = new ArrayList<>();
+        FloatingActionButton fab;
+
+        fab = (FloatingActionButton)view.findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 스낵바(화면 아래에 나타나는 상태줄) 출력 - Toast같이 테스트 용도
+                // Snackbar.make(v, "Hello World", Snackbar.LENGTH_LONG).show();
+
+                // 다시 LogoActivity로 이동하도록 설정. 작성 화면으로 이동해야 함.
+                startActivity(new Intent(v.getContext(), LogoActivity.class));
+            }
+        });
 
         linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView = (RecyclerView)view.findViewById(R.id.homeRecyclerView);
