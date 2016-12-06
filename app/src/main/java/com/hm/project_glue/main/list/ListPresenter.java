@@ -1,7 +1,5 @@
 package com.hm.project_glue.main.list;
 
-import android.os.Handler;
-
 import com.hm.project_glue.main.list.data.Results;
 
 import java.util.ArrayList;
@@ -12,8 +10,8 @@ import java.util.ArrayList;
 
 public interface ListPresenter {
     void setView(ListPresenter.View view);
-    ArrayList<Results> callHttp(Handler mHandler, String GroupId);
+    ArrayList<Results> callHttp(String GroupId);
     public interface View {
-
+        void dataChanged(ArrayList<Results> post);
     }
 }

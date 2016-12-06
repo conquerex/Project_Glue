@@ -1,15 +1,13 @@
 package com.hm.project_glue.main.list.data;
 
-import java.util.List;
-
 /**
- * Created by HM on 2016-12-05.
+ * Created by HM on 2016-12-06.
  */
 
 public class Results
 {
     private String likes_count;
-    private List<PostData.Photos> photos;
+    private Photos photos;
     private String content;
     private String uploaded_user;
     private String[] dislike;
@@ -30,12 +28,12 @@ public class Results
         this.likes_count = likes_count;
     }
 
-    public List<PostData.Photos> getPhotos ()
+    public Photos getPhotos ()
     {
         return photos;
     }
 
-    public void setPhotos (List<PostData.Photos> photos)
+    public void setPhotos (Photos photos)
     {
         this.photos = photos;
     }

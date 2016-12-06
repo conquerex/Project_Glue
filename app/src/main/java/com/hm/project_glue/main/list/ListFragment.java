@@ -2,8 +2,6 @@ package com.hm.project_glue.main.list;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,8 +23,6 @@ import com.bumptech.glide.request.target.Target;
 import com.hm.project_glue.R;
 import com.hm.project_glue.main.OnFragmentInteractionListener;
 import com.hm.project_glue.main.list.data.Results;
-import com.hm.project_glue.util.HttpThread;
-import com.hm.project_glue.util.LooperHandler;
 
 import java.util.ArrayList;
 
@@ -36,8 +32,6 @@ public class ListFragment extends Fragment implements ListPresenter.View {
     public static ArrayList<Results> datas = null;
     RecyclerView listRecyclerView;
     RecyclerCardAdapter adapter;
-    HttpThread thread;
-    LooperHandler handlerThread;
 
     private static final String TAG = "TEST";
 
@@ -59,17 +53,7 @@ public class ListFragment extends Fragment implements ListPresenter.View {
 
 
     }
-    Handler mainHandler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what){
-                case 1:
 
-
-            }
-        }
-    };
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -77,8 +61,8 @@ public class ListFragment extends Fragment implements ListPresenter.View {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
 
-        datas = listPresenter.callHttp(mainHandler ,"3");
-        Log.i(TAG,"onCreateView : "+datas.toString());
+        datas =  listPresenter.callHttp("3");
+
 
 
         listRecyclerView = (RecyclerView) view.findViewById(R.id.recylerCardView);
@@ -89,6 +73,13 @@ public class ListFragment extends Fragment implements ListPresenter.View {
         listRecyclerView.setLayoutManager(manager);
         return view;
     }
+
+    @Override
+    public void dataChanged(ArrayList<Results> post) {
+        this.datas = post;
+        adapter.notifyDataSetChanged();
+    }
+
 
 
     // TODO 리사이클러 뷰 어텝터
@@ -104,7 +95,7 @@ public class ListFragment extends Fragment implements ListPresenter.View {
             this.datas = datas;
             this.itemLayout = itemLayout;
             this.context = context;
-            Log.i(TAG,"RecyclerCardAdapter : "+datas.toString());
+
         }
 
 
@@ -121,7 +112,6 @@ public class ListFragment extends Fragment implements ListPresenter.View {
         @Override
         public void onBindViewHolder(ViewHolder holder, final int position) {
             Results data = datas.get(position);
-            Log.i(TAG,"onBindViewHolder :"+datas.get(1).getContent().toString());
 
             holder.listCardItem.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -134,7 +124,13 @@ public class ListFragment extends Fragment implements ListPresenter.View {
             });
 
             // TODO get의 포지션 수정 ( 이미지 수 확인 후 여러개 표시)
-            String url  =  data.getPhotos().get(0).getPhoto().getFull_size();
+            String url="";
+            Log.i(TAG,"getPK :"+ data);
+//            if(!data.getPk().equals("")){
+//
+//                url  =  data.getPhotos().get(0).getFull_size();
+//            }
+
             Log.i(TAG, "이미지 URL:"+url);// TODO 삭제
             Glide.with(context).load(url).listener(new RequestListener<String, GlideDrawable>() {
                 @Override
