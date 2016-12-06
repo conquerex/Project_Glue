@@ -3,5 +3,7 @@
     <string name="BASE_URL">https://glue-dev.muse9.net</string>
     <string name="SIGNIN_URL">/member/login/</string>
     <string name="SIGNUP_URL">/member/signup/</string>
-    <string name="GET_LIST_URL">/posts/post_list/</string>
+    <string name="POST_URL">/posts/post_list/</string>
+    <string name="GROUP_URL">/group/group_list/</string>
+
 </resources>

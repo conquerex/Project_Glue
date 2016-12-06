@@ -1,11 +1,13 @@
 package com.hm.project_glue.main.list;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
-import com.hm.project_glue.Util.Networking;
 import com.hm.project_glue.main.list.data.PostData;
 import com.hm.project_glue.main.list.data.Results;
+import com.hm.project_glue.util.Networking;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 
 
 /**
@@ -32,8 +33,6 @@ public class ListPresenterImpl implements ListPresenter {
         listInModel = new ListModel(fragment.getContext());
         context = fragment.getActivity();
 
-
-        callHttp();
     }
 
     @Override
@@ -42,42 +41,40 @@ public class ListPresenterImpl implements ListPresenter {
     }
 
     @Override
-    public void getPostJson(String GroupId) {
+    public ArrayList<Results> callHttp(Handler mhandler, String GroupId){
 
-    }
-
-
-    public void callHttp(){
         ArrayList<Results> post = new ArrayList<>();
-        String token = Networking.getToken();
-        Log.i(TAG, token);
-        String group="3";
-        final Call<PostData> postData = ListRestAdapter.getInstance().getData();
+        String authorization = "Token "+ Networking.getToken();
+        final Call<PostData> postData = ListRestAdapter.getInstance().getListData(authorization, GroupId);
         postData.enqueue(new Callback<PostData>() {
             @Override
             public void onResponse(Call<PostData> call, Response<PostData> response) {
 
-                if(response.isSuccessful()) {
-//                    RemoteData data = response.body();
-//
-//                    List<RemoteData.Row> rows = data.getSeoulRoadNameInfo().getRow();
-//
-//                    for(RemoteData.Row row : rows ){
-//                        Log.i("result : ", row.getROAD_NM());
-//                    }
-                    PostData body =  response.body();
-                    List<Results> ListResults = body.getResults();
+                if(response.isSuccessful()){
+                    PostData body = response.body();
+                    List<Results> listResults = body.getResults();
 
-                    for(Results result : ListResults){
+                    for (Results result : listResults) {
                         Results data = new Results();
-                        result.getContent();
-                        Log.i(TAG, result.toString());
+                        data.setContent(result.getContent());
+                        data.setUploaded_user(result.getUploaded_user());
+                        data.setLikes_count(result.getLikes_count());
+                        data.setGroup(result.getGroup());
+                        data.setPhotos(result.getPhotos());
                         post.add(data);
+
                     }
 
-                }else{
+                    //TODO
+                    Message msg = new Message();
+                    msg.what = 1;
+                    mhandler.sendMessage(msg); // (what)
+                }
+                else{
                     Log.e("ERROR : ",response.message());
                 }
+
+
             }
 
             @Override
@@ -86,6 +83,12 @@ public class ListPresenterImpl implements ListPresenter {
             }
 
         });
+        Log.i(TAG,"callHttp : "+post.toString());
+        return post;
     }
+
+
+
+
 
 }

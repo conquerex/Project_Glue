@@ -1,5 +1,6 @@
 package com.hm.project_glue.main.list;
 
+import com.hm.project_glue.util.Networking;
 import com.hm.project_glue.main.list.data.IServerListData;
 
 import java.net.CookieManager;
@@ -30,18 +31,10 @@ public class ListRestAdapter {
     public static final int WRITE_TIMEOUT = 5;
     public static final int READ_TIMEOUT = 3;
     private static String TAG = "TEST";
-//    private static String SERVER_URL = "";
-    private static String group = "3";
     private static OkHttpClient client;
     private static IServerListData service;
 
-
-
-
     public synchronized static IServerListData getInstance(){
-       String  SERVER_URL = "https://glue-dev.muse9.net";
-
-
         if(service == null) {
             // 통신 로그를 확인하기 위한 interceptor 설정
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -58,24 +51,22 @@ public class ListRestAdapter {
                     .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
                     .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
                     .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+
                     .cookieJar(new JavaNetCookieJar(manager)) //쿠키 저장
                     .addInterceptor(interceptor) // 로그를 출력(디버깅용)
                     .build();
 
             service = new Retrofit.Builder()
-                    .baseUrl(SERVER_URL)
+                    .baseUrl(Networking.getBASE_URL())
                     .client(client)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
                     .create(IServerListData.class);
         }
         return service;
-
-
     }
 
     public static OkHttpClient.Builder configureClient(final OkHttpClient.Builder builder) {
-
         X509TrustManager x509TrustManager = new X509TrustManager() {
             @Override
             public X509Certificate[] getAcceptedIssuers() {
@@ -91,9 +82,7 @@ public class ListRestAdapter {
                                            final String authType) {
             }
         };
-
         final TrustManager[] certs = new TrustManager[]{x509TrustManager};
-
         SSLContext ctx = null;
         try {
             ctx = SSLContext.getInstance("TLS");
@@ -117,6 +106,4 @@ public class ListRestAdapter {
 
         return builder;
     }
-
-
 }

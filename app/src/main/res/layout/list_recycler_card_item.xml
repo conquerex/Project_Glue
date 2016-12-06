@@ -16,8 +16,7 @@
         card_view:cardElevation="@dimen/com_facebook_auth_dialog_corner_radius_oversized"
         android:elevation="2dp"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="7dp">
+        android:layout_centerHorizontal="true">
 
         <LinearLayout
             android:orientation="vertical"
@@ -93,6 +92,13 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp" />
 
+            <ProgressBar
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/barListPost"
+                android:visibility="visible" />
+
             <ImageView
                 android:layout_width="match_parent"
                 card_view:srcCompat="@mipmap/sample"
@@ -100,7 +106,8 @@
                 android:scaleType="centerCrop"
                 android:layout_height="200dp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp" />
+                android:layout_marginRight="5dp"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:orientation="horizontal"

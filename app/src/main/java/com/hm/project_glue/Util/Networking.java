@@ -1,4 +1,4 @@
-package com.hm.project_glue.Util;
+package com.hm.project_glue.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,7 +13,6 @@ public class Networking {
     private Context context;
     private static SharedPreferences loginCheck;
     private static String BASE_URL = "";
-    private static String SERVER_URL = "";
 
 
     private SharedPreferences.Editor editor;
@@ -30,8 +29,8 @@ public class Networking {
         return loginCheck.getString("token","");
     }
 
-    public static String getSERVER_URL(){
-        return SERVER_URL;
+    public static String getBASE_URL(){
+        return BASE_URL;
     }
 
     public void logout(){
