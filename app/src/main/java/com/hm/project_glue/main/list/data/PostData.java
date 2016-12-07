@@ -1,5 +1,7 @@
 package com.hm.project_glue.main.list.data;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -7,10 +9,15 @@ import java.util.List;
 */
 public class PostData
 {
+
+    @SerializedName("results")
     private List<Results> results;
-    private String previous;
-    private String count;
-    private String next;
+    @SerializedName("previous")
+    private String previous="";
+    @SerializedName("count")
+    private String count="";
+    @SerializedName("next")
+    private String next="";
     public List<Results> getResults ()
     {
         return results;

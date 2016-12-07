@@ -1,6 +1,6 @@
 package com.hm.project_glue.main.list.data;
 
-import java.util.List;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by HM on 2016-12-06.
@@ -10,18 +10,19 @@ import java.util.List;
 
 public class Photos
 {
-    private List<Photo> photos;
+    @SerializedName("photos")
+    private Photo photo;
+    @SerializedName("pk")
+    private String pk ="";
 
-    private String pk;
-
-    public List<Photo> getPhotos ()
+    public Photo getPhoto ()
     {
-        return photos;
+        return photo;
     }
 
-    public void setPhotos (List<Photo> photos)
+    public void setPhotos (Photo photo)
     {
-        this.photos = photos;
+        this.photo = photo;
     }
 
     public String getPk ()

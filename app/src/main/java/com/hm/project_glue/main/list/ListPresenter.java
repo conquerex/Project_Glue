@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public interface ListPresenter {
     void setView(ListPresenter.View view);
-    ArrayList<Results> callHttp(String GroupId);
+    void callHttp(ArrayList<Results> datas, String GroupId);
     public interface View {
         void dataChanged(ArrayList<Results> post);
     }

@@ -6,13 +6,10 @@ package com.hm.project_glue.main.list.data;
 
 public class Photo
 {
-    private String thumbnail;
-
-    private String medium_thumbnail;
-
-    private String full_size;
-
-    private String small_thumbnail;
+    private String thumbnail="";
+    private String medium_thumbnail="";
+    private String full_size="";
+    private String small_thumbnail="";
 
     public Photo(){
 
