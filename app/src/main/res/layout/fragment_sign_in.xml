@@ -8,13 +8,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:padding="15dp"
-        android:paddingBottom="15dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
         android:layout_height="wrap_content"
         android:id="@+id/relativeLayout1"
-        android:background="@drawable/signbackground">
+        android:background="@drawable/back">
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -26,15 +22,18 @@
             android:layout_height="wrap_content"
             android:id="@+id/linearLayout1"
             android:layout_below="@+id/imageView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:paddingTop="20dp">
+            android:layout_marginRight="35dp"
+            android:background="@drawable/loginback"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_vertical">
 
             <Button
-                android:layout_width="35dp"
                 android:id="@+id/btnloginicon"
-                android:background="@drawable/signidicon"
-                android:layout_height="35dp" />
+                android:background="@drawable/login_id_icon"
+                android:layout_height="35dp"
+                android:layout_width="45dp" />
 
             <EditText
                 android:layout_width="wrap_content"
@@ -44,10 +43,14 @@
                 android:id="@+id/etId"
                 android:layout_weight="1"
                 android:layout_marginLeft="20dp"
-                android:hint="Input ID"
+                android:hint="Input Phone Number"
                 android:textColor="@android:color/white"
+                android:textAllCaps="false"
                 android:clickable="false"
-                android:layout_marginRight="20dp" />
+                android:layout_marginRight="20dp"
+                android:textColorHint="@color/cardview_light_background"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp" />
 
         </LinearLayout>
 
@@ -56,14 +59,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/linearLayout1"
-            android:id="@+id/linearLayout2">
+            android:id="@+id/linearLayout2"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:background="@drawable/loginback"
+            android:gravity="center_vertical">
 
 
             <Button
-                android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:id="@+id/btnpasswdicon"
-                android:background="@drawable/loginpassicon" />
+                android:background="@drawable/login_pass_icon"
+                android:layout_width="45dp" />
 
             <EditText
                 android:layout_width="wrap_content"
@@ -77,7 +85,9 @@
                 android:textColor="@android:color/white"
                 android:clickable="false"
                 android:layout_marginRight="20dp"
-                android:allowUndo="false" />
+                android:allowUndo="false"
+                android:textColorHighlight="@color/cardview_light_background"
+                android:textColorHint="@color/cardview_light_background" />
 
         </LinearLayout>
 
@@ -89,36 +99,22 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:id="@+id/linearsignin"
-                android:layout_marginBottom="5dp">
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp">
 
                 <Button
                     android:text="SIGN IN"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:id="@+id/btnSignIn"
-                    android:background="@color/windowBackground"
-                    android:layout_weight="1" />
-
-                <Button
-                    android:layout_width="match_parent"
-                    android:id="@+id/btnFacebook"
-                    android:layout_weight="5"
-                    android:background="@drawable/facebook_icon"
-                    android:layout_marginLeft="5dp"
-                    android:layout_height="45dp" />
+                    android:background="@color/colorPrimaryDark"
+                    android:layout_weight="1"
+                    android:textColor="@color/cardview_light_background" />
 
             </LinearLayout>
 
-            <Button
-            android:text="SIGN UP"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_below="@+id/linearsignin"
-            android:id="@+id/btnSignUp"
-            android:background="@color/windowBackground"
-            android:layout_marginBottom="5dp" />
-
-        <ImageView
+            <ImageView
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/gluelogo"
             android:id="@+id/imageView"
@@ -138,16 +134,59 @@
             android:layout_height="wrap_content" />
 
         <Button
-            android:text="ID/PW 찾기"
+            android:text="Forget your Password?"
+            android:textAllCaps="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btnFindId"
             android:textColor="@color/windowBackground"
-            android:layout_below="@+id/btnSignUp"
+            android:layout_below="@+id/linearfacebook"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:background="?attr/actionBarItemBackground" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:id="@+id/linearfacebook"
+                android:layout_below="@+id/btnSignUp"
+
+                android:layout_marginRight="35dp"
+                android:layout_marginLeft="35dp">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:background="@drawable/com_facebook_button_icon_blue"
+                    android:layout_height="45dp"
+                    android:layout_weight="2" />
+
+                <Button
+                    android:text="SIGNUP WITH FACEBOOK "
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:id="@+id/btnFacebook"
+
+                    android:background="@color/colorPrimaryDark"
+                    android:layout_weight="3"
+                    android:textColor="@color/cardview_light_background" />
+            </LinearLayout>
+
+            <Button
+            android:text="SIGN UP"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+                android:id="@+id/btnSignUp"
+            android:background="@color/colorPrimaryDark"
+                android:textColor="@color/cardview_light_background"
+                android:layout_below="@+id/linearsignin"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp"
+                android:layout_marginBottom="5dp" />
 
         </RelativeLayout>
     </ScrollView>
+
 </FrameLayout>
