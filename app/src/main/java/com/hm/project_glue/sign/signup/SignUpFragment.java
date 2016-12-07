@@ -17,7 +17,7 @@ import com.hm.project_glue.R;
 public class SignUpFragment extends Fragment implements SignUpPresenter.View {
     private static final String TAG = "SignUpFragment";
     Button btnSuSignUp;
-    EditText etSuId, etSuPw, etSuPwRe, etSuEmail, etSuPhone, etSuName;
+    EditText etSuPw, etSuPwRe, etSuEmail, etSuPhone, etSuName;
     private SignUpPresenter signUpPresenter;
 
     public SignUpFragment() {
@@ -45,11 +45,12 @@ public class SignUpFragment extends Fragment implements SignUpPresenter.View {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
-        etSuId = (EditText)view.findViewById(R.id.etId);
+
+        // 2016.12.07 폼변경
+        etSuPhone = (EditText)view.findViewById(R.id.etPhone);
         etSuPw = (EditText)view.findViewById(R.id.etPassword);
         etSuPwRe = (EditText)view.findViewById(R.id.etRePassword);
         etSuName = (EditText)view.findViewById(R.id.etName);
-        etSuPhone = (EditText)view.findViewById(R.id.etPhone);
         etSuEmail = (EditText)view.findViewById(R.id.etEmail);
         btnSuSignUp = (Button)view.findViewById(R.id.btnSignUpSubmit);
 
@@ -57,18 +58,11 @@ public class SignUpFragment extends Fragment implements SignUpPresenter.View {
         btnSuSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // ID 입력 확인
-                if( etSuId.getText().toString().length() == 0 ) {
+                // 휴대전화 입력 확인
+                if( etSuPhone.getText().toString().length() == 0 ) {
                     Toast.makeText(view.getContext(),
-                            R.string.signUpIdInputChk, Toast.LENGTH_SHORT).show();
-                    // EditText를 터치하지 않고 바로 입력할 수 있도록 requestFocus()를 사용
-                    etSuId.requestFocus();
-                    return;
-                } else if ( etSuId.getText().toString().length() < 5 ) {
-                    Toast.makeText(view.getContext(),
-                            R.string.signUpIdLengthChk, Toast.LENGTH_SHORT).show();
-                    // EditText를 터치하지 않고 바로 입력할 수 있도록 requestFocus()를 사용
-                    etSuId.requestFocus();
+                            R.string.signUpPhoneInputChk, Toast.LENGTH_SHORT).show();
+                    etSuPhone.requestFocus();
                     return;
                 }
 
@@ -119,14 +113,6 @@ public class SignUpFragment extends Fragment implements SignUpPresenter.View {
                     return;
                 }
 
-                // 휴대전화 입력 확인
-                if( etSuPhone.getText().toString().length() == 0 ) {
-                    Toast.makeText(view.getContext(),
-                            R.string.signUpPhoneInputChk, Toast.LENGTH_SHORT).show();
-                    etSuPhone.requestFocus();
-                    return;
-                }
-
                 // 이메일 입력 확인
                 if( etSuEmail.getText().toString().length() == 0 ) {
                     Toast.makeText(view.getContext(),
@@ -153,11 +139,10 @@ public class SignUpFragment extends Fragment implements SignUpPresenter.View {
     public void onStop() {
         super.onStop();
         // 회원가입 후, 다시 회원가입 버튼 눌렀을 때 초기화
-        etSuId.setText(null);
+        etSuPhone.setText(null);
         etSuPw.setText(null);
         etSuPwRe.setText(null);
         etSuName.setText(null);
-        etSuPhone.setText(null);
         etSuEmail.setText(null);
     }
 }

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.hm.project_glue.sign.signup.SignUpFragment"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:background="@color/cardview_light_background">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -13,29 +14,28 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:layout_height="wrap_content"
-        android:id="@+id/signUpScrollView"
-        android:background="@drawable/signbackground">
+        android:id="@+id/signUpScrollView">
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <!-- ID 입력란 -->
+            <!-- 휴대폰 번호 입력란 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                android:id="@+id/layoutId"
-                android:orientation="horizontal">
+                android:id="@+id/layoutPhone"
+                android:layout_marginTop="150dp"
+                android:orientation="horizontal" >
                 <TextView
-                    android:text="ID"
-                    android:id="@+id/tvId"
+                    android:text="휴대전화"
+                    android:id="@+id/tvPhone"
                     style="@style/SignUpTextViewTheme"/>
+
                 <EditText
-                    android:inputType="textPersonName"
-                    android:layout_toRightOf="@+id/tvId"
-                    android:id="@+id/etId"
-                    android:ems="15"
-                    android:hint="5글자 이상"
+                    android:inputType="number"
+                    android:layout_toRightOf="@+id/tvPhone"
+                    android:id="@+id/etPhone"
+                    android:hint="휴대전화번호를 숫자로만 입력"
                     style="@style/SignUpEditTextTheme"/>
             </LinearLayout>
 
@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/layoutPassword"
-                android:layout_alignTop="@+id/layoutId"
+                android:layout_alignTop="@+id/layoutPhone"
                 android:layout_marginTop="50dp"
                 android:orientation="horizontal" >
                 <TextView
@@ -102,33 +102,12 @@
                     style="@style/SignUpEditTextTheme"/>
             </LinearLayout>
 
-            <!-- 휴대폰 번호 입력란 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/layoutPhone"
-                android:layout_alignTop="@id/layoutName"
-                android:layout_marginTop="50dp"
-                android:orientation="horizontal" >
-                <TextView
-                    android:text="휴대전화"
-                    android:id="@+id/tvPhone"
-                    style="@style/SignUpTextViewTheme"/>
-
-                <EditText
-                    android:inputType="number"
-                    android:layout_toRightOf="@+id/tvPhone"
-                    android:id="@+id/etPhone"
-                    android:hint="휴대전화번호를 숫자로만 입력"
-                    style="@style/SignUpEditTextTheme"/>
-            </LinearLayout>
-
             <!-- 이메일 입력란 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/layoutEmail"
-                android:layout_alignTop="@id/layoutPhone"
+                android:layout_alignTop="@id/layoutName"
                 android:layout_marginTop="50dp"
                 android:orientation="horizontal" >
                 <TextView
@@ -154,7 +133,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/gluelogo_120"
+                android:src="@drawable/gluelogo_pu180"
                 android:layout_centerHorizontal="true" />
 
         </RelativeLayout>

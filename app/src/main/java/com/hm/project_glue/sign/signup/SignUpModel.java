@@ -33,16 +33,16 @@ public class SignUpModel {
     // 서버 완성시 아래 적용
     // private final String SERVER_URL = R.string.BASE_URL + R.string.SIGNUP_URL + "";
 
-    public void signUp(String id, String pw, String pwre,
-                       String email, String name, String phone, Context context) {
+    public void signUp(String phone, String pw, String pwre,
+                       String email, String name, Context context) {
         HashMap hashMap = new HashMap();
 
-        hashMap.put("id", id);
-        hashMap.put("pw", pw);
-        hashMap.put("pwre", pwre);
+        // 2016.12.07 폼변경
         hashMap.put("phone", phone);
+        hashMap.put("pw", pw);
         hashMap.put("name", name);
         hashMap.put("email", email);
+
         // AsyncTask클래스는 항상 Subclassing 해서 사용 해야 함.
         // UI 처리 및 Background 작업 등 을 하나의 클래스에서 작업 할 수 있게 지원
         // 파라미터 타입은 작업 실행 시에 송신 : Map (doInBackground 파라미터 타입이, execute 메소드 인자값)
