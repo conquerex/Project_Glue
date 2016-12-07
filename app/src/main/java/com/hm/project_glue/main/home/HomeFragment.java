@@ -22,10 +22,19 @@ import android.widget.Toast;
 
 import com.hm.project_glue.LogoActivity;
 import com.hm.project_glue.R;
+import com.hm.project_glue.Util.Networking;
 import com.hm.project_glue.main.OnFragmentInteractionListener;
 import com.hm.project_glue.main.list.ListFragment;
+import com.hm.project_glue.main.list.ListRestAdapter;
+import com.hm.project_glue.main.list.data.PostData;
+import com.hm.project_glue.main.list.data.Results;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.hm.project_glue.main.MainActivity.metrics;
 
@@ -43,13 +52,13 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
-
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -143,8 +152,8 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
 //            });
 
             Log.i(TAG, "----------- onBindViewHolder ---- "+ data);
-            holder.tvHomeCard.setText(data.homeCardTitle);
-            holder.ivHomeCard.setImageResource(data.homeCardImage);
+            holder.tvHomeCard.setText(data.getHomeCardTitle());
+            holder.ivHomeCard.setImageResource(data.getHomeCardImage());
             holder.cardView.setTag(data);
             setAnimation(holder.cardView, position);
         }
@@ -164,4 +173,8 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
         }
 
     }
+
+    // 2016.12.06
+
+
 }
