@@ -70,19 +70,11 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                         break;
                 }
             }
-
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
+            public void onTabUnselected(TabLayout.Tab tab) {}
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) {}
         });
-
-
 
         adapter = new MainPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);
@@ -141,20 +133,18 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         Intent i = new Intent(MainActivity.this, SignActivity.class);
         startActivity(i);
     }
-    @Override
+    @Override   //facebook
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
-    // Facebook 로그아웃 및 프리퍼런스 값 초기화
-    public void logOut() {
+
+    public void logOut() { // Facebook 로그아웃, 프리퍼런스 값 초기화, activity 이동
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().logOut();    // 페이스북 로그아웃
         networking.logout();                    //프리퍼런스 초기화
+        moveActivity();
     }
 
-    public void tmpLogOut() { // TODO 머지하고 삭제
-
-    }
 }

@@ -37,20 +37,19 @@
 
             <EditText
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="15"
+                android:layout_height="match_parent"
+                android:inputType="number"
+                android:ems="11"
                 android:id="@+id/etId"
                 android:layout_weight="1"
-                android:layout_marginLeft="20dp"
                 android:hint="Input Phone Number"
                 android:textColor="@android:color/white"
                 android:textAllCaps="false"
                 android:clickable="false"
-                android:layout_marginRight="20dp"
+                android:background="@null"
                 android:textColorHint="@color/cardview_light_background"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="0dp" />
+                android:paddingLeft="5dp"
+                android:layout_gravity="bottom" />
 
         </LinearLayout>
 
@@ -75,19 +74,17 @@
 
             <EditText
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textCapCharacters|number"
+                android:layout_height="match_parent"
                 android:ems="20"
                 android:id="@+id/etPasswd"
                 android:layout_weight="1"
-                android:layout_marginLeft="20dp"
                 android:hint="Input Password"
                 android:textColor="@android:color/white"
-                android:clickable="false"
-                android:layout_marginRight="20dp"
-                android:allowUndo="false"
+                android:background="@null"
                 android:textColorHighlight="@color/cardview_light_background"
-                android:textColorHint="@color/cardview_light_background" />
+                android:textColorHint="@color/cardview_light_background"
+                android:paddingLeft="5dp"
+                android:inputType="textPassword" />
 
         </LinearLayout>
 
