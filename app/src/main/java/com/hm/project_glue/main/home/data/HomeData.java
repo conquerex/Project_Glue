@@ -1,11 +1,10 @@
 package com.hm.project_glue.main.home.data;
 
 /**
- * Created by jongkook on 2016. 12. 6..
+ * Created by jongkook on 2016. 12. 7..
  */
 
-public class GroupListData
-{
+public class HomeData {
     private String group_name;
 
     private String id;
