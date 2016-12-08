@@ -1,7 +1,5 @@
 package com.hm.project_glue.main.list.data;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
  * Created by HM on 2016-12-06.
  */
@@ -10,9 +8,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class Photos
 {
-    @SerializedName("photos")
+
     private Photo photo;
-    @SerializedName("pk")
     private String pk ="";
 
     public Photo getPhoto ()

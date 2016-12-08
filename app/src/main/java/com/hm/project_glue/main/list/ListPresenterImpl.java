@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.hm.project_glue.main.list.data.Photo;
+import com.hm.project_glue.main.list.data.Photos;
 import com.hm.project_glue.main.list.data.PostData;
 import com.hm.project_glue.main.list.data.Results;
 import com.hm.project_glue.util.Networking;
@@ -49,7 +51,7 @@ public class ListPresenterImpl implements ListPresenter {
                 ArrayList<Results> results = null;
                 String authorization = "Token "+ Networking.getToken();
                 Map<String, String> queryMap = new HashMap<>();
-                queryMap.put("page", "2");
+                queryMap.put("page", "1");
                 try {
                     final Call<PostData> postData = ListRestAdapter.getInstance().getListData(authorization, GroupId, queryMap);
                     Log.i(TAG, "final Call<PostData> ");
@@ -64,12 +66,25 @@ public class ListPresenterImpl implements ListPresenter {
                         data.setGroup(result.getGroup());
                         data.setPhotos(result.getPhotos());
 
+
+                        
+                        for(Photos photoMember : result.getPhotos()){
+
+                            Photo photo = new Photo();
+                            photo.setFull_size(photoMember.getPhoto().getFull_size());
+
+                            Photos photos = new Photos();
+                            photos.setPhotos(photo);
+
+                            data.getPhotos().add(photos);
+                        }
                         Log.i(TAG, "post.add");
                         post.add(data);
                     }
 
                     Log.i(TAG,"results");
                 } catch (Exception e) {
+                    Log.e(TAG, "Retrofit ERROR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     e.printStackTrace();
                 }
                 return results;

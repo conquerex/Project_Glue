@@ -21,7 +21,6 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.hm.project_glue.R;
-import com.hm.project_glue.main.list.data.Photo;
 import com.hm.project_glue.main.list.data.Photos;
 import com.hm.project_glue.main.list.data.Results;
 
@@ -128,11 +127,15 @@ public class ListFragment extends Fragment implements ListPresenter.View {
 
 
 
-            if(data.getPhotos().size() > 0){
-                Photos photos = data.getPhotos().get(0);
-                Photo photo = photos.getPhoto();
-                url = photo.getFull_size();
+                for(Photos photos : data.getPhotos()){
 
+                   if(photos.getPhoto() != null){
+                       url =photos.getPhoto().getFull_size();
+                   }
+                    else {
+                       url = "";
+                   }
+                }
 
                 Log.i(TAG,"image URL:"+url );
                 Glide.with(context).load(url).listener(new RequestListener<String, GlideDrawable>() {
@@ -153,10 +156,10 @@ public class ListFragment extends Fragment implements ListPresenter.View {
                     }
                 })
                         .into(holder.imgListCardMainImg);
-            }else {
+
                 holder.imgListCardMainImg.setVisibility(View.GONE);
 
-            }
+
             //TODO 임시 샘플 이미지 ( 구룹 이미지 )
             holder.imgListCardGroupImg.setBackgroundResource(R.drawable.logoimg);
 
