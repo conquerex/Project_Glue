@@ -18,7 +18,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.hm.project_glue.R;
-import com.hm.project_glue.Util.Networking;
+import com.hm.project_glue.util.Networking;
 import com.hm.project_glue.main.home.HomeFragment;
 import com.hm.project_glue.main.info.InfoFragment;
 import com.hm.project_glue.main.list.ListFragment;

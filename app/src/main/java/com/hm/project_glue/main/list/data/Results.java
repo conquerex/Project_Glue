@@ -3,25 +3,23 @@ package com.hm.project_glue.main.list.data;
 import java.util.List;
 
 /**
- * Created by HM on 2016-12-05.
+ * Created by HM on 2016-12-06.
  */
 
 public class Results
 {
-    private String likes_count;
-    private List<PostData.Photos> photos;
-    private String content;
-    private String uploaded_user;
+    private String likes_count ="";
+    private List<Photos> photos;
+    private String content="";
+    private String uploaded_user="";
     private String[] dislike;
     private String[] like;
-    private String group;
-    private String dislikes_count;
-    private String pk;
+    private String group="";
+    private String dislikes_count="";
+    private String pk="";
 
-    public Results(){
-
-    }
-    public String getLikes_count ()     {
+    public String getLikes_count ()
+    {
         return likes_count;
     }
 
@@ -30,12 +28,12 @@ public class Results
         this.likes_count = likes_count;
     }
 
-    public List<PostData.Photos> getPhotos ()
+    public List<Photos> getPhotos ()
     {
         return photos;
     }
 
-    public void setPhotos (List<PostData.Photos> photos)
+    public void setPhotos (List<Photos> photos)
     {
         this.photos = photos;
     }
@@ -109,10 +107,5 @@ public class Results
     {
         this.pk = pk;
     }
-//
-//        @Override
-//        public String toString()
-//        {
-//            return "ClassPojo [likes_count = "+likes_count+", photos = "+photos+", content = "+content+", uploaded_user = "+uploaded_user+", dislike = "+dislike+", like = "+like+", group = "+group+", dislikes_count = "+dislikes_count+", pk = "+pk+"]";
-//        }
+
 }

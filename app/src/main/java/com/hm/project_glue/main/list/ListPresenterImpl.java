@@ -1,19 +1,19 @@
 package com.hm.project_glue.main.list;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 
-import com.hm.project_glue.Util.Networking;
 import com.hm.project_glue.main.list.data.PostData;
 import com.hm.project_glue.main.list.data.Results;
+import com.hm.project_glue.util.Networking;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 
 
 /**
@@ -25,15 +25,14 @@ public class ListPresenterImpl implements ListPresenter {
     private ListModel listInModel;
     private ListPresenter.View view;
     private static final String TAG = "TEST";
-
     Context context;
+    ArrayList<Results> post;
+
     public ListPresenterImpl(ListFragment fragment) {
         this.fragment=fragment;
         listInModel = new ListModel(fragment.getContext());
         context = fragment.getActivity();
-
-
-        callHttp();
+        post = new ArrayList<>();
     }
 
     @Override
@@ -42,50 +41,119 @@ public class ListPresenterImpl implements ListPresenter {
     }
 
     @Override
-    public void getPostJson(String GroupId) {
-
-    }
-
-
-    public void callHttp(){
-        ArrayList<Results> post = new ArrayList<>();
-        String token = Networking.getToken();
-        Log.i(TAG, token);
-        String group="3";
-        final Call<PostData> postData = ListRestAdapter.getInstance().getData();
-        postData.enqueue(new Callback<PostData>() {
+    public  void callHttp(ArrayList<Results> post, String GroupId){
+        ProgressDialog progress = new ProgressDialog(context);
+         new AsyncTask<String, Void, ArrayList<Results>>(){
             @Override
-            public void onResponse(Call<PostData> call, Response<PostData> response) {
+            protected ArrayList<Results> doInBackground(String... params) {
+                ArrayList<Results> results = null;
+                String authorization = "Token "+ Networking.getToken();
+                Map<String, String> queryMap = new HashMap<>();
+                queryMap.put("page", "2");
+                try {
+                    final Call<PostData> postData = ListRestAdapter.getInstance().getListData(authorization, GroupId, queryMap);
+                    Log.i(TAG, "final Call<PostData> ");
+                    PostData body = postData.execute().body();
 
-                if(response.isSuccessful()) {
-//                    RemoteData data = response.body();
-//
-//                    List<RemoteData.Row> rows = data.getSeoulRoadNameInfo().getRow();
-//
-//                    for(RemoteData.Row row : rows ){
-//                        Log.i("result : ", row.getROAD_NM());
-//                    }
-                    PostData body =  response.body();
-                    List<Results> ListResults = body.getResults();
-
-                    for(Results result : ListResults){
+                    for (Results result : body.getResults()) { // 게시물 단위
+                        Log.i(TAG, "Results result : item.getResults()");
                         Results data = new Results();
-                        result.getContent();
-                        Log.i(TAG, result.toString());
+                        data.setContent(result.getContent());
+                        data.setUploaded_user(result.getUploaded_user());
+                        data.setLikes_count(result.getLikes_count());
+                        data.setGroup(result.getGroup());
+                        data.setPhotos(result.getPhotos());
+
+                        Log.i(TAG, "post.add");
                         post.add(data);
                     }
 
-                }else{
-                    Log.e("ERROR : ",response.message());
+                    Log.i(TAG,"results");
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+                return results;
             }
-
             @Override
-            public void onFailure(Call<PostData> call, Throwable t) {
+            protected void onPreExecute() {
+                super.onPreExecute();
+                //TODO  메인쓰레드 프로그래스 바 보여주기
+
+                progress.setMessage("Loging....");
+                progress.setProgressStyle((ProgressDialog.STYLE_SPINNER));
+                progress.setCancelable(false);
+                progress.show();
+            }
+            @Override
+            protected void onPostExecute(ArrayList<Results> listResults) {
+                super.onPostExecute(listResults);
+                progress.dismiss();
+                view.dataChanged(post);
 
             }
+        }.execute();
 
-        });
+        // Callback ( 비동기 방식)
+//        postData.enqueue(new Callback<PostData>() {
+//            @Override
+//            protected Object clone() throws CloneNotSupportedException {
+//                return super.clone();
+//
+//
+//
+//            }
+//
+//            @Override
+//            public void onResponse(Call<PostData> call, Response<PostData> response) {
+//
+//                if(response.isSuccessful()){
+//                    PostData body = response.body();
+//                    List<Results> listResults = body.getResults();
+//
+//                    for (Results result : listResults) {
+//                        Results data = new Results();
+//                        data.setContent(result.getContent());
+//                        data.setUploaded_user(result.getUploaded_user());
+//                        data.setLikes_count(result.getLikes_count());
+//                        data.setGroup(result.getGroup());
+//                        data.setPhotos(result.getPhotos());
+//
+//
+//
+//                        for (Photo photo_URL : result.getPhotos().getPhotos()) {
+//                            Photo photo = new Photo();
+//                            photo.setFull_size(photo_URL.getFull_size());
+//                            Log.i(TAG, "setFull_size:"+photo.getFull_size());
+//                            data.getPhotos().getPhotos().add(photo);
+//                        }
+//
+//                        post.add(data);
+//                    }
+//
+//                    Log.i(TAG, "onResponse"+response.body().toString());
+//                    view.dataChanged(post);
+//
+//
+//
+//                }
+//                else{
+//                    Log.e("ERROR : ",response.message());
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<PostData> call, Throwable t) {
+//
+//            }
+//
+//        });
+//        Log.i(TAG,"callHttp : "+post.toString());
+
     }
+
+
+
+
 
 }
