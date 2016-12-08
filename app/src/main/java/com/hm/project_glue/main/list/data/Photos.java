@@ -5,13 +5,15 @@ package com.hm.project_glue.main.list.data;
  */
 
 
-
 public class Photos
 {
 
-    private Photo photo;
-    private String pk ="";
+    Photo photo;
+    String pk ="";
 
+    public Photos(){
+
+    }
     public Photo getPhoto ()
     {
         return photo;
@@ -34,4 +36,3 @@ public class Photos
 
 
 }
-

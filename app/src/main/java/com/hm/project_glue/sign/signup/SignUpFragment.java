@@ -59,6 +59,7 @@ public class SignUpFragment extends Fragment implements SignUpPresenter.View {
         btnSuSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 // 휴대전화 입력 확인
                 if( etSuPhone.getText().toString().length() == 0 ) {
                     Toast.makeText(view.getContext(),

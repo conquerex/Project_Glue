@@ -1,8 +1,6 @@
 package com.hm.project_glue.main.list;
 
-import com.hm.project_glue.main.list.data.Results;
-
-import java.util.ArrayList;
+import com.hm.project_glue.main.list.data.PostData;
 
 /**
  * Created by HM on 2016-11-29.
@@ -10,8 +8,8 @@ import java.util.ArrayList;
 
 public interface ListPresenter {
     void setView(ListPresenter.View view);
-    void callHttp(ArrayList<Results> datas, String GroupId);
+    void callHttp(PostData postData, String GroupId);
     public interface View {
-        void dataChanged(ArrayList<Results> post);
+        void dataChanged(PostData post);
     }
 }

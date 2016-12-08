@@ -92,10 +92,16 @@ public class SignInFragment extends Fragment implements SignInPresenter.View {
     }
 
     @Override
-    public void failAlert(){
+    public void failAlert(int errorCode){
+
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
         alert.setTitle(R.string.loginfailtitle); // "로그인실패"
-        alert.setMessage(R.string.loginfailmessage); // "아이디와 ..."
+        if(errorCode != 200){
+            alert.setMessage(R.string.loginHttpError); // "통신 오류"
+        }else{
+            alert.setMessage(R.string.loginfailmessage); // "아이디와 ..."
+        }
+
         alert.setNegativeButton(R.string.ok, null); // "확인"
         alert.show();
     }

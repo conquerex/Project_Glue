@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.hm.project_glue.util.Networking;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.jakewharton.rxbinding.widget.TextViewTextChangeEvent;
 
@@ -78,25 +79,30 @@ public class SignInPresenterImpl implements SignInPresenter {
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
                 String token ="";
-                try {
-                    JSONObject jObject = new JSONObject(result);
-                    token = jObject.getString("token");
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if(Networking.getResponseCode() != 200){
+                    view.failAlert(0);
+                    view.reSetEditText();
+                }else {
+                    try {
+                        JSONObject jObject = new JSONObject(result);
+                        token = jObject.getString("token");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    if (!token.equals("")) { // 로그인 성공
+                        Log.i(TAG, "if:" + token);
+                        // Preferences 에 token 저장
+                        signInModel.savePreferences(id, token);
+                        view.moveActivity();
+                    } else {// 로그인 실패
+                        Log.i(TAG, "else:" + token);
+                        view.failAlert(200);
+                        view.reSetEditText();
+                    }
                 }
                 progress.dismiss();
-
-                if(!token.equals("")) { // 로그인 성공
-                    Log.i(TAG,"if:"+token);
-                    // Preferences 에 token 저장
-                    signInModel.savePreferences(id, token);
-                    view.moveActivity();
-                }
-                else{// 로그인 실패
-                    Log.i(TAG,"else:"+token);
-                    view.failAlert();
-                    view.reSetEditText();
-                }
 
             }
         }.execute(userInfoMap);

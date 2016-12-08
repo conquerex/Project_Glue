@@ -1,23 +1,31 @@
 package com.hm.project_glue.main.list.data;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
 * Created by HM on 2016-12-03.
 */
 public class PostData
 {
+    ArrayList<Results> results;
+    String previous;
+    String count;
+    String next;
 
-    private List<Results> results;
-    private String previous="";
-    private String count="";
-    private String next="";
-    public List<Results> getResults ()
+    public PostData(){
+    }
+    public static PostData newPostInstance(){
+        return new PostData();
+    }
+    public static ArrayList<Results> newArrayListInstance(){
+        return new ArrayList<Results>();
+    }
+    public ArrayList<Results> getResults ()
     {
         return results;
     }
 
-    public void setResults (List<Results> results)
+    public void setResults (ArrayList<Results> results)
     {
         this.results = results;
     }
@@ -52,14 +60,11 @@ public class PostData
         this.next = next;
     }
 
-
-
-
-
-
-
-
 }
+
+
+
+
 
 
 
