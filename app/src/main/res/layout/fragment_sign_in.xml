@@ -104,10 +104,12 @@
                     android:text="SIGN IN"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
+
                     android:id="@+id/btnSignIn"
                     android:background="@color/colorPrimaryDark"
                     android:layout_weight="1"
-                    android:textColor="@color/cardview_light_background" />
+                    android:textColor="@color/cardview_light_background"
+                    android:enabled="true" />
 
             </LinearLayout>
 
@@ -118,7 +120,8 @@
             android:layout_width="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:paddingBottom="20dp" />
+            android:paddingBottom="20dp"
+                android:padding="20dp" />
 
         <TextView
             android:text="우리들만의 사진 다이어리"
@@ -177,11 +180,12 @@
             android:background="@color/colorPrimaryDark"
                 android:textColor="@color/cardview_light_background"
                 android:layout_below="@+id/linearsignin"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentStart="false"
                 android:layout_marginLeft="35dp"
                 android:layout_marginRight="35dp"
-                android:layout_marginBottom="5dp" />
+                android:layout_marginBottom="5dp"
+                android:enabled="true" />
 
         </RelativeLayout>
     </ScrollView>
