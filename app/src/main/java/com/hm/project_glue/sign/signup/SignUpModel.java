@@ -1,8 +1,12 @@
 package com.hm.project_glue.sign.signup;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
-
+import android.widget.Toast;
+import com.hm.project_glue.R;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -12,8 +16,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by jongkook on 2016. 11. 30..
@@ -28,18 +30,19 @@ import javax.net.ssl.HttpsURLConnection;
 public class SignUpModel {
     private static final String TAG = "SignUpModel";
     private final String SERVER_URL = "http://dummy-dev.ap-northeast-2.elasticbeanstalk.com/group/";
+    // 서버 완성시 아래 적용
+    // private final String SERVER_URL = R.string.BASE_URL + R.string.SIGNUP_URL + "";
 
-    public void signUp(String id, String pw, String pwre,
-                       String email, String name, String phone) {
+    public void signUp(String phone, String pw, String pwre,
+                       String email, String name, Context context) {
         HashMap hashMap = new HashMap();
 
-        // hashMap.put("id", id);
-        hashMap.put("title", id);
-        hashMap.put("pw", pw);
-        hashMap.put("pwre", pwre);
+        // 2016.12.07 폼변경
         hashMap.put("phone", phone);
+        hashMap.put("pw", pw);
         hashMap.put("name", name);
         hashMap.put("email", email);
+
         // AsyncTask클래스는 항상 Subclassing 해서 사용 해야 함.
         // UI 처리 및 Background 작업 등 을 하나의 클래스에서 작업 할 수 있게 지원
         // 파라미터 타입은 작업 실행 시에 송신 : Map (doInBackground 파라미터 타입이, execute 메소드 인자값)
@@ -47,6 +50,7 @@ public class SignUpModel {
         // doInBackground 리턴값 : String (onPostExecute 파라미터 타입)
         // 인자를 사용하지 않은 경우 Void Type 으로 지정
         new AsyncTask<Map, Void, String>(){
+            ProgressDialog progress;
             @Override
             // doInBackground : Background 작업을 진행
             // doInBackground의 매개값 : Map
@@ -66,11 +70,34 @@ public class SignUpModel {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                progress = new ProgressDialog(context);
+                progress.setMessage("Loging....");
+                progress.setProgressStyle((ProgressDialog.STYLE_SPINNER));
+                progress.setCancelable(false);
+                progress.show();
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
+                Log.i(TAG, "----------- onPostExecute ---- " + s);
+
+                try {
+                    Log.i(TAG, "----------- 로그인 성공");
+                    progress.dismiss();
+                    Toast.makeText(context, "회원가입 완료", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Log.i(TAG, "----------- 로그인 실패");
+                    AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                    alert.setTitle(R.string.loginfailtitle); // "로그인실패"
+                    alert.setMessage(R.string.loginfailmessage); // "아이디와 ..."
+                    alert.setNegativeButton(R.string.ok, null); // "확인"
+                    alert.show();
+                    e.printStackTrace();
+                }
+
+
+
             }
         }.execute(hashMap);
     }
@@ -96,8 +123,10 @@ public class SignUpModel {
         // Server 통신에서 입력/출력 가능한 상태로 만듬
         conn.setDoOutput(true);
         conn.setDoInput(true);
+        Log.i(TAG, "----------- before OutputStream");
         // Body에 Data를 담기위해 OutputStream 객체를 생성
         OutputStream os = conn.getOutputStream();
+        Log.i(TAG, "----------- After OutputStream");
         // Map의 key, value를 담아냄
         ArrayList<String> keyset = new ArrayList<>(params.keySet());
         for(String key : keyset){

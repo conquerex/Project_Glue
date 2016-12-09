@@ -1,140 +1,141 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    tools:context="com.hm.project_glue.sign.signup.SignUpFragment"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:background="@drawable/signbackground"
-    tools:context="com.hm.project_glue.sign.signup.SignUpFragment">
+    android:background="@color/cardview_light_background">
 
-    <!-- ID 입력란 -->
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
+        android:padding="15dp"
+        android:paddingBottom="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:layout_height="wrap_content"
-        android:text="SIGN UP"
-        android:layout_marginTop="100dp"
-        android:id="@+id/layoutId"
-        android:orientation="horizontal">
-        <TextView
-            android:text="ID"
-            android:id="@+id/tvId"
-            style="@style/SignUpTextViewTheme"/>
-        <EditText
-            android:inputType="textPersonName"
-            android:layout_toRightOf="@+id/tvId"
-            android:id="@+id/etId"
-            android:hint="5글자 이상"
-            style="@style/SignUpEditTextTheme"/>
-    </LinearLayout>
+        android:id="@+id/signUpScrollView">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-    <!-- 패스워드 입력란 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/layoutPassword"
-        android:layout_alignTop="@+id/layoutId"
-        android:layout_marginTop="50dp"
-        android:orientation="horizontal" >
-        <TextView
-            android:text="비밀번호"
-            android:id="@+id/tvPassword"
-            style="@style/SignUpTextViewTheme"/>
-        <EditText
-            android:inputType="textPassword"
-            android:layout_toRightOf="@+id/tvPassword"
-            android:id="@+id/etPassword"
-            android:hint="숫자와 영문 조합. 6글자 이상"
-            style="@style/SignUpEditTextTheme"/>
-    </LinearLayout>
+            <!-- 휴대폰 번호 입력란 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/layoutPhone"
+                android:layout_marginTop="150dp"
+                android:orientation="horizontal" >
+                <TextView
+                    android:text="휴대전화"
+                    android:id="@+id/tvPhone"
+                    style="@style/SignUpTextViewTheme"/>
 
-    <!-- 패스워드 재입력 입력란 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/layoutRePassword"
-        android:layout_alignTop="@id/layoutPassword"
-        android:layout_marginTop="50dp"
-        android:orientation="horizontal" >
-        <TextView
-            android:text="재입력"
-            android:id="@+id/tvRePassword"
-            style="@style/SignUpTextViewTheme"/>
-        <EditText
-            android:inputType="textPassword"
-            android:layout_toRightOf="@+id/tvRePassword"
-            android:id="@+id/etRePassword"
-            android:hint="위와 같은 패스워드를 입력"
-            style="@style/SignUpEditTextTheme"/>
-    </LinearLayout>
+                <EditText
+                    android:inputType="number"
+                    android:layout_toRightOf="@+id/tvPhone"
+                    android:id="@+id/etPhone"
+                    android:hint="휴대전화번호를 숫자로만 입력"
+                    style="@style/SignUpEditTextTheme"/>
+            </LinearLayout>
 
-    <!-- 이름 입력란 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/layoutName"
-        android:layout_alignTop="@id/layoutRePassword"
-        android:layout_marginTop="50dp"
-        android:orientation="horizontal" >
-        <TextView
-            android:text="이름"
-            android:id="@+id/tvName"
-            style="@style/SignUpTextViewTheme"/>
+            <!-- 패스워드 입력란 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/layoutPassword"
+                android:layout_alignTop="@+id/layoutPhone"
+                android:layout_marginTop="50dp"
+                android:orientation="horizontal" >
+                <TextView
+                    android:text="비밀번호"
+                    android:id="@+id/tvPassword"
+                    style="@style/SignUpTextViewTheme"/>
+                <EditText
+                    android:inputType="textPassword"
+                    android:layout_toRightOf="@+id/tvPassword"
+                    android:id="@+id/etPassword"
+                    android:ems="20"
+                    android:hint="숫자와 영문 조합. 8글자 이상"
+                    style="@style/SignUpEditTextTheme"/>
+            </LinearLayout>
 
-        <EditText
-            android:inputType="textPersonName"
-            android:layout_toRightOf="@+id/tvName"
-            android:id="@+id/etName"
-            android:hint="이름 입력"
-            style="@style/SignUpEditTextTheme"/>
-    </LinearLayout>
+            <!-- 패스워드 재입력 입력란 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/layoutRePassword"
+                android:layout_alignTop="@id/layoutPassword"
+                android:layout_marginTop="50dp"
+                android:orientation="horizontal" >
+                <TextView
+                    android:text="재입력"
+                    android:id="@+id/tvRePassword"
+                    style="@style/SignUpTextViewTheme"/>
+                <EditText
+                    android:inputType="textPassword"
+                    android:layout_toRightOf="@+id/tvRePassword"
+                    android:id="@+id/etRePassword"
+                    android:ems="20"
+                    android:hint="위와 같은 패스워드를 입력"
+                    style="@style/SignUpEditTextTheme"/>
+            </LinearLayout>
 
-    <!-- 휴대폰 번호 입력란 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/layoutPhone"
-        android:layout_alignTop="@id/layoutName"
-        android:layout_marginTop="50dp"
-        android:orientation="horizontal" >
-        <TextView
-            android:text="휴대전화"
-            android:id="@+id/tvPhone"
-            style="@style/SignUpTextViewTheme"/>
+            <!-- 이름 입력란 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/layoutName"
+                android:layout_alignTop="@id/layoutRePassword"
+                android:layout_marginTop="50dp"
+                android:orientation="horizontal" >
+                <TextView
+                    android:text="이름"
+                    android:id="@+id/tvName"
+                    style="@style/SignUpTextViewTheme"/>
 
-        <EditText
-            android:inputType="number"
-            android:layout_toRightOf="@+id/tvPhone"
-            android:id="@+id/etPhone"
-            android:hint="휴대전화번호를 숫자로만 입력"
-            style="@style/SignUpEditTextTheme"/>
-    </LinearLayout>
+                <EditText
+                    android:inputType="textPersonName"
+                    android:layout_toRightOf="@+id/tvName"
+                    android:id="@+id/etName"
+                    android:hint="이름 입력"
+                    style="@style/SignUpEditTextTheme"/>
+            </LinearLayout>
 
-    <!-- 이메일 입력란 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/layoutEmail"
-        android:layout_alignTop="@id/layoutPhone"
-        android:layout_marginTop="50dp"
-        android:orientation="horizontal" >
-        <TextView
-            android:text="E-mail"
-            android:id="@+id/tvEmail"
-            style="@style/SignUpTextViewTheme"/>
-        <EditText
-            android:inputType="textEmailAddress"
-            android:layout_toRightOf="@+id/tvEmail"
-            android:id="@+id/etEmail"
-            android:hint="이메일 입력"
-            style="@style/SignUpEditTextTheme"/>
-    </LinearLayout>
+            <!-- 이메일 입력란 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/layoutEmail"
+                android:layout_alignTop="@id/layoutName"
+                android:layout_marginTop="50dp"
+                android:orientation="horizontal" >
+                <TextView
+                    android:text="E-mail"
+                    android:id="@+id/tvEmail"
+                    style="@style/SignUpTextViewTheme"/>
+                <EditText
+                    android:inputType="textEmailAddress"
+                    android:layout_toRightOf="@+id/tvEmail"
+                    android:id="@+id/etEmail"
+                    android:hint="이메일 입력"
+                    style="@style/SignUpEditTextTheme"/>
+            </LinearLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/layoutEmail"
-        android:layout_marginTop="50dp"
-        android:id="@+id/btnSignUpSubmit"
-        android:text="회원가입"/>
-    
-</RelativeLayout>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/layoutEmail"
+                android:layout_marginTop="50dp"
+                android:id="@+id/btnSignUpSubmit"
+                android:text="회원가입"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/gluelogo_pu180"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+    </ScrollView>
+</FrameLayout>

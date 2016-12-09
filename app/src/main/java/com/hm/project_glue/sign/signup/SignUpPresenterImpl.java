@@ -1,5 +1,6 @@
 package com.hm.project_glue.sign.signup;
 
+import android.content.Context;
 import android.util.Log;
 
 /**
@@ -25,15 +26,16 @@ public class SignUpPresenterImpl implements SignUpPresenter {
 
     @Override
     public void signUp() {
-        String id = signUpFragment.etSuId.getText().toString();
+        // 2016.12.07 폼변경
+        Context context = signUpFragment.getContext();
+        String phone = signUpFragment.etSuPhone.getText().toString();
         String pw = signUpFragment.etSuPw.getText().toString();
         String pwre = signUpFragment.etSuPwRe.getText().toString();
         String email = signUpFragment.etSuEmail.getText().toString();
         String name = signUpFragment.etSuName.getText().toString();
-        String phone = signUpFragment.etSuPhone.getText().toString();
-        Log.i(TAG, "----------- id ------- "+ id);
+        Log.i(TAG, "----------- phone ---- "+ phone);
         Log.i(TAG, "----------- email ---- "+ email);
-        signUpModel.signUp(id, pw, pwre, email, name, phone);
+        signUpModel.signUp(phone, pw, pwre, email, name, context);
     }
 
     @Override

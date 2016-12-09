@@ -18,7 +18,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.hm.project_glue.R;
-import com.hm.project_glue.Util.Networking;
+import com.hm.project_glue.util.Networking;
 import com.hm.project_glue.main.home.HomeFragment;
 import com.hm.project_glue.main.info.InfoFragment;
 import com.hm.project_glue.main.list.ListFragment;
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         list =  ListFragment.newInstance();
         tab = (TabLayout) findViewById(R.id.tabLayout);
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
-        tab.addTab(tab.newTab().setIcon(R.mipmap.ic_supervisor_account_gray_36dp));
+        tab.addTab(tab.newTab().setIcon(R.mipmap.ic_supervisor_account_white_36dp));
         tab.addTab(tab.newTab().setIcon(R.mipmap.ic_photo_library_gray_36dp));
         tab.addTab(tab.newTab().setIcon(R.mipmap.ic_sms_gray_36dp));
         tab.addTab(tab.newTab().setIcon(R.mipmap.ic_account_circle_gray_36dp));
@@ -70,19 +70,11 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                         break;
                 }
             }
-
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
+            public void onTabUnselected(TabLayout.Tab tab) {}
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) {}
         });
-
-
 
         adapter = new MainPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);
@@ -141,20 +133,18 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         Intent i = new Intent(MainActivity.this, SignActivity.class);
         startActivity(i);
     }
-    @Override
+    @Override   //facebook
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
-    // Facebook 로그아웃 및 프리퍼런스 값 초기화
-    public void logOut() {
+
+    public void logOut() { // Facebook 로그아웃, 프리퍼런스 값 초기화, activity 이동
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().logOut();    // 페이스북 로그아웃
         networking.logout();                    //프리퍼런스 초기화
+        moveActivity();
     }
 
-    public void tmpLogOut() { // TODO 머지하고 삭제
-
-    }
 }

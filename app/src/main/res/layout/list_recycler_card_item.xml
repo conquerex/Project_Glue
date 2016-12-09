@@ -16,8 +16,7 @@
         card_view:cardElevation="@dimen/com_facebook_auth_dialog_corner_radius_oversized"
         android:elevation="2dp"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="7dp">
+        android:layout_centerHorizontal="true">
 
         <LinearLayout
             android:orientation="vertical"
@@ -100,7 +99,8 @@
                 android:scaleType="centerCrop"
                 android:layout_height="200dp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp" />
+                android:layout_marginRight="5dp"
+                />
 
             <LinearLayout
                 android:orientation="horizontal"
