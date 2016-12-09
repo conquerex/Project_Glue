@@ -49,6 +49,12 @@ public class SignInFragment extends Fragment implements SignInPresenter.View {
         btnFacebook = (Button) view.findViewById(R.id.btnFacebook);
 
 
+        btnFindId.setOnClickListener(v-> {
+            //TODO 임시 main activity 접근
+            moveActivity();
+
+        });
+
 
         btnSignUp.setOnClickListener(v -> {
             Log.i("test","click");
@@ -96,11 +102,14 @@ public class SignInFragment extends Fragment implements SignInPresenter.View {
 
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
         alert.setTitle(R.string.loginfailtitle); // "로그인실패"
-        if(errorCode != 200){
-            alert.setMessage(R.string.loginHttpError); // "통신 오류"
-        }else{
-            alert.setMessage(R.string.loginfailmessage); // "아이디와 ..."
+        switch (errorCode){
+            case 400 :  alert.setMessage(R.string.loginfailmessage+"(400)"); // "아이디와 ..."
+                break;
+            case 500 : alert.setMessage(R.string.loginHttpError+"(500)"); // "통신 오류"
+                break;
+            case 404 : alert.setMessage("not found 404"); // "통신 오류"
         }
+
 
         alert.setNegativeButton(R.string.ok, null); // "확인"
         alert.show();
