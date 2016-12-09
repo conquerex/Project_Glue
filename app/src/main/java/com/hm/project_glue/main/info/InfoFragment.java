@@ -38,7 +38,7 @@ public class InfoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_info, container, false);
         Button btnTmp = (Button)view.findViewById(R.id.btntmp);
         btnTmp.setOnClickListener(v ->
-            ((MainActivity)getActivity()).tmpLogOut()
+            ((MainActivity)getActivity()).logOut()
         );
         return view;
     }

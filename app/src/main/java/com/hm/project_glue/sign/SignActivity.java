@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -49,20 +48,20 @@ public class SignActivity extends AppCompatActivity {
     }
 
     public void setOne(){
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.fragment,signInFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.setCustomAnimations(R.anim.gla_there_come,R.anim.gla_there_gone);
+        ft.replace(R.id.fragment, signInFragment);
+        ft.addToBackStack(null);
+        ft.commit();
+
     }
 
     public void goToSignUpFragment(){
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.add(R.id.fragment,signUpFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-        keyBoardOff();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.setCustomAnimations(R.anim.gla_there_come,R.anim.gla_there_gone);
+        ft.replace(R.id.fragment, signUpFragment);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 
     public void keyBoardOff() {  // 키보드 내리기
