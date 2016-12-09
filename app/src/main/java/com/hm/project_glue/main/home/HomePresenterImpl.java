@@ -3,7 +3,7 @@ package com.hm.project_glue.main.home;
 import android.content.Context;
 import android.util.Log;
 
-import com.hm.project_glue.Util.Networking;
+import com.hm.project_glue.util.Networking;
 import com.hm.project_glue.main.home.data.HomeData;
 import com.hm.project_glue.main.home.data.HomeGroupData;
 
@@ -61,7 +61,11 @@ public class HomePresenterImpl implements HomePresenter {
 
                     for(HomeData homeData : homeResults){
                         /*
+
                         작성 예정
+                        테스트
+                        test2
+                        
                          */
                     }
                 }else{
