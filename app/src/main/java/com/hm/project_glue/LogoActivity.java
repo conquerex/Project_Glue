@@ -29,7 +29,7 @@ public class LogoActivity extends AppCompatActivity {
                 signFlag = loginCheck.getBoolean("SIGN",false);
 
                 //signFlag
-                if(true){
+                if(signFlag){
                     Intent intent = new Intent(LogoActivity.this, MainActivity.class);
                     startActivity(intent);
                 }else {

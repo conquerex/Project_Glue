@@ -79,10 +79,7 @@ public class SignInPresenterImpl implements SignInPresenter {
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
                 String token ="";
-                if(Networking.getResponseCode() != 200){
-                    view.failAlert(0);
-                    view.reSetEditText();
-                }else {
+
                     try {
                         JSONObject jObject = new JSONObject(result);
                         token = jObject.getString("token");
@@ -98,10 +95,10 @@ public class SignInPresenterImpl implements SignInPresenter {
                         view.moveActivity();
                     } else {// 로그인 실패
                         Log.i(TAG, "else:" + token);
-                        view.failAlert(200);
+                        view.failAlert(Networking.getResponseCode());
                         view.reSetEditText();
                     }
-                }
+
                 progress.dismiss();
 
             }
