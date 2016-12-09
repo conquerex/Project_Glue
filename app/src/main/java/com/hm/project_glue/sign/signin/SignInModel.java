@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.hm.project_glue.R;
+import com.hm.project_glue.util.Networking;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -72,6 +73,7 @@ public class SignInModel {
             br.close();
         } else {
             Log.i(TAG, "" + responseCode);
+            Networking.setResponseCode(responseCode);
         }
 
         Log.i(TAG, "result:" + result.toString());

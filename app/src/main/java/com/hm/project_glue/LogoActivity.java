@@ -28,6 +28,7 @@ public class LogoActivity extends AppCompatActivity {
                 loginCheck = getSharedPreferences("localLoginCheck", 0);
                 signFlag = loginCheck.getBoolean("SIGN",false);
 
+                //signFlag
                 if(signFlag){
                     Intent intent = new Intent(LogoActivity.this, MainActivity.class);
                     startActivity(intent);

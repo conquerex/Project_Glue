@@ -14,7 +14,7 @@ public interface SignInPresenter {
 
     interface View {
         void reSetEditText();
-        void failAlert();
+        void failAlert(int errorCode);
         void moveActivity();
         void setButtonEnabled(boolean flag);
         String getIdText();
