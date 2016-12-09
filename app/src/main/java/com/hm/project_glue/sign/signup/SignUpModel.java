@@ -95,6 +95,9 @@ public class SignUpModel {
                     alert.show();
                     e.printStackTrace();
                 }
+
+
+
             }
         }.execute(hashMap);
     }

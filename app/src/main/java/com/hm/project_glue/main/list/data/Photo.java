@@ -1,15 +1,15 @@
 package com.hm.project_glue.main.list.data;
 
 /**
- * Created by HM on 2016-12-06.
+ * Created by HM on 2016-12-08.
  */
 
 public class Photo
 {
-    private String thumbnail="";
-    private String medium_thumbnail="";
-    private String full_size="";
-    private String small_thumbnail="";
+    String thumbnail="";
+    String medium_thumbnail="";
+    String full_size="";
+    String small_thumbnail="";
 
     public Photo(){
 

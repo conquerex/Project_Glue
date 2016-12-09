@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         list =  ListFragment.newInstance();
         tab = (TabLayout) findViewById(R.id.tabLayout);
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
-        tab.addTab(tab.newTab().setIcon(R.mipmap.ic_supervisor_account_gray_36dp));
+        tab.addTab(tab.newTab().setIcon(R.mipmap.ic_supervisor_account_white_36dp));
         tab.addTab(tab.newTab().setIcon(R.mipmap.ic_photo_library_gray_36dp));
         tab.addTab(tab.newTab().setIcon(R.mipmap.ic_sms_gray_36dp));
         tab.addTab(tab.newTab().setIcon(R.mipmap.ic_account_circle_gray_36dp));

@@ -1,22 +1,27 @@
 package com.hm.project_glue.main.list.data;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
- * Created by HM on 2016-12-06.
+ * Created by HM on 2016-12-08.
  */
 
 public class Results
 {
-    private String likes_count ="";
-    private List<Photos> photos;
-    private String content="";
-    private String uploaded_user="";
-    private String[] dislike;
-    private String[] like;
-    private String group="";
-    private String dislikes_count="";
-    private String pk="";
+    String likes_count ="";
+    ArrayList<Photos> photos;
+    String content="";
+    String uploaded_user="";
+    String[] dislike;
+    String[] like;
+    String group="";
+    String dislikes_count="";
+    String pk="";
+
+    public Results(){
+
+    }
+
 
     public String getLikes_count ()
     {
@@ -28,12 +33,12 @@ public class Results
         this.likes_count = likes_count;
     }
 
-    public List<Photos> getPhotos ()
+    public ArrayList<Photos> getPhotos ()
     {
         return photos;
     }
 
-    public void setPhotos (List<Photos> photos)
+    public void setPhotos (ArrayList<Photos> photos)
     {
         this.photos = photos;
     }

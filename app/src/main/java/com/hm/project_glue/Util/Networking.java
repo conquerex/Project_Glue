@@ -13,7 +13,7 @@ public class Networking {
     private Context context;
     private static SharedPreferences loginCheck;
     private static String BASE_URL = "";
-
+    private static int responseCode = 0;
 
     private SharedPreferences.Editor editor;
 
@@ -21,7 +21,7 @@ public class Networking {
         this.context = context;
         loginCheck = context.getSharedPreferences("localLoginCheck", 0);
         BASE_URL= context.getResources().getString(R.string.BASE_URL);
-
+        editor = loginCheck.edit();
 
     }
 
@@ -32,7 +32,12 @@ public class Networking {
     public static String getBASE_URL(){
         return BASE_URL;
     }
-
+    public static void  setResponseCode(int code){
+        responseCode = code;
+    }
+    public static int  getResponseCode(){
+        return responseCode;
+    }
     public void logout(){
         editor.putString("user", "");
         editor.putString("token", "");
