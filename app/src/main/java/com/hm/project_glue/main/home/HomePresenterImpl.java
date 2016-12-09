@@ -61,7 +61,9 @@ public class HomePresenterImpl implements HomePresenter {
 
                     for(HomeData homeData : homeResults){
                         /*
+
                         작성 예정
+                        
                          */
                     }
                 }else{
