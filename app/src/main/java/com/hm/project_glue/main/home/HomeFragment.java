@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.hm.project_glue.LogoActivity;
 import com.hm.project_glue.R;
-import com.hm.project_glue.Util.Networking;
+import com.hm.project_glue.util.Networking;
 import com.hm.project_glue.main.OnFragmentInteractionListener;
 
 import java.util.ArrayList;

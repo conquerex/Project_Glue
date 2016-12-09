@@ -3,7 +3,7 @@ package com.hm.project_glue.main.home;
 import android.content.Context;
 import android.util.Log;
 
-import com.hm.project_glue.Util.Networking;
+import com.hm.project_glue.util.Networking;
 import com.hm.project_glue.main.home.data.HomeData;
 import com.hm.project_glue.main.home.data.HomeGroupData;
 
