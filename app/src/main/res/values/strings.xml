@@ -22,5 +22,6 @@
     <string name="signUpPwLengthChk">패스워드를 8글자 이상 입력하세요.</string>
     <string name="signUpPwReLengthChk">패스워드 재입력을 8글자 이상 입력하세요.</string>
     <string name="signUpPwNoEqual">비밀번호가 일치하지 않습니다.</string>
+    <string name="title_activity_write">WriteActivity</string>
 
 </resources>
