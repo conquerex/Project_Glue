@@ -20,6 +20,10 @@ import java.util.regex.Pattern;
 public class SignUpPresenterImpl implements SignUpPresenter {
     private static final String TAG = "SignUpPresenterImpl";
     private static final int PASSWORD_MIN = 13;
+    // private static final String PASSWORD_PATTERN = "([a-zA-Z0-9].*[!,@,#,$,%,^,&,*,?,_,~])|([!,@,#,$,%,^,&,*,?,_,~].*[a-zA-Z0-9])";
+    private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z|A-Z])(?=.*[~'!@`#$%?\\\\\\/&*\\]|\\[=()}\"{+_:;,.><'-])).{8,}";
+    private static final String EMAIL_PATTERN = "[\\w\\~\\-\\.]+@[\\w\\~\\-]+(\\.[\\w\\~\\-]+)+";
+
 
     // 모든 기능은 MVP를 따르며 현재 SignUpPresenterImpl가 Presenter 역할을 한다
     // SignUp Model
@@ -124,6 +128,9 @@ public class SignUpPresenterImpl implements SignUpPresenter {
             return false;
         }
 
+        // 비밀번호 포맷 정의
+        Pattern passwordCheck = Pattern.compile(PASSWORD_PATTERN);
+
         // 비밀번호 입력 확인
         if( view.getSuPwText().length() == 0 ) {
             Toast.makeText(context,
@@ -134,6 +141,11 @@ public class SignUpPresenterImpl implements SignUpPresenter {
             Toast.makeText(context,
                     R.string.signUpPwLengthChk, Toast.LENGTH_SHORT).show();
             // EditText를 터치하지 않고 바로 입력할 수 있도록 requestFocus()를 사용
+            view.getSuPwEditText().requestFocus();
+            return false;
+        } else if (!passwordCheck.matcher(view.getSuPwText()).find()) {
+            Toast.makeText(context,
+                    R.string.signUpPwPattern, Toast.LENGTH_SHORT).show();
             view.getSuPwEditText().requestFocus();
             return false;
         }
@@ -148,6 +160,11 @@ public class SignUpPresenterImpl implements SignUpPresenter {
             Toast.makeText(context,
                     R.string.signUpPwReLengthChk, Toast.LENGTH_SHORT).show();
             // EditText를 터치하지 않고 바로 입력할 수 있도록 requestFocus()를 사용
+            view.getSuPwReEditText().requestFocus();
+            return false;
+        } else if(!passwordCheck.matcher(view.getSuPwReText()).find()) {
+            Toast.makeText(context,
+                    R.string.signUpPwPattern, Toast.LENGTH_SHORT).show();
             view.getSuPwReEditText().requestFocus();
             return false;
         }
@@ -172,8 +189,7 @@ public class SignUpPresenterImpl implements SignUpPresenter {
         }
 
         // 이메일 포맷 체크
-        boolean emailCheck = Pattern.matches(
-                "[\\w\\~\\-\\.]+@[\\w\\~\\-]+(\\.[\\w\\~\\-]+)+", view.getSuEmailText().trim());
+        boolean emailCheck = Pattern.matches(EMAIL_PATTERN, view.getSuEmailText().trim());
         Log.i(TAG, "----------- emailCheck ----- " + emailCheck);
 
         // 이메일 입력 확인
@@ -185,6 +201,7 @@ public class SignUpPresenterImpl implements SignUpPresenter {
         }else if(!emailCheck){
             Toast.makeText(context,
                     R.string.signUpEmailPattern, Toast.LENGTH_SHORT).show();
+            view.getSuEmailEditText().requestFocus();
             return false;
         }
 

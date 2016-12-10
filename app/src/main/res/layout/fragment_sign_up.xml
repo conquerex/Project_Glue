@@ -56,7 +56,7 @@
                     android:layout_toRightOf="@+id/tvPassword"
                     android:id="@+id/etPassword"
                     android:ems="20"
-                    android:hint="숫자와 영문 조합. 8글자 이상"
+                    android:hint="숫자, 영문, 특수기호. 13글자 이상"
                     style="@style/SignUpEditTextTheme"/>
             </LinearLayout>
 

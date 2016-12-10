@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
 import com.hm.project_glue.R;
 
 public class SignUpFragment extends Fragment implements SignUpPresenter.View {

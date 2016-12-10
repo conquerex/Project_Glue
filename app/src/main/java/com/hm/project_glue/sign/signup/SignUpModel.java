@@ -1,11 +1,7 @@
 package com.hm.project_glue.sign.signup;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.AsyncTask;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.widget.Toast;
 import com.hm.project_glue.R;
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -14,7 +10,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
