@@ -12,18 +12,20 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.hm.project_glue.R;
-import com.hm.project_glue.util.Networking;
 import com.hm.project_glue.main.home.HomeFragment;
 import com.hm.project_glue.main.info.InfoFragment;
 import com.hm.project_glue.main.list.ListFragment;
 import com.hm.project_glue.main.msg.MsgFragment;
 import com.hm.project_glue.sign.SignActivity;
+import com.hm.project_glue.util.Networking;
+import com.hm.project_glue.util.write.WriteActivity;
 
 public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener{
     private CallbackManager callbackManager;
@@ -35,23 +37,32 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     PagerAdapter adapter;
     Networking networking;
     TabLayout tab;
+    Fragment writeFragment;
+    FrameLayout mainFrameLayout;
     private final String PreferenceName ="localLoginCheck";
+    public static String TAG = "TEST";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState!=null) {
+            finish();
+            return;
+        }
         setContentView(R.layout.activity_main);
         networking = new Networking(this);
         home =  HomeFragment.newInstance();
         msg  =  MsgFragment.newInstance();
         info =  InfoFragment.newInstance();
         list =  ListFragment.newInstance();
+
         tab = (TabLayout) findViewById(R.id.tabLayout);
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
         tab.addTab(tab.newTab().setIcon(R.mipmap.ic_supervisor_account_white_36dp));
         tab.addTab(tab.newTab().setIcon(R.mipmap.ic_photo_library_gray_36dp));
         tab.addTab(tab.newTab().setIcon(R.mipmap.ic_sms_gray_36dp));
         tab.addTab(tab.newTab().setIcon(R.mipmap.ic_account_circle_gray_36dp));
+
         tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab selectedtab) {
@@ -78,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
         adapter = new MainPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);
-
+        pager.setOffscreenPageLimit(3);
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab));
         tab.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager));
 
@@ -129,9 +140,22 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         }
     }
 
-    public void moveActivity(){
-        Intent i = new Intent(MainActivity.this, SignActivity.class);
+    public void moveActivity(int activityCode){
+        Intent i = null;
+        switch (activityCode){
+            case 1 :
+                i = new Intent(MainActivity.this, SignActivity.class);
+
+                break;
+            case 2 :
+                i = new Intent(MainActivity.this, WriteActivity.class);
+
+                break;
+        }
         startActivity(i);
+        overridePendingTransition(R.anim.ani_there_up_come, R.anim.gla_there_come);
+
+
     }
     @Override   //facebook
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -144,7 +168,9 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         callbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().logOut();    // 페이스북 로그아웃
         networking.logout();                    //프리퍼런스 초기화
-        moveActivity();
+        int SignActivity = 1;
+        moveActivity(SignActivity);
     }
+
 
 }

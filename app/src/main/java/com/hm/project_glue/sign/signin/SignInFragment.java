@@ -103,9 +103,9 @@ public class SignInFragment extends Fragment implements SignInPresenter.View {
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
         alert.setTitle(R.string.loginfailtitle); // "로그인실패"
         switch (errorCode){
-            case 400 :  alert.setMessage(R.string.loginfailmessage+"(400)"); // "아이디와 ..."
+            case 400 :  alert.setMessage(R.string.loginfailmessage); // "아이디와 ..."
                 break;
-            case 500 : alert.setMessage(R.string.loginHttpError+"(500)"); // "통신 오류"
+            case 500 : alert.setMessage(R.string.loginHttpError); // "통신 오류"
                 break;
             case 404 : alert.setMessage("not found 404"); // "통신 오류"
         }
