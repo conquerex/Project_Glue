@@ -77,16 +77,18 @@ public class SignUpModel {
         // OutputStream 종료
         os.close();
 
-        // Body에 Data를 담기위해 InputStream 객체를 생성
-        InputStream is = conn.getInputStream();
         // 실제 서버로 Request 요청 하는 부분 (응답 코드를 받는다. 200 혹은 201 성공, 나머지 에러)
         int responseCode = conn.getResponseCode();
+        Log.i(TAG, "----------- if ---- "+ responseCode);
 
         if(responseCode == HttpURLConnection.HTTP_OK
                 || responseCode == HttpURLConnection.HTTP_CREATED){
+
+            // Body에 Data를 담기위해 InputStream 객체를 생성
+            InputStream is = conn.getInputStream();
+
             // 스트림을 직접 읽으면 느리고 비효율적
             // 버퍼(BufferedReader)를 지원하는 보조 스트림 객체로 감싸서 사용
-            Log.i(TAG, "----------- if ---- "+ responseCode);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             // 입력받은 값이 null이 아니면 result에 담음
             while ((dataLine = br.readLine()) != null){

@@ -11,6 +11,7 @@ import com.hm.project_glue.R;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * Created by jongkook on 2016. 11. 30..
@@ -18,6 +19,7 @@ import java.util.Map;
 
 public class SignUpPresenterImpl implements SignUpPresenter {
     private static final String TAG = "SignUpPresenterImpl";
+    private static final int PASSWORD_MIN = 13;
 
     // 모든 기능은 MVP를 따르며 현재 SignUpPresenterImpl가 Presenter 역할을 한다
     // SignUp Model
@@ -49,8 +51,8 @@ public class SignUpPresenterImpl implements SignUpPresenter {
         Log.i(TAG, "----------- email ---- "+ email);
 
         HashMap hashMap = new HashMap();
-        hashMap.put("phone", phone);
-        hashMap.put("pw", pw);
+        hashMap.put("phone_number", phone);
+        hashMap.put("password", pw);
         hashMap.put("name", name);
         hashMap.put("email", email);
 
@@ -111,6 +113,7 @@ public class SignUpPresenterImpl implements SignUpPresenter {
         // signUpModel.signUp(phone, pw, pwre, email, name);
     }
 
+    // 2016.12.10 회원가입 조건 체크
     @Override
     public boolean signUpCheck() {
         // 휴대전화 입력 확인
@@ -127,7 +130,7 @@ public class SignUpPresenterImpl implements SignUpPresenter {
                     R.string.signUpPwInputChk, Toast.LENGTH_SHORT).show();
             view.getSuPwEditText().requestFocus();
             return false;
-        } else if ( view.getSuPwText().length() < 8 ) {
+        } else if ( view.getSuPwText().length() < PASSWORD_MIN ) {
             Toast.makeText(context,
                     R.string.signUpPwLengthChk, Toast.LENGTH_SHORT).show();
             // EditText를 터치하지 않고 바로 입력할 수 있도록 requestFocus()를 사용
@@ -141,7 +144,7 @@ public class SignUpPresenterImpl implements SignUpPresenter {
                     R.string.signUpPwReInputChk, Toast.LENGTH_SHORT).show();
             view.getSuPwReEditText().requestFocus();
             return false;
-        } else if ( view.getSuPwReText().length() < 8 ) {
+        } else if ( view.getSuPwReText().length() < PASSWORD_MIN ) {
             Toast.makeText(context,
                     R.string.signUpPwReLengthChk, Toast.LENGTH_SHORT).show();
             // EditText를 터치하지 않고 바로 입력할 수 있도록 requestFocus()를 사용
@@ -168,13 +171,23 @@ public class SignUpPresenterImpl implements SignUpPresenter {
             return false;
         }
 
+        // 이메일 포맷 체크
+        boolean emailCheck = Pattern.matches(
+                "[\\w\\~\\-\\.]+@[\\w\\~\\-]+(\\.[\\w\\~\\-]+)+", view.getSuEmailText().trim());
+        Log.i(TAG, "----------- emailCheck ----- " + emailCheck);
+
         // 이메일 입력 확인
         if( view.getSuEmailText().length() == 0 ) {
             Toast.makeText(context,
                     R.string.signUpEmailInputChk, Toast.LENGTH_SHORT).show();
             view.getSuEmailEditText().requestFocus();
             return false;
+        }else if(!emailCheck){
+            Toast.makeText(context,
+                    R.string.signUpEmailPattern, Toast.LENGTH_SHORT).show();
+            return false;
         }
+
         return true;
     }
 }

@@ -10,7 +10,7 @@ public interface SignUpPresenter {
     // 회원가입 기능
     void signUp();
 
-    //
+    // 2016.12.10 회원가입 조건 체크
     boolean signUpCheck();
 
     void setView(SignUpPresenter.View view);
