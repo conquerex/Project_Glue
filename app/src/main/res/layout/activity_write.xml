@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.hm.project_glue.util.write.WriteActivity"
+    android:id="@+id/activity_write"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_centerVertical="true"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:background="@null">
+
+
+    <RelativeLayout
+        android:id="@+id/rL1"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+
+        android:background="@color/colorPrimary">
+
+        <Button
+            android:text="back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnWriteBack"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:text="글쓰기"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView2"
+            android:layout_above="@+id/exListView"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:text="write"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnWrite"
+            android:layout_alignBaseline="@+id/btnWriteBack"
+            android:layout_alignBottom="@+id/btnWriteBack"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <ExpandableListView
+            android:layout_width="120dp"
+            android:id="@+id/exListView"
+            android:layout_height="30dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        style="@android:style/ButtonBar"
+        android:background="@color/com_facebook_button_background_color_disabled"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <Button
+            android:text="사진올리기"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnGallery"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView"
+        android:layout_below="@+id/rL1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <com.hm.project_glue.util.write.HorizontalListView
+                android:id="@+id/horizontalListView"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@null"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:id="@+id/mEditText"
+                android:layout_weight="1"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:hint="친구들에게 전할 내용을 남기세요."
+                android:textSize="14dp" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

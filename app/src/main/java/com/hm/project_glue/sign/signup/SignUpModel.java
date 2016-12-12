@@ -1,11 +1,7 @@
 package com.hm.project_glue.sign.signup;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.AsyncTask;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.widget.Toast;
 import com.hm.project_glue.R;
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -14,7 +10,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -29,84 +24,21 @@ import java.util.Map;
 
 public class SignUpModel {
     private static final String TAG = "SignUpModel";
-    private final String SERVER_URL = "http://dummy-dev.ap-northeast-2.elasticbeanstalk.com/group/";
-    // 서버 완성시 아래 적용
-    // private final String SERVER_URL = R.string.BASE_URL + R.string.SIGNUP_URL + "";
+    private static String SERVER_URL = "";
+    Context context;
 
-    public void signUp(String phone, String pw, String pwre,
-                       String email, String name, Context context) {
-        HashMap hashMap = new HashMap();
-
-        // 2016.12.07 폼변경
-        hashMap.put("phone", phone);
-        hashMap.put("pw", pw);
-        hashMap.put("name", name);
-        hashMap.put("email", email);
-
-        // AsyncTask클래스는 항상 Subclassing 해서 사용 해야 함.
-        // UI 처리 및 Background 작업 등 을 하나의 클래스에서 작업 할 수 있게 지원
-        // 파라미터 타입은 작업 실행 시에 송신 : Map (doInBackground 파라미터 타입이, execute 메소드 인자값)
-        // doInBackground 작업 시 진행 단위의 타입 : Void (onProgressUpdate 파라미터 타입)
-        // doInBackground 리턴값 : String (onPostExecute 파라미터 타입)
-        // 인자를 사용하지 않은 경우 Void Type 으로 지정
-        new AsyncTask<Map, Void, String>(){
-            ProgressDialog progress;
-            @Override
-            // doInBackground : Background 작업을 진행
-            // doInBackground의 매개값 : Map
-            protected String doInBackground(Map... params) {
-                String result = "";
-                Log.i(TAG, "----------- doInBackground ");
-                try {
-                    // SERVER_URL에서 보낸 값을 받음
-                    result = postData(SERVER_URL, params[0]);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                return result;
-            }
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                progress = new ProgressDialog(context);
-                progress.setMessage("Loging....");
-                progress.setProgressStyle((ProgressDialog.STYLE_SPINNER));
-                progress.setCancelable(false);
-                progress.show();
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                Log.i(TAG, "----------- onPostExecute ---- " + s);
-
-                try {
-                    Log.i(TAG, "----------- 로그인 성공");
-                    progress.dismiss();
-                    Toast.makeText(context, "회원가입 완료", Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    Log.i(TAG, "----------- 로그인 실패");
-                    AlertDialog.Builder alert = new AlertDialog.Builder(context);
-                    alert.setTitle(R.string.loginfailtitle); // "로그인실패"
-                    alert.setMessage(R.string.loginfailmessage); // "아이디와 ..."
-                    alert.setNegativeButton(R.string.ok, null); // "확인"
-                    alert.show();
-                    e.printStackTrace();
-                }
-
-
-
-            }
-        }.execute(hashMap);
+    // 2016.12.10 URL 세팅
+    public SignUpModel(Context context) {
+        this.context = context;
+        SERVER_URL = context.getResources().getString(R.string.BASE_URL)
+                + context.getResources().getString(R.string.SIGNUP_URL);
     }
 
-    public static String postData (String webURL, Map params) throws Exception{
+    public static String postData (Map params) throws Exception{
         // 동기화 및 String보다 빠른 반응을 위해 StringBuilder 사용
         StringBuilder result = new StringBuilder();
         String dataLine;
-        URL url = new URL(webURL);
+        URL url = new URL(SERVER_URL);
         Log.i(TAG, "----------- URL ---- "+ url.toString());
 
         // HttpURLConnection 객체 생성
@@ -140,16 +72,18 @@ public class SignUpModel {
         // OutputStream 종료
         os.close();
 
-        // Body에 Data를 담기위해 InputStream 객체를 생성
-        InputStream is = conn.getInputStream();
         // 실제 서버로 Request 요청 하는 부분 (응답 코드를 받는다. 200 혹은 201 성공, 나머지 에러)
         int responseCode = conn.getResponseCode();
+        Log.i(TAG, "----------- if ---- "+ responseCode);
 
         if(responseCode == HttpURLConnection.HTTP_OK
                 || responseCode == HttpURLConnection.HTTP_CREATED){
+
+            // Body에 Data를 담기위해 InputStream 객체를 생성
+            InputStream is = conn.getInputStream();
+
             // 스트림을 직접 읽으면 느리고 비효율적
             // 버퍼(BufferedReader)를 지원하는 보조 스트림 객체로 감싸서 사용
-            Log.i(TAG, "----------- if ---- "+ responseCode);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             // 입력받은 값이 null이 아니면 result에 담음
             while ((dataLine = br.readLine()) != null){

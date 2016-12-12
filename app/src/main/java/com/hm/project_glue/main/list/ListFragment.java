@@ -2,6 +2,7 @@ package com.hm.project_glue.main.list;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.hm.project_glue.R;
+import com.hm.project_glue.main.MainActivity;
 import com.hm.project_glue.main.list.data.PostData;
 import com.hm.project_glue.main.list.data.Results;
 
@@ -33,7 +35,7 @@ public class ListFragment extends Fragment implements ListPresenter.View {
     RecyclerView listRecyclerView;
     RecyclerCardAdapter adapter;
     PostData post;
-
+    View view;
     private static final String TAG = "TEST";
 
     public ListFragment() {
@@ -50,41 +52,56 @@ public class ListFragment extends Fragment implements ListPresenter.View {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(savedInstanceState!=null){
+
             return;
         }
         listPresenter = new ListPresenterImpl(ListFragment.this);
+
         listPresenter.setView(this);
         post = PostData.newPostInstance();
+        datas = new ArrayList<>();
 
+        Log.i(TAG,"onCreate");
 
+    }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.i(TAG,"onDetach");
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG,"onDestroy");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list, container, false);
-        if(savedInstanceState!=null){
-            return view ;
+        view = inflater.inflate(R.layout.fragment_list, container, false);
+
+        if(savedInstanceState==null){
+            listPresenter.callHttp(post, "1");
         }
-
-
-        datas = new ArrayList<>();
-        listPresenter.callHttp(post, "3");
-        Log.i(TAG,"datas.get0 : ");
         listRecyclerView = (RecyclerView) view.findViewById(R.id.recylerCardView);
         adapter  = new RecyclerCardAdapter(datas,R.layout.list_recycler_card_item,getContext());
         listRecyclerView.setAdapter(adapter);
-
+        FloatingActionButton floatingBtnWrite = (FloatingActionButton)view.findViewById(R.id.floatingBtnWrite);
+        floatingBtnWrite.setOnClickListener(v -> {
+            ((MainActivity)getActivity()).moveActivity(2);
+        });
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
         listRecyclerView.setLayoutManager(manager);
+
+        Log.i(TAG,"onCreateView");
         return view;
     }
 
     @Override
     public void dataChanged(PostData post) {
-        datas = post.getResults();
+        datas.addAll(post.getResults());
         adapter.notifyDataSetChanged();
     }
 
@@ -125,46 +142,41 @@ public class ListFragment extends Fragment implements ListPresenter.View {
             holder.listCardItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) { //클릭시
-//                    Intent intent = new Intent(context, DetailActivity.class);
-//                    intent.putExtra("position", position);
-//                    //intent.putExtra("OBJECT",data);
-//                    context.startActivity(intent);
+
                 }
             });
 
             // TODO get의 포지션 수정 ( 이미지 수 확인 후 여러개 표시)
             String url="";
             Log.i(TAG,"photo size :"+ data.getPhotos().size());
-
-
-            int photosSize = data.getPhotos().size();
-            if(photosSize > 0){
-                url = data.getPhotos().get(0).getPhoto().getFull_size();
+            if(data.getPhotos().size() ==0){
+                url = "";
+                holder.imgListCardMainImg.setVisibility(View.GONE);
             }else{
-                url = "not found";
+                url = data.getPhotos().get(0).getPhoto().getFull_size();
+                Log.i(TAG,"image URL:"+url );
+                Glide.with(context).load(url).listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+//                        holder.bar.setVisibility(View.GONE);
+                        holder.imgListCardMainImg.setVisibility(View.VISIBLE);
+                        return false;
+                    }
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource,
+                                                   String model, Target<GlideDrawable> target,
+                                                   boolean isFromMemoryCache, boolean isFirstResource) {
+//                        holder.bar.setVisibility(View.GONE);
+                        holder.imgListCardMainImg.setVisibility(View.VISIBLE);
+                        return false;
+                    }
+                })
+                        .into(holder.imgListCardMainImg);
             }
 
-            Log.i(TAG,"image URL:"+url );
-            Glide.with(context).load(url).listener(new RequestListener<String, GlideDrawable>() {
-                @Override
-                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-//                        holder.bar.setVisibility(View.GONE);
-                    holder.imgListCardMainImg.setVisibility(View.VISIBLE);
-                    return false;
-                }
 
-                @Override
-                public boolean onResourceReady(GlideDrawable resource,
-                                               String model, Target<GlideDrawable> target,
-                                               boolean isFromMemoryCache, boolean isFirstResource) {
-//                        holder.bar.setVisibility(View.GONE);
-                    holder.imgListCardMainImg.setVisibility(View.VISIBLE);
-                    return false;
-                }
-            })
-            .into(holder.imgListCardMainImg);
 
-            holder.imgListCardMainImg.setVisibility(View.GONE);
+
 
 
             //TODO 임시 샘플 이미지 ( 구룹 이미지 )
