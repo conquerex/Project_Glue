@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+    buildToolsVersion "24.0.0"
     defaultConfig {
         applicationId "com.hm.project_glue"
         minSdkVersion 15
@@ -15,8 +15,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility org.gradle.api.JavaVersion.VERSION_1_8
-        targetCompatibility org.gradle.api.JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes {
         release {
