@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class GroupListData {
 
+
     ArrayList<GroupResponse> Response;
 
     public ArrayList<GroupResponse>  getResults ()
@@ -25,7 +26,5 @@ public class GroupListData {
     {
         return "ClassPojo [results = "+Response+"]";
     }
-
-
 
 }

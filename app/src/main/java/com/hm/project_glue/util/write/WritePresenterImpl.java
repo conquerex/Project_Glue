@@ -120,6 +120,7 @@ public class WritePresenterImpl implements WritePresenter {
     private void groupListCallHttp(){
         String authorization = "Token "+ Networking.getToken();
         Log.i(TAG, "groupListCallHttp");
+
         final Call<GroupListData> response = ListRestAdapter.getInstance().getGroupListData(authorization);
         response.enqueue(new Callback<GroupListData>() {
             @Override
@@ -127,12 +128,14 @@ public class WritePresenterImpl implements WritePresenter {
                 if(response.isSuccessful()) {
                     Log.i(TAG, "isSuccessful");
                     view.setGroupListChanged(response.body().getResults());
+
                 }else{
                     Log.e(TAG,response.message());
                 }
             }
             @Override
             public void onFailure(Call<GroupListData> call, Throwable t) {
+
                 Log.i(TAG, "onFailure:"+ t.getMessage());
             }
         });

@@ -2,7 +2,9 @@ package com.hm.project_glue.util.http;
 
 import com.hm.project_glue.main.list.data.PostData;
 import com.hm.project_glue.util.write.data.GroupListData;
+import com.hm.project_glue.util.write.data.GroupListResults;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import okhttp3.RequestBody;
@@ -38,6 +40,8 @@ public interface IServerData {
     Call<String> loginData( @Field("phone_number") String phone_number,
                             @Field("password") String password);
 
+
+
     //로그아웃
     @GET("/member/logout/")
     Call<String> logOutData(@Header("Authorization") String authorization);
@@ -59,7 +63,7 @@ public interface IServerData {
     // 구룹 생성
     @Multipart
     @POST("/group/group_list/")
-    Call<GroupListData> createGroupData(@Header("Authorization") String authorization,
+    Call<ArrayList<GroupListResults>> createGroupData(@Header("Authorization") String authorization,
                                                       @Field("name") String name, //20자
                                                       @PartMap Map<String, RequestBody> group_image);
     //구룹 탈퇴
@@ -92,8 +96,8 @@ public interface IServerData {
     @POST("/posts/post_list/{groupId}/")
     Call<PostData> postingData(     @Header("Authorization") String authorization,
                                     @Path("groupId") String groupId,
-                                    //content, group
-                                    @PartMap Map<String, RequestBody> getParams,
+                               //content, group
+                                    @PartMap Map<String, RequestBody> params,
                                     @PartMap Map<String, RequestBody> photos);
     // Post 목록 보기  QueryMap-> ex) page=2
     @GET("/posts/post_list/{groupId}/")

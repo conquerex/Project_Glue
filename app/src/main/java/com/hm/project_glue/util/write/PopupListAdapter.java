@@ -7,7 +7,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.hm.project_glue.R;
+
 import com.hm.project_glue.util.write.data.GroupResponse;
+
 
 import java.util.ArrayList;
 
@@ -17,12 +19,15 @@ import java.util.ArrayList;
 
 
 public class PopupListAdapter extends BaseAdapter{
+
     ArrayList<GroupResponse> datas;
     LayoutInflater inflater;
     Context context;
 
 
+
     PopupListAdapter(Context context, ArrayList<GroupResponse> datas){ //생성자
+
         this.context = context;
         this.datas = datas;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -52,7 +57,7 @@ public class PopupListAdapter extends BaseAdapter{
         textView.setText(datas.get(position).getGroup_name());
 
         convertView.setOnClickListener(v ->{
-            ((WriteActivity)context).groupChanged(datas.get(position).getId(),datas.get(position).getGroup_name());
+            ((WriteActivity)context).groupChanged(datas.get(position).getId(), datas.get(position).getGroup_name());
         });
         return convertView;
     }

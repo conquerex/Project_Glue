@@ -20,6 +20,8 @@ import com.hm.project_glue.util.write.photo.GalleryListMain;
 
 import java.util.ArrayList;
 
+
+
 public class WriteActivity extends AppCompatActivity implements WritePresenter.View  {
     Button btnWrite, btnWriteBack,btnGroupSelect;
     ImageButton btnGallery;
@@ -63,15 +65,18 @@ public class WriteActivity extends AppCompatActivity implements WritePresenter.V
         });
         btnGroupSelect.setOnClickListener(v ->{
             setGroupDialog();
+
             viewgroupDialog = groupDialog.show();
         });
         btnWrite.setOnClickListener(v -> {
             //TODO
             // 사진 체크, 값 보내기
             String content = mEditText.getText().toString();
+
             if(content.equals("") || selectGroupId.equals("0")){
                 Toast.makeText(this,"input content or Select Group",Toast.LENGTH_SHORT).show();
             }else {
+
                 writePresenter.httpPosting(photosDatas, selectGroupId, content);
             }
         });
@@ -102,13 +107,17 @@ public class WriteActivity extends AppCompatActivity implements WritePresenter.V
     }
     public void checkPermissions(){
         //TODO
+
     }
+
     @Override // 이미지 결과 출력
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if( requestCode == REQ_CODE_IMAGE && data != null){
+
             ArrayList<String> result = data.getStringArrayListExtra("pathList");
+
             if( Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
                 Log.i(TAG, "Build.VERSION.SDK_INT < Build.VERSION_CODES.M");
             }
@@ -124,6 +133,7 @@ public class WriteActivity extends AppCompatActivity implements WritePresenter.V
 
                 horizontalListView.setVisibility(View.GONE);
             }
+
         }
     }
     private void showResult(ArrayList<String> paths){
@@ -139,10 +149,11 @@ public class WriteActivity extends AppCompatActivity implements WritePresenter.V
         }else {
             listAdapter.setPathList(photosDatas);
             listAdapter.notifyDataSetChanged();
+            Log.i(TAG, "listAdapter.notifyDataSetChanged();");
         }
     }
     @Override
-    public void groupChanged(String groupId, String groupName) {
+    public void groupChanged(String groupId, String groupName ) {
         btnGroupSelect.setText(groupName);
         selectGroupId = groupId;
         selectGroupName = groupName;

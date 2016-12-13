@@ -36,9 +36,12 @@ public class PhotosListAdapter extends BaseAdapter {
         img_height = dpToPx(context, 100);
 
     }
-    public void setPathList(ArrayList<String> paths){
-        this.datas = paths;
+
+    public void setPathList(ArrayList<String> datas){
+        this.datas = datas;
     }
+
+
     public int dpToPx(Context context, int dp){
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         int px = Math.round(dp * (metrics.xdpi / metrics.DENSITY_DEFAULT));
