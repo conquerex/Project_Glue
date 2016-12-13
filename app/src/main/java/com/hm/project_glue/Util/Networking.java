@@ -13,7 +13,9 @@ public class Networking {
     private Context context;
     private static SharedPreferences loginCheck;
     private static String BASE_URL = "";
-    private static int responseCode = 0;
+    private static int responseCode = 0 ;
+    private static String selectedGroupId;
+    private static String selectedGroupName;
 
     private SharedPreferences.Editor editor;
 
@@ -30,6 +32,18 @@ public class Networking {
         return loginCheck.getString("token","");
     }
 
+    public static void setGroupId(String groupId){
+        selectedGroupId = groupId;
+    }
+    public static void setGroupName(String groupName){
+        selectedGroupId = groupName;
+    }
+    public static String getGroupName(){
+        return selectedGroupName;
+    }
+    public static String getGroupId(){
+        return selectedGroupId;
+    }
     public static String getBASE_URL(){
         return BASE_URL;
     }

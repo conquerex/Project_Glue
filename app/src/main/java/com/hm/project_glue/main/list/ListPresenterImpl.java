@@ -3,10 +3,10 @@ package com.hm.project_glue.main.list;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.hm.project_glue.main.list.data.PostData;
 import com.hm.project_glue.util.Networking;
+import com.hm.project_glue.util.http.ListRestAdapter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,8 +44,9 @@ public class ListPresenterImpl implements ListPresenter {
     public void callHttp(PostData post, String GroupId){
         this.postData = post;
 
-        ProgressDialog progress = new ProgressDialog(context);
+
          new AsyncTask<String, Void, PostData>(){
+             ProgressDialog progress = new ProgressDialog(context);
             @Override
             protected PostData doInBackground(String... params) {
 
@@ -54,11 +55,9 @@ public class ListPresenterImpl implements ListPresenter {
                 queryMap.put("page", "1");
                 try {
                     final Call<PostData> response = ListRestAdapter.getInstance().getListData(authorization, GroupId, queryMap);
-                    Log.i(TAG, "final Call<PostData> ");
-                    postData = response.execute().body();
-                    Log.e(TAG,"!!!!!!!!!!!!:"+postData.getCount());
 
-                    Log.i(TAG,"results");
+                    postData = response.execute().body();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -78,7 +77,6 @@ public class ListPresenterImpl implements ListPresenter {
                 super.onPostExecute(postData);
                 progress.dismiss();
                 view.dataChanged(postData);
-
             }
         }.execute();
 
