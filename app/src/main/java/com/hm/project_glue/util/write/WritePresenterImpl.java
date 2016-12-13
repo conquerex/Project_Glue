@@ -126,6 +126,7 @@ public class WritePresenterImpl implements WritePresenter {
             public void onResponse(Call<ArrayList<GroupListResults>> call, Response<ArrayList<GroupListResults>> response) {
                 if(response.isSuccessful()) {
                     Log.i(TAG, "isSuccessful");
+
                     view.setGroupListChanged(response.body());
                 }else{
                     Log.e(TAG,response.message());

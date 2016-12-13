@@ -2,11 +2,8 @@ package com.hm.project_glue.util.write;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,6 +16,8 @@ import android.widget.Toast;
 
 import com.hm.project_glue.R;
 import com.hm.project_glue.util.write.data.GroupListResults;
+import com.yongbeam.y_photopicker.util.photopicker.PhotoPickerActivity;
+import com.yongbeam.y_photopicker.util.photopicker.utils.YPhotoPickerIntent;
 
 import java.util.ArrayList;
 
@@ -64,21 +63,19 @@ public class WriteActivity extends AppCompatActivity implements WritePresenter.V
             doTakeAlbum();
         });
         btnGroupSelect.setOnClickListener(v ->{
-            groupView = getLayoutInflater().inflate(R.layout.popupgroup, null);
-            groupListView = (ListView)groupView.findViewById(R.id.popupListView);
-            groupListView.setAdapter(popupAdapter);
-            groupDialog = new AlertDialog.Builder(this);
-            groupDialog.setView(groupView);
-            groupDialog.create();
+            setGroupDialog();
+
             viewgroupDialog = groupDialog.show();
         });
         btnWrite.setOnClickListener(v -> {
             //TODO
             // 사진 체크, 값 보내기
             String content = mEditText.getText().toString();
-            if(content.equals("")){
-                Toast.makeText(this,"input content",Toast.LENGTH_SHORT).show();
+            if(content.equals("") && selectGroupId.equals("0")){
+
+                Toast.makeText(this,"input content or Select Group",Toast.LENGTH_SHORT).show();
             }else {
+
                 writePresenter.httpPosting(photosDatas, selectGroupId, content);
             }
         });
@@ -90,11 +87,27 @@ public class WriteActivity extends AppCompatActivity implements WritePresenter.V
                 this, photosDatas, R.layout.write_photos_list_item);
         horizontalListView.setAdapter(listAdapter);
     }
-    public void doTakeAlbum(){
-        Intent intent = new Intent(Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+    private void  setGroupDialog(){
+        groupView = getLayoutInflater().inflate(R.layout.popupgroup, null);
+        groupListView = (ListView)groupView.findViewById(R.id.popupListView);
+        groupListView.setAdapter(popupAdapter);
+        groupDialog = new AlertDialog.Builder(this);
+        groupDialog.setView(groupView);
+        if(groupListDatas.size() > 0 ){
 
-        startActivityForResult(intent, REQ_CODE_IMAGE);
+        }else{
+            groupDialog.setTitle("not found Group");
+        }
+        groupDialog.create();
+    }
+    private void doTakeAlbum(){
+        YPhotoPickerIntent intent = new YPhotoPickerIntent(this);
+        intent.setMaxSelectCount(5);    //선택 가능한 체크박스 수
+        intent.setShowCamera(true);    //사진찍는 부분 추가할건지
+        intent.setShowGif(false);       //동영상 gif 포함시킬건지
+        intent.setSelectCheckBox(false);    //true 하면 사진클릭할때 무조건 체크됨. false 하면 사진클릭하면 사진확대, 체크박스에 가깝게 눌러야 체크됨.
+        intent.setMaxGrideItemCount(4); //열 개수
+        startActivityForResult(intent, REQ_CODE_IMAGE);    //REQ_CODE_IMAGE 정수
     }
     public void checkPermissions(){
             //TODO
@@ -104,8 +117,8 @@ public class WriteActivity extends AppCompatActivity implements WritePresenter.V
         super.onActivityResult(requestCode, resultCode, data);
 
         if( requestCode == REQ_CODE_IMAGE && data != null){
-            Uri imageUri = data.getData();    // Intent에서 받아온 갤러리 URI
-            String selections[] = { MediaStore.Images.Media.DATA}; // 실제 이미지 패스 데이터
+            ArrayList<String> result = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
+
             if( Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
                 Log.i(TAG, "Build.VERSION.SDK_INT < Build.VERSION_CODES.M");
             }
@@ -113,18 +126,31 @@ public class WriteActivity extends AppCompatActivity implements WritePresenter.V
                 checkPermissions();
                 Log.i(TAG, "Build.VERSION.SDK_INT > Build.VERSION_CODES.M");
             }
-            Cursor cursor = getContentResolver().query(imageUri, selections, null,null,null);
-            if(cursor.moveToNext()){
-                String imagePath = cursor.getString(0);
-                Log.i("imagePath : ", imagePath);
-                photosDatas.add(imagePath);
-            }
-            if(photosDatas.size() > 0){
+
+            if(result.size() > 0){
+                showResult(result);
                 horizontalListView.setVisibility(View.VISIBLE);
             }else{
+
                 horizontalListView.setVisibility(View.GONE);
             }
+
+        }
+    }
+    private void showResult(ArrayList<String> paths){
+        if(photosDatas == null){
+            photosDatas = new ArrayList<>();
+        }
+        photosDatas.clear();
+        photosDatas.addAll(paths);
+
+        if(listAdapter == null){
+            listAdapter  = new PhotosListAdapter(
+                    this, photosDatas, R.layout.write_photos_list_item);
+        }else {
+            listAdapter.setPathList(photosDatas);
             listAdapter.notifyDataSetChanged();
+            Log.i(TAG, "listAdapter.notifyDataSetChanged();");
         }
     }
     @Override

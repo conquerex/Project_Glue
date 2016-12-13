@@ -31,9 +31,9 @@ public class ListRestAdapter {
     public static final int READ_TIMEOUT = 5;
     private static String TAG = "TEST";
     private static OkHttpClient client;
-    private static IServerListData service;
+    private static IServerData service;
 
-    public synchronized static IServerListData getInstance(){
+    public synchronized static IServerData getInstance(){
         if(service == null) {
             // 통신 로그를 확인하기 위한 interceptor 설정
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -60,7 +60,7 @@ public class ListRestAdapter {
                     .client(client)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
-                    .create(IServerListData.class);
+                    .create(IServerData.class);
         }
         return service;
     }
