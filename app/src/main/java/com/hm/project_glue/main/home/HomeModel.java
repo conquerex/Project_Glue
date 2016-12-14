@@ -16,25 +16,4 @@ public class HomeModel {
         this.context = context;
     }
 
-    public HomeModel(int homeCardImage, String homeCardTitle) {
-        this.homeCardImage = homeCardImage;
-        this.homeCardTitle = homeCardTitle;
-    }
-
-    public int getHomeCardImage() {
-        return homeCardImage;
-    }
-
-    public void setHomeCardImage(int homeCardImage) {
-        this.homeCardImage = homeCardImage;
-    }
-
-    public String getHomeCardTitle() {
-        return homeCardTitle;
-    }
-
-    public void setHomeCardTitle(String homeCardTitle) {
-        this.homeCardTitle = homeCardTitle;
-    }
-
 }

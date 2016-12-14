@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.hm.project_glue.R;
 import com.hm.project_glue.main.home.data.IServerHomeData;
+import com.hm.project_glue.util.Networking;
 
 import java.net.CookieManager;
 import java.net.CookiePolicy;
@@ -36,10 +37,10 @@ public class HomeRestAdapter {
     private static IServerHomeData service;
 
     public synchronized static IServerHomeData getInstance(){
-        String SERVER_URL = R.string.BASE_URL + "";
-        Log.i(TAG, "----------- SERVER_URL ---- "+ SERVER_URL);
+        Log.i(TAG, "----------- getBASE_URL ---- "+ Networking.getBASE_URL());
 
-        if(service.equals(null)){
+        if(service == null){
+            Log.i(TAG, "----------- service == null");
             // 통신 로그를 확인하기 위한 interceptor 설정
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -60,7 +61,7 @@ public class HomeRestAdapter {
 
             // Retrofit 설정
             service = new Retrofit.Builder()
-                    .baseUrl(SERVER_URL)
+                    .baseUrl(Networking.getBASE_URL())
                     .client(client)
                     .addConverterFactory(GsonConverterFactory.create()) // json 응답 변환. Json Parser 추가
                     .build().create(IServerHomeData.class); //인터페이스 연결
@@ -75,7 +76,8 @@ public class HomeRestAdapter {
         X509TrustManager x509TrustManager = new X509TrustManager() {
             @Override
             public X509Certificate[] getAcceptedIssuers() {
-                return null;
+                //return null;
+                return new X509Certificate[0];
             }
 
             @Override

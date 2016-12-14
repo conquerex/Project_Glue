@@ -24,7 +24,6 @@ public class SignUpPresenterImpl implements SignUpPresenter {
     private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z|A-Z])(?=.*[~'!@`#$%?\\\\\\/&*\\]|\\[=()}\"{+_:;,.><'-])).{8,}";
     private static final String EMAIL_PATTERN = "[\\w\\~\\-\\.]+@[\\w\\~\\-]+(\\.[\\w\\~\\-]+)+";
 
-
     // 모든 기능은 MVP를 따르며 현재 SignUpPresenterImpl가 Presenter 역할을 한다
     // SignUp Model
     private SignUpModel signUpModel;
