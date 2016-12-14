@@ -78,7 +78,7 @@ public class HomePresenterImpl implements HomePresenter {
                 super.onPostExecute(res);
                 Log.i(TAG, "----------- onPostExecute ------- " + res.getHomeResponses());
                 progress.dismiss();
-                // view.dataChanged(res);
+                view.dataChanged(res);
             }
 
         }.execute();
