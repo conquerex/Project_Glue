@@ -15,7 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.hm.project_glue.R;
-import com.hm.project_glue.util.write.data.GroupResponse;
+import com.hm.project_glue.main.home.data.Response;
 import com.hm.project_glue.util.write.photo.GalleryListMain;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class WriteActivity extends AppCompatActivity implements WritePresenter.V
     PhotosListAdapter listAdapter;
     PopupListAdapter popupAdapter;
     ArrayList<String> photosDatas;
-    ArrayList<GroupResponse> groupListDatas;
+    ArrayList<Response> groupListDatas;
     AlertDialog.Builder groupDialog =null;
     AlertDialog viewgroupDialog;
     int REQ_CODE_IMAGE = 1;
@@ -160,7 +160,7 @@ public class WriteActivity extends AppCompatActivity implements WritePresenter.V
         viewgroupDialog.dismiss();
     }
     @Override
-    public void setGroupListChanged(ArrayList<GroupResponse> results) {
+    public void setGroupListChanged(ArrayList<Response> results) {
         groupListDatas.addAll(results);
         popupAdapter.notifyDataSetChanged();
     }

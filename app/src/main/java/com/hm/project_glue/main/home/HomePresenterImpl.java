@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.hm.project_glue.main.home.data.HomeData;
+import com.hm.project_glue.main.home.data.Response;
 import com.hm.project_glue.util.Networking;
 
 import retrofit2.Call;
@@ -20,7 +21,7 @@ public class HomePresenterImpl implements HomePresenter {
     private HomeModel model;
     private HomePresenter.View view;
     Context context;
-
+    HomeData res;
 
     // 2016.12.06
     public HomePresenterImpl(HomeFragment fragment) {
@@ -41,7 +42,7 @@ public class HomePresenterImpl implements HomePresenter {
         ProgressDialog progress = new ProgressDialog(context);
         Log.i(TAG, "----------- after progress");
         new AsyncTask<String, Void, HomeData>(){
-            HomeData res;
+
             @Override
             protected HomeData doInBackground(String... params) {
                 String token = "Token "+ Networking.getToken();
@@ -50,6 +51,11 @@ public class HomePresenterImpl implements HomePresenter {
                 try{
                     final Call<HomeData> response = HomeRestAdapter.getInstance().getData(token);
                     res = response.execute().body();
+                    Log.i(TAG, "res.getResponse().size():   "+res.getResponse().size());
+                    for(Response s : res.getResponse()){
+                        Log.i(TAG, "Response s :"+s.getGroup_name());
+                    }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

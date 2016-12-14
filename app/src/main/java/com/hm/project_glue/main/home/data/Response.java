@@ -12,7 +12,7 @@ public class Response
 
     private String id;
 
-    private ArrayList<String> lastest_posts;
+    private ArrayList<Lastest_posts> Lastest_posts;
 
     private String group_image;
 
@@ -46,14 +46,14 @@ public class Response
         this.id = id;
     }
 
-    public ArrayList<String>  getLastest_posts ()
+    public ArrayList<Lastest_posts>  getLastest_posts ()
     {
-        return lastest_posts;
+        return Lastest_posts;
     }
 
-    public void setLastest_posts (ArrayList<String>  lastest_posts)
+    public void setLastest_posts (ArrayList<Lastest_posts>  Lastest_posts)
     {
-        this.lastest_posts = lastest_posts;
+        this.Lastest_posts = Lastest_posts;
     }
 
     public String getGroup_image ()
@@ -119,6 +119,6 @@ public class Response
     @Override
     public String toString()
     {
-        return "ClassPojo [group_name = "+group_name+", id = "+id+", lastest_posts = "+lastest_posts+", group_image = "+group_image+", post_count = "+post_count+", user_count = "+user_count+", last_updated = "+last_updated+", members = "+members+", master = "+master+"]";
+        return "ClassPojo [group_name = "+group_name+", id = "+id+", lastest_posts = "+Lastest_posts+", group_image = "+group_image+", post_count = "+post_count+", user_count = "+user_count+", last_updated = "+last_updated+", members = "+members+", master = "+master+"]";
     }
 }
