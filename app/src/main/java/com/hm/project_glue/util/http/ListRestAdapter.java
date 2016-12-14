@@ -1,7 +1,6 @@
-package com.hm.project_glue.main.list;
+package com.hm.project_glue.util.http;
 
 import com.hm.project_glue.util.Networking;
-import com.hm.project_glue.main.list.data.IServerListData;
 
 import java.net.CookieManager;
 import java.net.CookiePolicy;
@@ -28,13 +27,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ListRestAdapter {
 
     public static final int CONNECT_TIMEOUT = 3;
-    public static final int WRITE_TIMEOUT = 5;
-    public static final int READ_TIMEOUT = 3;
+    public static final int WRITE_TIMEOUT = 10;
+    public static final int READ_TIMEOUT = 5;
     private static String TAG = "TEST";
     private static OkHttpClient client;
-    private static IServerListData service;
+    private static IServerData service;
 
-    public synchronized static IServerListData getInstance(){
+    public synchronized static IServerData getInstance(){
         if(service == null) {
             // 통신 로그를 확인하기 위한 interceptor 설정
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -61,7 +60,7 @@ public class ListRestAdapter {
                     .client(client)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
-                    .create(IServerListData.class);
+                    .create(IServerData.class);
         }
         return service;
     }

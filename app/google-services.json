@@ -1,0 +1,104 @@
+{
+  "project_info": {
+    "project_number": "942568093817",
+    "firebase_url": "https://fckorea-2dab1.firebaseio.com",
+    "project_id": "fckorea-2dab1",
+    "storage_bucket": "fckorea-2dab1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:942568093817:android:11131d470fcb76d6",
+        "android_client_info": {
+          "package_name": "com.baekcedar.android.firebase_database"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "942568093817-hjj44v1k18a59qti9o0eiuif435s9bvv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtD4HE2TTTw7_6EhP9WX-OXovp5RhF-1g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:942568093817:android:4f7e4721fff26542",
+        "android_client_info": {
+          "package_name": "com.baekcedar.android.firebase_message"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "942568093817-hjj44v1k18a59qti9o0eiuif435s9bvv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtD4HE2TTTw7_6EhP9WX-OXovp5RhF-1g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:942568093817:android:7aef65e8208c30b4",
+        "android_client_info": {
+          "package_name": "com.baekcedar.android.firebase_auth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "942568093817-hjj44v1k18a59qti9o0eiuif435s9bvv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtD4HE2TTTw7_6EhP9WX-OXovp5RhF-1g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

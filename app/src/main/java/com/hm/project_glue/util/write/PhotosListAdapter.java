@@ -36,6 +36,12 @@ public class PhotosListAdapter extends BaseAdapter {
         img_height = dpToPx(context, 100);
 
     }
+
+    public void setPathList(ArrayList<String> datas){
+        this.datas = datas;
+    }
+
+
     public int dpToPx(Context context, int dp){
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         int px = Math.round(dp * (metrics.xdpi / metrics.DENSITY_DEFAULT));
@@ -64,12 +70,16 @@ public class PhotosListAdapter extends BaseAdapter {
             convertView = inflater.inflate(gridItem, null);
         }
         ImageView itemImg = (ImageView) convertView.findViewById(R.id.imgGridItem);
-        Bitmap image_bitmap 	= BitmapFactory.decodeFile(imagePath);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 4;
+        Bitmap src = BitmapFactory.decodeFile(imagePath, options);
+        Bitmap resized = Bitmap.createScaledBitmap(src, 400, 500, true);
+
         Log.i("TEST", "img_height:"+img_height);
 
 
 //        Bitmap resize = Bitmap.createScaledBitmap(image_bitmap,image_bitmap.getWidth(),img_height,true);
-        itemImg.setImageBitmap(image_bitmap);
+        itemImg.setImageBitmap(resized);
         return convertView;
     }
 }
