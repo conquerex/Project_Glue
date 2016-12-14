@@ -42,9 +42,11 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     private final String PreferenceName ="localLoginCheck";
     public static String TAG = "TEST";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if(savedInstanceState!=null) {
             finish();
             return;
