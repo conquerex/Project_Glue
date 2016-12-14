@@ -18,6 +18,7 @@ public interface WritePresenter{
         void writeResult(int Code);
         void groupChanged(String groupId, String groupName);
         void setGroupListChanged(ArrayList<GroupResponse> results);
+        void progressShow(boolean status);
     }
 
 

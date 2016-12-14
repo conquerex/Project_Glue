@@ -1,5 +1,6 @@
 package com.hm.project_glue.util.write;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -38,6 +39,7 @@ public class WriteActivity extends AppCompatActivity implements WritePresenter.V
     AlertDialog viewgroupDialog;
     int REQ_CODE_IMAGE = 1;
     WritePresenterImpl writePresenter;
+    ProgressDialog progress;
     private String selectGroupId ="0";
     private String selectGroupName ="GROUP";
     public final static String TAG= "TEST";
@@ -164,6 +166,22 @@ public class WriteActivity extends AppCompatActivity implements WritePresenter.V
         groupListDatas.addAll(results);
         popupAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void progressShow(boolean status) {
+        if(status){
+            progress = new ProgressDialog(context);
+            progress.setMessage("Upload....");
+            progress.setProgressStyle((ProgressDialog.STYLE_SPINNER));
+            progress.setCancelable(false);
+            progress.show();
+        }else{
+            if(progress != null) {
+                progress.dismiss();
+            }
+        }
+    }
+
     @Override
     public void writeResult(int code){
         Log.i(TAG, "writeResult:"+code);

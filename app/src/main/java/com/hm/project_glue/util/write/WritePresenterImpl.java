@@ -1,22 +1,20 @@
 package com.hm.project_glue.util.write;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.hm.project_glue.main.list.data.PostData;
 import com.hm.project_glue.util.Networking;
 import com.hm.project_glue.util.http.ListRestAdapter;
 import com.hm.project_glue.util.write.data.GroupListData;
 
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,75 +40,144 @@ public class WritePresenterImpl implements WritePresenter {
     @Override
     public void httpPosting(ArrayList<String> photosPath, String groupId, String content){
             Log.i(TAG, "httpPosting");
-        new AsyncTask<String, Void, String>(){
-            ProgressDialog progress = new ProgressDialog(context);
-            String MULTIPART_FORM_DATA = "multipart/form-data";
-            String authorization = "Token "+Networking.getToken();
+        new AsyncTask<String, Void, Integer>(){
+            String boundary="----------";
+            String lineEnd = "\r\n";
+            String twoHyphens = "--";
+            int maxBufferSize = 1 * 1024 * 1024;
+            int bufferSize;
+            public static final int MAX_READ_TIME = 10000;
+            public static final int MAX_CONNECT_TIME = 15000;
             int responseCode = 0;
             @Override
-            protected String doInBackground(String... params) {
-                Map<String, RequestBody> files  = new HashMap<>();
-                Map<String, RequestBody> getParams = new HashMap<>();
-                Log.i(TAG,"doInBackground");
+            protected Integer doInBackground(String... params) {
+                int responeCode = 0;
+
                 try {
-                    for (String photoPath : photosPath) {
-                        Log.i(TAG,"for photoPath:" +photoPath);
-                        File file = new File(photoPath);
-                        if (file.exists()) {
-                            Log.i(TAG, "file.exists():"+photoPath);
-                            files.put("photos",RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), file));
+                    URL connectUrl = new URL(Networking.getBASE_URL() + "/posts/post_list/" + groupId + "/");
+                    HttpURLConnection conn = (HttpURLConnection) connectUrl.openConnection();
+                    conn.setDoOutput(true);
+                    conn.setDoInput(true);
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+                    conn.setRequestProperty("Content-Type","multipart/form-data; boundary="+boundary);
+                    conn.setRequestProperty("Authorization", "Token "+Networking.getToken());
+                    conn.setRequestProperty("cache-control", "no-cache");
+                    conn.connect();
+
+                    DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
+
+                    dos.writeBytes("\r\n--" + boundary + "\r\n");
+                    dos.writeBytes("Content-Disposition: form-data; name=\"content\"\r\n\r\n" + content);
+                    dos.writeBytes("\r\n--" + boundary + "\r\n");
+                    dos.writeBytes("Content-Disposition: form-data; name=\"group\"\r\n\r\n" + groupId);
+
+                    //photo가 있으면
+                    for(String photopath : photosPath){
+                        Log.i(TAG,"for / photopath:"+photopath);
+                        dos = new DataOutputStream(conn.getOutputStream());
+                        File file = new File(photopath);
+                        if(file.exists()){
+                            Log.i(TAG,"file.exists()");
                         }
+                        FileInputStream mFileInputStream = new FileInputStream(file);
+
+                        dos.writeBytes("\r\n--" + boundary + "\r\n");
+                        dos.writeBytes("Content-Disposition: form-data; name=\"photos\";filename=\"" + photopath + "\"" + lineEnd);
+                        dos.writeBytes("Content-Type: application/octet-stream" + lineEnd);
+                        dos.writeBytes(lineEnd);
+
+                        int bytesAvailable = mFileInputStream.available();
+                        bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                        byte[] buffer = new byte[bufferSize];
+                        int bytesRead = mFileInputStream.read(buffer, 0, bufferSize);
+                        while (bytesRead > 0)
+                        {
+                            Log.i(TAG, "bytesRead: "+bytesRead);
+                            dos.write(buffer, 0, bufferSize);
+                            bytesAvailable = mFileInputStream.available();
+                            bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                            bytesRead = mFileInputStream.read(buffer, 0, bufferSize);
+
+                        }
+                        mFileInputStream.close();
                     }
-                    Log.i(TAG,"doInBackground try");
-                    getParams.put("group",RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), groupId));
-                    getParams.put("content",RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), content));
-                    final Call<PostData> response = ListRestAdapter.getInstance().postingData(
-                            authorization, groupId, getParams, files);
 
-                    response.enqueue(new Callback<PostData>() {
-                        @Override
-                        public void onResponse(Call<PostData> call, Response<PostData> res) {
-                            responseCode = res.code();
-                            if(res.isSuccessful()){
-                                Log.i(TAG,"isSuccessful");
-                            }
-                            if(res.code() != 200){
-                                Log.i(TAG,"resCode:"+res.code());
-                                onPreExecute();
-
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<PostData> call, Throwable t) {
-                            Log.i(TAG,"onFailure");
-                        }
-                    });
-
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.i(TAG,"catch (Exception e)" );
+                    dos.writeBytes(lineEnd);
+                    dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+                    dos.flush();
+                    if(conn.getResponseCode() == 200 ||conn.getResponseCode() == 201 ){
+                        Log.i(TAG,"conn.getResponseCode(): "+conn.getResponseCode() );
+                        responeCode = conn.getResponseCode() ;
+                    }else{
+                        Log.i(TAG,"conn.getResponseCode(): "+conn.getResponseCode() );
+                        responeCode = conn.getResponseCode() ;
+                    }
+                }catch(Exception e){
+                    Log.e(TAG,e.getMessage());
                 }
-                return "";
+                Log.i(TAG,"doInBackground");
+//                try {
+//                    for (String photoPath : photosPath) {
+//                        Log.i(TAG,"for photoPath:" +photoPath);
+//
+//                        File file = new File(photoPath);
+//                        if (file.exists()) {
+//                            Log.i(TAG, "file.exists():"+photoPath);
+//                            RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);
+//                            getParams.put("photos", fileBody);
+//                        }
+//                    }
+//                    getParams.put("group",RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), groupId));
+//                    getParams.put("content",RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), content));
+//                    final Call<PostData> response = ListRestAdapter.getInstance().postingData(
+//                            authorization, groupId, getParams);
+//
+//                    response.enqueue(new Callback<PostData>() {
+//                        @Override
+//                        public void onResponse(Call<PostData> call, Response<PostData> res) {
+//                            responseCode = res.code();
+//                            if(res.isSuccessful()){
+//                                Log.i(TAG,"isSuccessful");
+//                            }
+//                            if(res.code() != 200){
+//                                Log.i(TAG,"resCode:"+res.code());
+//                                onPreExecute();
+//
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<PostData> call, Throwable t) {
+//                            Log.i(TAG,"onFailure");
+//                        }
+//                    });
+//
+//
+//
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                    Log.i(TAG,"catch (Exception e)" );
+//                }
+                return responeCode;
             }
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
 
-                progress.setMessage("Upload....");
-                progress.setProgressStyle((ProgressDialog.STYLE_SPINNER));
-                progress.setCancelable(false);
-                progress.show();
+            @Override
+            protected void onPostExecute(Integer code) {
+                super.onPostExecute(code);
+                view.progressShow(false);
                 Log.i(TAG,"onPostExecute");
+                view.writeResult(responseCode);
             }
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                progress.dismiss();
-                view.writeResult(responseCode);
+                view.progressShow(true);
                 Log.i(TAG,"onPreExecute");
+            }
+            @Override
+            protected void onProgressUpdate(Void... values) {
+                super.onProgressUpdate(values);
             }
         }.execute();
 

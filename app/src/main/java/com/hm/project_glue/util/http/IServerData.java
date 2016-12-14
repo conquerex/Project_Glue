@@ -96,9 +96,7 @@ public interface IServerData {
     @POST("/posts/post_list/{groupId}/")
     Call<PostData> postingData(     @Header("Authorization") String authorization,
                                     @Path("groupId") String groupId,
-                               //content, group
-                                    @PartMap Map<String, RequestBody> params,
-                                    @PartMap Map<String, RequestBody> photos);
+                                    @PartMap Map<String, RequestBody> params);
     // Post 목록 보기  QueryMap-> ex) page=2
     @GET("/posts/post_list/{groupId}/")
     Call<PostData> getListData(     @Header("Authorization") String authorization,

@@ -24,7 +24,7 @@ public class ListPresenterImpl implements ListPresenter {
     private ListPresenter.View view;
     private static final String TAG = "TEST";
     Context context;
-    PostData postData;
+
 
     public ListPresenterImpl(ListFragment fragment) {
         this.fragment=fragment;
@@ -41,11 +41,10 @@ public class ListPresenterImpl implements ListPresenter {
     }
 
     @Override
-    public void callHttp(PostData post, String GroupId){
-        this.postData = post;
-
+    public void callHttp(String GroupId){
 
          new AsyncTask<String, Void, PostData>(){
+             PostData postData;
              ProgressDialog progress = new ProgressDialog(context);
             @Override
             protected PostData doInBackground(String... params) {

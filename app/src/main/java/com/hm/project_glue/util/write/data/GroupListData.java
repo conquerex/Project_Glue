@@ -9,14 +9,14 @@ import java.util.ArrayList;
 public class GroupListData {
 
 
-    ArrayList<GroupResponse> Response;
+    ArrayList<Response> Response;
 
-    public ArrayList<GroupResponse>  getResults ()
+    public ArrayList<Response>  getResults ()
     {
         return Response;
     }
 
-    public void setResults (ArrayList<GroupResponse>  results)
+    public void setResults (ArrayList<Response>  results)
     {
         this.Response = results;
     }
