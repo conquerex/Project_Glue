@@ -1,6 +1,5 @@
 package com.hm.project_glue.main.home;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -37,43 +36,29 @@ public class HomePresenterImpl implements HomePresenter {
     // 2016.12.06
     @Override
     public void callHttp() {
-        Log.i(TAG, "----------- callHttp");
-        ProgressDialog progress = new ProgressDialog(context);
-        Log.i(TAG, "----------- after progress");
         new AsyncTask<String, Void, HomeData>(){
-
             @Override
             protected HomeData doInBackground(String... params) {
                 String token = "Token "+ Networking.getToken();
-                Log.i(TAG, "----------- token ---- "+ token);
                 HomeData res=null;
                 try{
                     final Call<HomeData> response = HomeRestAdapter.getInstance().getData(token);
                     res = response.execute().body();
+
                 } catch (Exception e) {
                     Log.e(TAG, e.getMessage());
                 }
-
                 return res;
             }
-
             @Override
             protected void onPreExecute() {
                 Log.i(TAG, "----------- in onPreExecute");
                 super.onPreExecute();
                 //TODO  메인쓰레드 프로그래스 바 보여주기
-                progress.setMessage("Loging....");
-                progress.setProgressStyle((ProgressDialog.STYLE_SPINNER));
-                progress.setCancelable(false);
-                progress.show();
-                Log.i(TAG, "----------- end of onPreExecute");
-
             }
-
             @Override
             protected void onPostExecute(HomeData res) {
                 super.onPostExecute(res);
-                progress.dismiss();
                 view.dataChanged(res);
             }
         }.execute();

@@ -4,9 +4,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.hm.project_glue.main.home.data.HomeData;
 import com.hm.project_glue.util.Networking;
 import com.hm.project_glue.util.http.ListRestAdapter;
-import com.hm.project_glue.util.write.data.GroupListData;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -188,20 +188,20 @@ public class WritePresenterImpl implements WritePresenter {
         String authorization = "Token "+ Networking.getToken();
         Log.i(TAG, "groupListCallHttp");
 
-        final Call<GroupListData> response = ListRestAdapter.getInstance().getGroupListData(authorization);
-        response.enqueue(new Callback<GroupListData>() {
+        final Call<HomeData> response = ListRestAdapter.getInstance().getGroupListData(authorization);
+        response.enqueue(new Callback<HomeData>() {
             @Override
-            public void onResponse(Call<GroupListData> call, Response<GroupListData> response) {
+            public void onResponse(Call<HomeData> call, Response<HomeData> response) {
                 if(response.isSuccessful()) {
                     Log.i(TAG, "isSuccessful");
-                    view.setGroupListChanged(response.body().getResults());
+                    view.setGroupListChanged(response.body().getResponse());
 
                 }else{
                     Log.e(TAG,response.message());
                 }
             }
             @Override
-            public void onFailure(Call<GroupListData> call, Throwable t) {
+            public void onFailure(Call<HomeData> call, Throwable t) {
 
                 Log.i(TAG, "onFailure:"+ t.getMessage());
             }

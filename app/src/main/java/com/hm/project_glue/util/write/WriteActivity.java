@@ -16,7 +16,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.hm.project_glue.R;
-import com.hm.project_glue.util.write.data.Response;
+
+import com.hm.project_glue.main.home.data.Response;
+
 import com.hm.project_glue.util.write.photo.GalleryListMain;
 
 import java.util.ArrayList;

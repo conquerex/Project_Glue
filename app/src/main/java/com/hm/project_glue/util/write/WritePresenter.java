@@ -1,8 +1,6 @@
 package com.hm.project_glue.util.write;
 
-
-import com.hm.project_glue.util.write.data.Response;
-
+import com.hm.project_glue.main.home.data.Response;
 import java.util.ArrayList;
 
 /**
@@ -19,6 +17,7 @@ public interface WritePresenter{
         void groupChanged(String groupId, String groupName);
         void setGroupListChanged(ArrayList<Response> results);
         void progressShow(boolean status);
+
     }
 
 

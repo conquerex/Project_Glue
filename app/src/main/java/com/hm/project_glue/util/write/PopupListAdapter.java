@@ -7,7 +7,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.hm.project_glue.R;
-import com.hm.project_glue.util.write.data.Response;
+
+import com.hm.project_glue.main.home.data.Response;
 
 import java.util.ArrayList;
 
