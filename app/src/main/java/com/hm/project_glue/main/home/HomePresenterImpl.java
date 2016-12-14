@@ -71,6 +71,7 @@ public class HomePresenterImpl implements HomePresenter {
                 progress.setCancelable(false);
                 progress.show();
                 Log.i(TAG, "----------- end of onPreExecute");
+
             }
 
             @Override
