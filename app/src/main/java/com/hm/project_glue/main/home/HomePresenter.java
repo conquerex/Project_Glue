@@ -8,10 +8,10 @@ import com.hm.project_glue.main.home.data.HomeData;
 
 public interface HomePresenter {
     void setView(HomePresenter.View view);
-    void callHttp(HomeData homeData);
+    void callHttp();
 
     // setView로 부르기 위해 임시로 만든 View
-    public interface View {
-        void dataChanged(HomeData homeData);
+    interface View {
+        void dataChanged(HomeData res);
     }
 }

@@ -1,32 +1,27 @@
 package com.hm.project_glue.main.home.data;
 
-import android.util.Log;
 import java.util.ArrayList;
 
 /**
  * Created by jongkook on 2016. 12. 7..
  */
-public class HomeData {
-    private static final String TAG = "HomeData";
-    ArrayList<HomeResponse> homeResponses;
+public class HomeData
+{
+    private ArrayList<Response> Response;
 
-    public HomeData() {
-        Log.i(TAG, "----------- HomeData");
+    public ArrayList<Response> getResponse ()
+    {
+        return Response;
     }
 
-    public static HomeData newHomeInstance(){
-        return new HomeData();
+    public void setResponse (ArrayList<Response> Response)
+    {
+        this.Response = Response;
     }
 
-    public static ArrayList<HomeResponse> newArrayListHomeInstance(){
-        return new ArrayList<HomeResponse>();
-    }
-
-    public ArrayList<HomeResponse> getHomeResponses() {
-        return homeResponses;
-    }
-
-    public void setHomeResponses(ArrayList<HomeResponse> homeResponses) {
-        this.homeResponses = homeResponses;
+    @Override
+    public String toString()
+    {
+        return "ClassPojo [Response = "+Response+"]";
     }
 }

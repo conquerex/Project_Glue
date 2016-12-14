@@ -1,32 +1,30 @@
 package com.hm.project_glue.main.home.data;
 
+import java.util.ArrayList;
+
 /**
- * Created by jongkook on 2016. 12. 13..
+ * Created by HM on 2016-12-14.
  */
 
-public class HomeResponse {
+public class Response
+{
+    private String group_name;
 
     private String id;
-    private String group_name;
+
+    private ArrayList<String> lastest_posts;
+
     private String group_image;
-    private String last_updated;
-    private String user_count;
-    private String master;
-    private String[] members;
+
     private String post_count;
-    private String[] lastest_posts;
 
-    public HomeResponse() {
+    private String user_count;
 
-    }
+    private String last_updated;
 
-    public String[] getLastest_posts() {
-        return lastest_posts;
-    }
+    private ArrayList<String> members;
 
-    public void setLastest_posts(String[] lastest_posts) {
-        this.lastest_posts = lastest_posts;
-    }
+    private String master;
 
     public String getGroup_name ()
     {
@@ -48,10 +46,20 @@ public class HomeResponse {
         this.id = id;
     }
 
-    public String getGroup_image ()
+    public ArrayList<String>  getLastest_posts ()
     {
-        return group_image;
+        return lastest_posts;
     }
+
+    public void setLastest_posts (ArrayList<String>  lastest_posts)
+    {
+        this.lastest_posts = lastest_posts;
+    }
+
+    public String getGroup_image ()
+{
+    return group_image;
+}
 
     public void setGroup_image (String group_image)
     {
@@ -88,12 +96,12 @@ public class HomeResponse {
         this.last_updated = last_updated;
     }
 
-    public String[] getMembers ()
+    public ArrayList<String>  getMembers ()
     {
         return members;
     }
 
-    public void setMembers (String[] members)
+    public void setMembers (ArrayList<String>  members)
     {
         this.members = members;
     }
@@ -108,4 +116,9 @@ public class HomeResponse {
         this.master = master;
     }
 
+    @Override
+    public String toString()
+    {
+        return "ClassPojo [group_name = "+group_name+", id = "+id+", lastest_posts = "+lastest_posts+", group_image = "+group_image+", post_count = "+post_count+", user_count = "+user_count+", last_updated = "+last_updated+", members = "+members+", master = "+master+"]";
+    }
 }

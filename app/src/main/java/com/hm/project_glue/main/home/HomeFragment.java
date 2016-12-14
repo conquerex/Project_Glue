@@ -25,8 +25,7 @@ import com.bumptech.glide.request.target.Target;
 import com.hm.project_glue.R;
 import com.hm.project_glue.main.MainActivity;
 import com.hm.project_glue.main.home.data.HomeData;
-import com.hm.project_glue.main.OnFragmentInteractionListener;
-import com.hm.project_glue.main.home.data.HomeResponse;
+import com.hm.project_glue.main.home.data.Response;
 
 import java.util.ArrayList;
 
@@ -38,11 +37,9 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
     private LinearLayoutManager linearLayoutManager;
     private HomePresenter homePresenter;
     private RecyclerView recyclerView;
-    public static ArrayList<HomeResponse> homeResponses = null;
-    private HomeData homeData;
+    public static ArrayList<Response> homeResponses = null;
     HomeRecyclerAdapter adapter;
 
-    private OnFragmentInteractionListener mListener;
     public HomeFragment() {
 
     }
@@ -59,10 +56,7 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
             return;
         }
         homePresenter = new HomePresenterImpl(HomeFragment.this);
-
         homePresenter.setView(this);
-        homeData = HomeData.newHomeInstance();
-        Log.i(TAG, "----------- HomeData.newHomeInstance ----- " + homeData.getHomeResponses());
         homeResponses = new ArrayList<>();
         Log.i(TAG, "----------- onCreate");
     }
@@ -73,7 +67,7 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         Log.i(TAG, "----------- onCreateView");
         if(savedInstanceState == null){
-            homePresenter.callHttp(homeData);
+            homePresenter.callHttp();
         }
         FloatingActionButton fab;
 
@@ -105,17 +99,17 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
 
     @Override
     public void dataChanged(HomeData res) {
-        Log.i(TAG, "----------- dataChanged --- " + res.getHomeResponses());
-        homeResponses.addAll(res.getHomeResponses());
+        homeResponses.addAll(res.getResponse());
         adapter.notifyDataSetChanged();
+        Log.i("TEST", "dataChanged");
     }
 
     private static class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder>{
-        ArrayList<HomeResponse> datas;
+        ArrayList<Response> datas;
         int itemLayout;
         Context context;
 
-        public HomeRecyclerAdapter(ArrayList<HomeResponse> datas, int itemLayout, Context context) {
+        public HomeRecyclerAdapter(ArrayList<Response> datas, int itemLayout, Context context) {
             this.datas = datas;
             this.itemLayout = itemLayout;
             this.context = context;
@@ -130,7 +124,7 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            HomeResponse response = datas.get(position);
+            Response response = datas.get(position);
 
             holder.ivHomeCard.setOnClickListener(new View.OnClickListener(){
                 @Override
@@ -141,12 +135,11 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
 
             Log.i(TAG, "----------- onBindViewHolder");
 
-            String url="";
-            if(response.getGroup_image().isEmpty()){
-                url = "";
-                holder.ivHomeCard.setVisibility(View.GONE);
+
+            if(response.getGroup_image()==null){
+                Glide.with(context).load(R.drawable.sample_card_img2).into(holder.ivHomeCard);
             }else{
-                url = response.getGroup_image();
+                String url = response.getGroup_image();
                 Log.i(TAG, "----------- image URL ---- "+ url);
                 Glide.with(context).load(url).listener(new RequestListener<String, GlideDrawable>() {
                     @Override

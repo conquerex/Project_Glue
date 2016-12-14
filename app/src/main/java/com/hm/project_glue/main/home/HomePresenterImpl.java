@@ -5,10 +5,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.hm.project_glue.util.Networking;
 import com.hm.project_glue.main.home.data.HomeData;
-import java.util.HashMap;
-import java.util.Map;
+import com.hm.project_glue.util.Networking;
 
 import retrofit2.Call;
 
@@ -22,7 +20,7 @@ public class HomePresenterImpl implements HomePresenter {
     private HomeModel model;
     private HomePresenter.View view;
     Context context;
-    HomeData homeData;
+
 
     // 2016.12.06
     public HomePresenterImpl(HomeFragment fragment) {
@@ -38,27 +36,25 @@ public class HomePresenterImpl implements HomePresenter {
 
     // 2016.12.06
     @Override
-    public void callHttp(HomeData data) {
-        this.homeData = data;
+    public void callHttp() {
         Log.i(TAG, "----------- callHttp");
         ProgressDialog progress = new ProgressDialog(context);
         Log.i(TAG, "----------- after progress");
         new AsyncTask<String, Void, HomeData>(){
+            HomeData res;
             @Override
             protected HomeData doInBackground(String... params) {
                 String token = "Token "+ Networking.getToken();
                 Log.i(TAG, "----------- token ---- "+ token);
-                Map<String, String> queryMap = new HashMap<>();
 
                 try{
-                    final Call<HomeData> response = HomeRestAdapter.getInstance().getData(token, queryMap);
-                    Log.i(TAG, "----------- response.execute().body() --- "+response.execute().body());
-                    homeData = response.execute().body();
+                    final Call<HomeData> response = HomeRestAdapter.getInstance().getData(token);
+                    res = response.execute().body();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                return homeData;
+                return res;
             }
 
             @Override
@@ -77,11 +73,9 @@ public class HomePresenterImpl implements HomePresenter {
             @Override
             protected void onPostExecute(HomeData res) {
                 super.onPostExecute(res);
-                Log.i(TAG, "----------- onPostExecute ------- " + res.getHomeResponses());
                 progress.dismiss();
                 view.dataChanged(res);
             }
-
         }.execute();
     }
 }
