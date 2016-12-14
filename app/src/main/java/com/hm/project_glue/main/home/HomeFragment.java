@@ -99,9 +99,12 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
 
     @Override
     public void dataChanged(HomeData res) {
-        homeResponses.addAll(res.getResponse());
-        adapter.notifyDataSetChanged();
-        Log.i("TEST", "dataChanged");
+        try{
+            homeResponses.addAll(res.getResponse());
+            adapter.notifyDataSetChanged();
+        }catch (Exception e){
+            Log.e("TEST", e.getMessage());
+        }
     }
 
     private static class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder>{

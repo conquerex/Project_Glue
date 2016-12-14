@@ -41,17 +41,17 @@ public class HomePresenterImpl implements HomePresenter {
         ProgressDialog progress = new ProgressDialog(context);
         Log.i(TAG, "----------- after progress");
         new AsyncTask<String, Void, HomeData>(){
-            HomeData res;
+
             @Override
             protected HomeData doInBackground(String... params) {
                 String token = "Token "+ Networking.getToken();
                 Log.i(TAG, "----------- token ---- "+ token);
-
+                HomeData res=null;
                 try{
                     final Call<HomeData> response = HomeRestAdapter.getInstance().getData(token);
                     res = response.execute().body();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Log.e(TAG, e.getMessage());
                 }
 
                 return res;

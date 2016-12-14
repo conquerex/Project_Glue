@@ -7,9 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.hm.project_glue.R;
-
-import com.hm.project_glue.util.write.data.GroupResponse;
-
+import com.hm.project_glue.util.write.data.Response;
 
 import java.util.ArrayList;
 
@@ -20,13 +18,13 @@ import java.util.ArrayList;
 
 public class PopupListAdapter extends BaseAdapter{
 
-    ArrayList<GroupResponse> datas;
+    ArrayList<Response> datas;
     LayoutInflater inflater;
     Context context;
 
 
 
-    PopupListAdapter(Context context, ArrayList<GroupResponse> datas){ //생성자
+    PopupListAdapter(Context context, ArrayList<Response> datas){ //생성자
 
         this.context = context;
         this.datas = datas;
