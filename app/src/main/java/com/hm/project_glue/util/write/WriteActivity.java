@@ -36,7 +36,7 @@ public class WriteActivity extends AppCompatActivity implements WritePresenter.V
     ArrayList<GroupResponse> groupListDatas;
     AlertDialog.Builder groupDialog =null;
     AlertDialog viewgroupDialog;
-    int REQ_CODE_IMAGE = 1;
+    int REQ_CODE_IMAGE = 10;
     WritePresenterImpl writePresenter;
     private String selectGroupId ="0";
     private String selectGroupName ="GROUP";

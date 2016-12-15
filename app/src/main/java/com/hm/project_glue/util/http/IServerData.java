@@ -1,5 +1,6 @@
 package com.hm.project_glue.util.http;
 
+import com.hm.project_glue.main.info.Data.InfoData;
 import com.hm.project_glue.main.list.data.PostData;
 import com.hm.project_glue.util.write.data.GroupListData;
 import com.hm.project_glue.util.write.data.GroupListResults;
@@ -16,6 +17,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -26,7 +28,7 @@ import retrofit2.http.QueryMap;
  */
 
 public interface IServerData {
-    /******************************** Member API ********************************/
+/******************************** Member API ********************************/
     //회원가입
     @Multipart
     @POST("/member/signup/")
@@ -40,22 +42,31 @@ public interface IServerData {
     Call<String> loginData( @Field("phone_number") String phone_number,
                             @Field("password") String password);
 
-
-
     //로그아웃
     @GET("/member/logout/")
     Call<String> logOutData(@Header("Authorization") String authorization);
 
     // 내정보 보기
-    @GET("/member/myinfo/{groupId}/")
-    Call<String> myInfoData(@Header("Authorization") String authorization,
-                            @Path("groupId") String groupId);
+    @GET("/member/myinfo/")
+    Call<InfoData> myInfoData(@Header("Authorization") String authorization);
+    // 내정보 수정
+    @PUT("/member/myinfo/{userId}/")
+    Call<String> myInfoUpdateData(@Header("Authorization") String authorization,
+                                  @Path("userId") String userId,
+                                  @Field("phone_number") String phone_number,
+                                  @Field("email") String email,
+                                  @Field("name") String name,
+                                  @Field("password") String password);
+    // 내정보 삭제
+    @DELETE("/member/myinfo/{userId}/")
+    Call<String> myInfoDeleteData(@Header("Authorization") String authorization,
+                                  @Path("userId") String userId);
 
     //아이디 중복 확인 (결과값 boolean)
     @GET("/member/id_check/")
     Call<String> checkId(@Query("phone_number")String phone_number);
 
-    /******************************** Group API ********************************/
+/******************************** Group API ********************************/
     // 구룹 리스트
     @GET("/group/group_list/")
     Call<GroupListData> getGroupListData(@Header("Authorization") String authorization);
@@ -90,7 +101,7 @@ public interface IServerData {
                                    @Path("groupId") String groupId,
                                    @PartMap Map<String, String> phone_number);
 
-    /******************************** Post API ********************************/
+/******************************** Post API ********************************/
     //Post 올리기
     @Multipart
     @POST("/posts/post_list/{groupId}/")

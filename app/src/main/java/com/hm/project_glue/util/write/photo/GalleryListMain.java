@@ -49,7 +49,7 @@ public class GalleryListMain extends Activity {
                 }
                 intent.putStringArrayListExtra("pathList", pathList);
             }
-            setResult(1,intent);
+            setResult(10,intent);
             finish();
         });
         Button btnSelectCancel = (Button) findViewById(R.id.btnSelectCancel);

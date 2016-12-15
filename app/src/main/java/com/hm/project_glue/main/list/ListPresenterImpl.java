@@ -31,8 +31,6 @@ public class ListPresenterImpl implements ListPresenter {
         listInModel = new ListModel(fragment.getContext());
         context = fragment.getActivity();
 
-
-
     }
 
     @Override

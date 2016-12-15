@@ -1,17 +1,186 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.hm.project_glue.main.info.InfoFragment"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:id="@+id/infoRelativeLayout"
     android:background="@color/windowBackground">
 
     <!-- TODO: Update blank fragment layout -->
 
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/li1"
+        android:id="@+id/li2"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+        <TextView
+            android:text="Name : "
+            android:layout_height="wrap_content"
+            android:id="@+id/textView15"
+            android:layout_width="110dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/etInfoName"
+            android:layout_weight="1"
+            android:hint="Name"
+            android:background="@null"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/li2"
+        android:id="@+id/li3"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+        <TextView
+            android:text="Password :"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView16"
+            android:layout_width="110dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/etInfoPassword1"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="*************"
+             />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/li4"
+
+        android:id="@+id/li5"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+        <TextView
+            android:text="E-Mail :"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView17" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/etInfoEmail"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="E - Mail"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/li4"
+        android:layout_below="@+id/li3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+        <TextView
+            android:text="Password : "
+            android:layout_height="wrap_content"
+            android:id="@+id/textView18"
+            android:layout_width="110dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/etInfoPassword2"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="*************"
+             />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/li1"
+        android:layout_below="@+id/btnLogOut"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+        <TextView
+            android:text="Phone Number :"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView14"
+            android:layout_width="110dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:inputType="phone"
+            android:ems="12"
+            android:id="@+id/etInfoPhone_number"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="Phone Number"
+            android:layout_height="40dp" />
+
+    </LinearLayout>
+
     <Button
-        android:text="List Fragment"
+        android:text="Logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:id="@+id/btnLogOut"
+        android:layout_below="@+id/imgInfoMyImg"
         android:layout_centerHorizontal="true"
-        android:id="@+id/btntmp" />
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp" />
+
+    <Button
+        android:text="update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnInfoUpdate"
+        android:layout_below="@+id/li5"
+        android:layout_alignLeft="@+id/btnLogOut"
+        android:layout_alignStart="@+id/btnLogOut" />
+
+    <ImageView
+        app:srcCompat="@drawable/com_facebook_profile_picture_blank_portrait"
+        android:id="@+id/imgInfoMyImg"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="17dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:elevation="0dp"
+        android:background="@null" />
+
 </RelativeLayout>
