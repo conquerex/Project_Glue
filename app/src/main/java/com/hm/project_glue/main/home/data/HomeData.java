@@ -1,109 +1,27 @@
 package com.hm.project_glue.main.home.data;
 
+import java.util.ArrayList;
+
 /**
  * Created by jongkook on 2016. 12. 7..
  */
+public class HomeData
+{
+    private ArrayList<Response> Response;
 
-public class HomeData {
-    private String group_name;
-
-    private String id;
-
-    private String group_image;
-
-    private String post_count;
-
-    private String user_count;
-
-    private String last_updated;
-
-    private String[] members;
-
-    private String master;
-
-    public String getGroup_name ()
+    public ArrayList<Response> getResponse ()
     {
-        return group_name;
+        return Response;
     }
 
-    public void setGroup_name (String group_name)
+    public void setResponse (ArrayList<Response> Response)
     {
-        this.group_name = group_name;
-    }
-
-    public String getId ()
-    {
-        return id;
-    }
-
-    public void setId (String id)
-    {
-        this.id = id;
-    }
-
-    public String getGroup_image ()
-    {
-        return group_image;
-    }
-
-    public void setGroup_image (String group_image)
-    {
-        this.group_image = group_image;
-    }
-
-    public String getPost_count ()
-    {
-        return post_count;
-    }
-
-    public void setPost_count (String post_count)
-    {
-        this.post_count = post_count;
-    }
-
-    public String getUser_count ()
-    {
-        return user_count;
-    }
-
-    public void setUser_count (String user_count)
-    {
-        this.user_count = user_count;
-    }
-
-    public String getLast_updated ()
-    {
-        return last_updated;
-    }
-
-    public void setLast_updated (String last_updated)
-    {
-        this.last_updated = last_updated;
-    }
-
-    public String[] getMembers ()
-    {
-        return members;
-    }
-
-    public void setMembers (String[] members)
-    {
-        this.members = members;
-    }
-
-    public String getMaster ()
-    {
-        return master;
-    }
-
-    public void setMaster (String master)
-    {
-        this.master = master;
+        this.Response = Response;
     }
 
     @Override
     public String toString()
     {
-        return "ClassPojo [group_name = "+group_name+", id = "+id+", group_image = "+group_image+", post_count = "+post_count+", user_count = "+user_count+", last_updated = "+last_updated+", members = "+members+", master = "+master+"]";
+        return "ClassPojo [Response = "+Response+"]";
     }
 }

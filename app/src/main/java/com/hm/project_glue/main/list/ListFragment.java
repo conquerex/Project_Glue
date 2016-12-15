@@ -11,8 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -28,23 +26,24 @@ import com.hm.project_glue.main.list.data.Results;
 
 import java.util.ArrayList;
 
+import static android.support.v7.widget.RecyclerView.SCROLL_STATE_SETTLING;
+
 public class ListFragment extends Fragment implements ListPresenter.View {
 
     private ListPresenter listPresenter;
-    public static ArrayList<Results> datas = null;
-    RecyclerView listRecyclerView;
-    RecyclerCardAdapter adapter;
-    PostData post;
-    View view;
+    private static ArrayList<Results> datas = null;
+    private RecyclerView listRecyclerView;
+    private RecyclerCardAdapter adapter;
+    private PostData post;
+    private  View view;
+    private  boolean lastitemVisibleFlag = false;
     private static final String TAG = "TEST";
 
     public ListFragment() {
-        Log.i(TAG, "ListFragment");
     }
 
     public static ListFragment newInstance() {
         ListFragment fragment = new ListFragment();
-
         return fragment;
     }
 
@@ -56,7 +55,6 @@ public class ListFragment extends Fragment implements ListPresenter.View {
             return;
         }
         listPresenter = new ListPresenterImpl(ListFragment.this);
-
         listPresenter.setView(this);
         post = PostData.newPostInstance();
         datas = new ArrayList<>();
@@ -83,7 +81,7 @@ public class ListFragment extends Fragment implements ListPresenter.View {
         view = inflater.inflate(R.layout.fragment_list, container, false);
 
         if(savedInstanceState==null){
-            listPresenter.callHttp(post, "1");
+            listPresenter.callHttp("1");
         }
         listRecyclerView = (RecyclerView) view.findViewById(R.id.recylerCardView);
         adapter  = new RecyclerCardAdapter(datas,R.layout.list_recycler_card_item,getContext());
@@ -95,18 +93,39 @@ public class ListFragment extends Fragment implements ListPresenter.View {
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
         listRecyclerView.setLayoutManager(manager);
 
-        Log.i(TAG,"onCreateView");
+        listRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(newState == SCROLL_STATE_SETTLING){
+                   postListUpdate();
+                }
+
+
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                Log.v("onScrolled=","dx:"+dx+"  /   dy:"+dy);
+
+            }
+        });
+
         return view;
     }
 
+    private void postListUpdate(){
+
+    }
     @Override
-    public void dataChanged(PostData post) {
-        datas.addAll(post.getResults());
+    public void dataChanged(PostData res) {
+        post.setPrevious(res.getPrevious());
+        post.setNext(res.getNext());
+        datas.addAll(res.getResults());
         adapter.notifyDataSetChanged();
     }
-
-
-
 
     // TODO 리사이클러 뷰 어텝터
 
@@ -194,16 +213,16 @@ public class ListFragment extends Fragment implements ListPresenter.View {
             holder.tvListCardTime.setText("2016/12/06");
             holder.itemView.setTag(data);
 
-            setAnimation(holder.listCardItem, position);
+//            setAnimation(holder.listCardItem, position);
         }
-        int lastPosision = -1;
-        public void setAnimation(View view,int position){
-            if(position > lastPosision) {
-                Animation ani = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
-                view.startAnimation(ani);
-                lastPosision = position;
-            }
-        }
+//        int lastPosision = -1;
+//        public void setAnimation(View view,int position){
+//            if(position > lastPosision) {
+//                Animation ani = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+//                view.startAnimation(ani);
+//                lastPosision = position;
+//            }
+//        }
         @Override
         public int getItemCount() {
             return datas.size();

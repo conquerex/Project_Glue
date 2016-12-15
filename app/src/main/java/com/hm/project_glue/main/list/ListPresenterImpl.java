@@ -1,6 +1,5 @@
 package com.hm.project_glue.main.list;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
@@ -24,7 +23,7 @@ public class ListPresenterImpl implements ListPresenter {
     private ListPresenter.View view;
     private static final String TAG = "TEST";
     Context context;
-    PostData postData;
+
 
     public ListPresenterImpl(ListFragment fragment) {
         this.fragment=fragment;
@@ -39,12 +38,10 @@ public class ListPresenterImpl implements ListPresenter {
     }
 
     @Override
-    public void callHttp(PostData post, String GroupId){
-        this.postData = post;
-
+    public void callHttp(String GroupId){
 
          new AsyncTask<String, Void, PostData>(){
-             ProgressDialog progress = new ProgressDialog(context);
+             PostData postData;
             @Override
             protected PostData doInBackground(String... params) {
 
@@ -53,7 +50,6 @@ public class ListPresenterImpl implements ListPresenter {
                 queryMap.put("page", "1");
                 try {
                     final Call<PostData> response = ListRestAdapter.getInstance().getListData(authorization, GroupId, queryMap);
-
                     postData = response.execute().body();
 
                 } catch (Exception e) {
@@ -65,15 +61,10 @@ public class ListPresenterImpl implements ListPresenter {
             protected void onPreExecute() {
                 super.onPreExecute();
                 //TODO  메인쓰레드 프로그래스 바 보여주기
-                progress.setMessage("Loging....");
-                progress.setProgressStyle((ProgressDialog.STYLE_SPINNER));
-                progress.setCancelable(false);
-                progress.show();
             }
             @Override
             protected void onPostExecute(PostData postData) {
                 super.onPostExecute(postData);
-                progress.dismiss();
                 view.dataChanged(postData);
             }
         }.execute();

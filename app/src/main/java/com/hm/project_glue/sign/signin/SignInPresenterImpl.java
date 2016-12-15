@@ -46,8 +46,13 @@ public class SignInPresenterImpl implements SignInPresenter {
     @Override
     public void signIn(){
         MyFirebaseInstanceIDService service  = new MyFirebaseInstanceIDService();
-        service.onTokenRefresh();
-        String device_token = service.getToken();
+        String device_token = "";
+        try {
+            device_token = service.getToken();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         HashMap userInfoMap = new HashMap();
         String id = view.getIdText();
         String pw = view.getPwText();

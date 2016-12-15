@@ -116,7 +116,7 @@ public class GalleryListMain extends Activity {
         private LayoutInflater mLiInflater;
         private ArrayList<GalleryItem> mArrData;
         int selectLimit = 5;
-        int selectCnt=0;
+        int selectCnt=1;
 
         public ImageAdapter(Context c, int cellLayout,
                             ArrayList<GalleryItem> thumbImageInfoList) {

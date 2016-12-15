@@ -1,7 +1,6 @@
 package com.hm.project_glue.main.home;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -17,18 +16,18 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.hm.project_glue.LogoActivity;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.hm.project_glue.R;
-import com.hm.project_glue.util.Networking;
-import com.hm.project_glue.main.OnFragmentInteractionListener;
+import com.hm.project_glue.main.MainActivity;
+import com.hm.project_glue.main.home.data.HomeData;
+import com.hm.project_glue.main.home.data.Response;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static com.hm.project_glue.main.MainActivity.metrics;
 
@@ -36,10 +35,11 @@ import static com.hm.project_glue.main.MainActivity.metrics;
 public class HomeFragment extends Fragment implements HomePresenter.View{
     private static final String TAG = "HomeFragment";
     private LinearLayoutManager linearLayoutManager;
+    private HomePresenter homePresenter;
     private RecyclerView recyclerView;
-    private ArrayList<HomeModel> datas;
+    public static ArrayList<Response> homeResponses = null;
+    HomeRecyclerAdapter adapter;
 
-    private OnFragmentInteractionListener mListener;
     public HomeFragment() {
 
     }
@@ -52,14 +52,23 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if(savedInstanceState != null){
+            return;
+        }
+        homePresenter = new HomePresenterImpl(HomeFragment.this);
+        homePresenter.setView(this);
+        homeResponses = new ArrayList<>();
+        Log.i(TAG, "----------- onCreate");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        datas = new ArrayList<>();
+        Log.i(TAG, "----------- onCreateView");
+        if(savedInstanceState == null){
+            homePresenter.callHttp();
+        }
         FloatingActionButton fab;
 
         fab = (FloatingActionButton)view.findViewById(R.id.floatingActionButton);
@@ -69,8 +78,8 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
                 // 스낵바(화면 아래에 나타나는 상태줄) 출력 - Toast같이 테스트 용도
                 // Snackbar.make(v, "Hello World", Snackbar.LENGTH_LONG).show();
 
-                // 다시 LogoActivity로 이동하도록 설정. 작성 화면으로 이동해야 함.
-                startActivity(new Intent(v.getContext(), LogoActivity.class));
+                // 2016.12.13 임시로 WriteActivity.class로 이동하도록 설정
+                ((MainActivity)getActivity()).moveActivity(2);
             }
         });
 
@@ -79,28 +88,97 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        for(int i = 0 ; i < 9 ; i++){
-            HomeModel data = new HomeModel(R.drawable.sample_card_img2, "Sample ----- " + i);
-            // 테스트용 data
-//            data.homeCardImage = R.drawable.sample_card_img2;
-//            data.homeCardTitle = "Sample ----- " + i;
-            Log.i(TAG, "----------- data.homeCardTitle ---- "+ i);
-            datas.add(data);
-        }
-
-        HomeRecyclerAdapter adapter = new HomeRecyclerAdapter(datas,
+        adapter = new HomeRecyclerAdapter(homeResponses,
                 R.layout.fragment_home_item, recyclerView.getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-
+        Log.i(TAG, "----------- end of onCreateView");
         return view;
     }
 
+    @Override
+    public void dataChanged(HomeData res) {
+        try{
+            homeResponses.addAll(res.getResponse());
+            adapter.notifyDataSetChanged();
+        }catch (Exception e){
+            Log.e("TEST", e.getMessage());
+        }
+    }
+
     private static class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder>{
-        ArrayList<HomeModel> datas;
+        ArrayList<Response> datas;
         int itemLayout;
         Context context;
+
+        public HomeRecyclerAdapter(ArrayList<Response> datas, int itemLayout, Context context) {
+            this.datas = datas;
+            this.itemLayout = itemLayout;
+            this.context = context;
+        }
+
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(itemLayout, parent, false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int position) {
+            Response response = datas.get(position);
+
+            holder.ivHomeCard.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context,"이미지가 클릭됨!!",Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            Log.i(TAG, "----------- onBindViewHolder");
+
+
+            if(response.getGroup_image()==null){
+                Glide.with(context).load(R.drawable.sample_card_img2).into(holder.ivHomeCard);
+            }else{
+                String url = response.getGroup_image();
+                Log.i(TAG, "----------- image URL ---- "+ url);
+                Glide.with(context).load(url).listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        holder.ivHomeCard.setVisibility(View.VISIBLE);
+                        return false;
+                    }
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource,
+                                                   String model, Target<GlideDrawable> target,
+                                                   boolean isFromMemoryCache, boolean isFirstResource) {
+                        holder.ivHomeCard.setVisibility(View.VISIBLE);
+                        return false;
+                    }
+                }).into(holder.ivHomeCard);
+            }
+
+            holder.tvHomeCard.setText(response.getGroup_name());
+            // holder.ivHomeCard.setImageResource(data.getGroup_image());
+            holder.cardView.setTag(response);
+            setAnimation(holder.cardView, position);
+        }
+
+        int lastPosition = -1;
+        public void setAnimation(View view, int position){
+            if(position > lastPosition){
+                Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+                view.startAnimation(animation);
+                lastPosition = position;
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return datas.size();
+        }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             ImageView ivHomeCard;
@@ -122,53 +200,5 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
             }
         }
 
-        public HomeRecyclerAdapter(ArrayList<HomeModel> datas, int itemLayout, Context context) {
-            this.datas = datas;
-            this.itemLayout = itemLayout;
-            this.context = context;
-        }
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(itemLayout, parent, false);
-            return new ViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            final HomeModel data = datas.get(position);
-
-//            holder.ivHomeCard.setOnClickListener(new View.OnClickListener(){
-//                @Override
-//                public void onClick(View v) {
-//                    Toast.makeText(context,"이미지가 클릭됨!!",Toast.LENGTH_SHORT).show();
-//                }
-//            });
-
-            Log.i(TAG, "----------- onBindViewHolder ---- "+ data);
-            holder.tvHomeCard.setText(data.getHomeCardTitle());
-            holder.ivHomeCard.setImageResource(data.getHomeCardImage());
-            holder.cardView.setTag(data);
-            setAnimation(holder.cardView, position);
-        }
-
-        int lastPosition = -1;
-        public void setAnimation(View view, int position){
-            if(position > lastPosition){
-                Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
-                view.startAnimation(animation);
-                lastPosition = position;
-            }
-        }
-
-        @Override
-        public int getItemCount() {
-            return datas.size();
-        }
-
     }
-
-    // 2016.12.06
-
-
 }
