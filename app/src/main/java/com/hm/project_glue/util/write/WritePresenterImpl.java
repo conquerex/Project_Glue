@@ -1,6 +1,8 @@
 package com.hm.project_glue.util.write;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -49,6 +51,7 @@ public class WritePresenterImpl implements WritePresenter {
             public static final int MAX_READ_TIME = 10000;
             public static final int MAX_CONNECT_TIME = 15000;
             int responseCode = 0;
+
             @Override
             protected Integer doInBackground(String... params) {
                 int responeCode = 0;
@@ -74,38 +77,56 @@ public class WritePresenterImpl implements WritePresenter {
 
                     //photo가 있으면
                     for(String photopath : photosPath){
+
                         Log.i(TAG,"for / photopath:"+photopath);
                         dos = new DataOutputStream(conn.getOutputStream());
                         File file = new File(photopath);
+                        byte[] pixels;
                         if(file.exists()){
-                            Log.i(TAG,"file.exists()");
-                        }
-                        FileInputStream mFileInputStream = new FileInputStream(file);
+                            // 이미지 압축
+//                            BitmapFactory.Options option = new BitmapFactory.Options();
+//                            if (file.length() > 100000)
+//                                option.inSampleSize = 10;
+//                            else
+//                                option.inSampleSize = 2;
+//                            Bitmap bitmap = BitmapFactory.decodeFile(photopath, option);
+                            Bitmap bitmap = BitmapFactory.decodeFile(photopath);
+                            pixels = new byte[bitmap.getWidth() * bitmap.getHeight()];
+                            for (int i = 0; i < bitmap.getWidth(); ++i) {
+                                for (int j = 0; j < bitmap.getHeight(); ++j) {
+                                    pixels[i + j] = (byte) ((bitmap.getPixel(i, j) & 0x80) >> 7);
+                                }
+                            }
 
-                        dos.writeBytes("\r\n--" + boundary + "\r\n");
-                        dos.writeBytes("Content-Disposition: form-data; name=\"photos\";filename=\"" + photopath + "\"" + lineEnd);
-                        dos.writeBytes("Content-Type: application/octet-stream" + lineEnd);
-                        dos.writeBytes(lineEnd);
+                            FileInputStream mFileInputStream = new FileInputStream(file);
 
-                        int bytesAvailable = mFileInputStream.available();
-                        bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                        byte[] buffer = new byte[bufferSize];
-                        int bytesRead = mFileInputStream.read(buffer, 0, bufferSize);
-                        while (bytesRead > 0)
-                        {
-                            Log.i(TAG, "bytesRead: "+bytesRead);
-                            dos.write(buffer, 0, bufferSize);
-                            bytesAvailable = mFileInputStream.available();
+                            dos.writeBytes("\r\n--" + boundary + "\r\n");
+                            dos.writeBytes("Content-Disposition: form-data; name=\"photos\";filename=\"" + photopath + "\"" + lineEnd);
+                            dos.writeBytes("Content-Type: application/octet-stream" + lineEnd);
+                            dos.writeBytes(lineEnd);
+                            int bytesAvailable = mFileInputStream.available();
+                            int bytesRead = mFileInputStream.read(pixels, 0, bufferSize);
                             bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                            bytesRead = mFileInputStream.read(buffer, 0, bufferSize);
+                            while (bytesRead > 0)
+                            {
+                                Log.i(TAG, "bytesRead: "+bytesRead);
+                                dos.write(pixels, 0, bufferSize);
+                                bytesAvailable = mFileInputStream.available();
+                                bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                                bytesRead = mFileInputStream.read(pixels, 0, bufferSize);
 
+                            }
+                            dos.write(pixels, 0, bufferSize);
+                            mFileInputStream.close();
                         }
-                        mFileInputStream.close();
+
+
                     }
 
                     dos.writeBytes(lineEnd);
                     dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
                     dos.flush();
+                    dos.close();
                     if(conn.getResponseCode() == 200 ||conn.getResponseCode() == 201 ){
                         Log.i(TAG,"conn.getResponseCode(): "+conn.getResponseCode() );
                         responeCode = conn.getResponseCode() ;
@@ -167,7 +188,7 @@ public class WritePresenterImpl implements WritePresenter {
                 super.onPostExecute(code);
                 view.progressShow(false);
                 Log.i(TAG,"onPostExecute");
-                view.writeResult(responseCode);
+                view.writeResult(code);
             }
             @Override
             protected void onPreExecute() {
