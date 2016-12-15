@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class HomeData {
     private static final String TAG = "HomeData";
-    ArrayList<HomeResponse> homeResponses;
+    ArrayList<HomeResponse> Response;
 
     public HomeData() {
         Log.i(TAG, "----------- HomeData");
@@ -23,10 +23,10 @@ public class HomeData {
     }
 
     public ArrayList<HomeResponse> getHomeResponses() {
-        return homeResponses;
+        return Response;
     }
 
-    public void setHomeResponses(ArrayList<HomeResponse> homeResponses) {
-        this.homeResponses = homeResponses;
+    public void setHomeResponses(ArrayList<HomeResponse> Response) {
+        this.Response = Response;
     }
 }

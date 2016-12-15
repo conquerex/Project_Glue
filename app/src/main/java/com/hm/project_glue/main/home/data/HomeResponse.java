@@ -14,19 +14,28 @@ public class HomeResponse {
     private String master;
     private String[] members;
     private String post_count;
-    private String[] lastest_posts;
+    //private String[] lastest_posts;
+    private Lastest_posts[] lastest_posts;
 
     public HomeResponse() {
 
     }
 
-    public String[] getLastest_posts() {
+    public Lastest_posts[] getLastest_posts() {
         return lastest_posts;
     }
 
-    public void setLastest_posts(String[] lastest_posts) {
+    public void setLastest_posts(Lastest_posts[] lastest_posts) {
         this.lastest_posts = lastest_posts;
     }
+
+//    public String[] getLastest_posts() {
+//        return lastest_posts;
+//    }
+//
+//    public void setLastest_posts(String[] lastest_posts) {
+//        this.lastest_posts = lastest_posts;
+//    }
 
     public String getGroup_name ()
     {

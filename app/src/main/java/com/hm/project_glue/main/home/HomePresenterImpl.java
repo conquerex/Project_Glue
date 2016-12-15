@@ -52,8 +52,8 @@ public class HomePresenterImpl implements HomePresenter {
 
                 try{
                     final Call<HomeData> response = HomeRestAdapter.getInstance().getData(token, queryMap);
-                    Log.i(TAG, "----------- response.execute().body() --- "+response.execute().body());
                     homeData = response.execute().body();
+                    Log.i(TAG, "----------- response.execute().body() --- "+homeData);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -71,7 +71,6 @@ public class HomePresenterImpl implements HomePresenter {
                 progress.setCancelable(false);
                 progress.show();
                 Log.i(TAG, "----------- end of onPreExecute");
-
             }
 
             @Override

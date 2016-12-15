@@ -139,10 +139,9 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
                 }
             });
 
-            Log.i(TAG, "----------- onBindViewHolder");
-
             String url="";
-            if(response.getGroup_image().isEmpty()){
+            Log.i(TAG, "----------- onBindViewHolder : if ---- " + response.getGroup_image());
+            if(response.getGroup_image() == null){
                 url = "";
                 holder.ivHomeCard.setVisibility(View.GONE);
             }else{

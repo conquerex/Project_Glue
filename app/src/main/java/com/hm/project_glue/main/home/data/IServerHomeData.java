@@ -18,7 +18,7 @@ public interface IServerHomeData {
     // HTTP 통신을 통해 수신한 JSON 등이 변환될 객체
     Call<HomeData> getData(
             // 헤더 : 요청, 응답 그리고 리소스에 대한 메타 정보를 전달
-            @Header("Authorization") String authorization,
-            @QueryMap Map<String, String> params
+            @Header("Authorization") String authorization
+            , @QueryMap Map<String, String> Response
     );
 }
