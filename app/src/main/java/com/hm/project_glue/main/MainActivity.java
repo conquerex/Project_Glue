@@ -12,7 +12,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -30,21 +29,22 @@ import com.hm.project_glue.util.write.WriteActivity;
 public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener{
     private CallbackManager callbackManager;
     public static DisplayMetrics metrics;
-    HomeFragment home;
-    MsgFragment msg;
-    InfoFragment info;
-    ListFragment list;
-    PagerAdapter adapter;
-    Networking networking;
-    TabLayout tab;
-    Fragment writeFragment;
-    FrameLayout mainFrameLayout;
-    private final String PreferenceName ="localLoginCheck";
+    private HomeFragment home;
+    private  MsgFragment msg;
+    private InfoFragment info;
+    private ListFragment list;
+    private  PagerAdapter adapter;
+    private Networking networking;
+    private TabLayout tab;
+
+    private final int facebookResultCode = -1;
     public static String TAG = "TEST";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if(savedInstanceState!=null) {
             finish();
             return;
@@ -160,7 +160,16 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     @Override   //facebook
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode){
+            case 1 :
+                break;
+            case 2 :
+                info.setBitmap(data.getStringExtra("imagePath"));
+                break;
+            case facebookResultCode :
+                callbackManager.onActivityResult(requestCode, resultCode, data);
+                break;
+        }
     }
 
     public void logOut() { // Facebook 로그아웃, 프리퍼런스 값 초기화, activity 이동

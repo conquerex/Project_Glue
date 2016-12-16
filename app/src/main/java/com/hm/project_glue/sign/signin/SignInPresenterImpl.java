@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.hm.project_glue.service.notification.MyFirebaseInstanceIDService;
 import com.hm.project_glue.util.Networking;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.jakewharton.rxbinding.widget.TextViewTextChangeEvent;
@@ -26,11 +27,9 @@ public class SignInPresenterImpl implements SignInPresenter {
     private final int PW_MIN_LENGTH = 8;
     private final static String TAG ="TEST";
     Context context;
-
     public SignInPresenterImpl(SignInFragment fragment){
         signInModel = new SignInModel(fragment.getContext());
         context = fragment.getActivity();
-
     }
     @Override
     public void setView(View view) {
@@ -46,12 +45,21 @@ public class SignInPresenterImpl implements SignInPresenter {
 //    }
     @Override
     public void signIn(){
+        MyFirebaseInstanceIDService service  = new MyFirebaseInstanceIDService();
+        String device_token = "";
+        try {
+            device_token = service.getToken();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         HashMap userInfoMap = new HashMap();
         String id = view.getIdText();
         String pw = view.getPwText();
         userInfoMap.put("phone_number", id);
         userInfoMap.put("password", pw);
+        userInfoMap.put("device_token", device_token);
+        userInfoMap.put("device_type", "android");
 
         new AsyncTask<Map, Void, String>(){
             ProgressDialog progress;

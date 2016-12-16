@@ -5,6 +5,7 @@ package com.hm.project_glue.main.home.data;
  */
 
 public class Lastest_posts {
+
     private String likes_count;
 
     private String content;
@@ -83,3 +84,4 @@ public class Lastest_posts {
         return "ClassPojo [likes_count = "+likes_count+", content = "+content+", uploaded_user = "+uploaded_user+", lastest_photos = "+lastest_photos+", dislikes_count = "+dislikes_count+", pk = "+pk+"]";
     }
 }
+

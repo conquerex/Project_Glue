@@ -49,7 +49,7 @@ public class GalleryListMain extends Activity {
                 }
                 intent.putStringArrayListExtra("pathList", pathList);
             }
-            setResult(1,intent);
+            setResult(10,intent);
             finish();
         });
         Button btnSelectCancel = (Button) findViewById(R.id.btnSelectCancel);
@@ -116,7 +116,7 @@ public class GalleryListMain extends Activity {
         private LayoutInflater mLiInflater;
         private ArrayList<GalleryItem> mArrData;
         int selectLimit = 5;
-        int selectCnt=0;
+        int selectCnt=1;
 
         public ImageAdapter(Context c, int cellLayout,
                             ArrayList<GalleryItem> thumbImageInfoList) {

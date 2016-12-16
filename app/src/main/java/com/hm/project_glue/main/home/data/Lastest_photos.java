@@ -1,10 +1,11 @@
 package com.hm.project_glue.main.home.data;
 
 /**
- * Created by jongkook on 2016. 12. 15..
+ * Created by HM on 2016-12-16.
  */
 
 public class Lastest_photos {
+
     private Photo photo;
 
     public Photo getPhoto ()

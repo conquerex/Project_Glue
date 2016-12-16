@@ -1,13 +1,14 @@
 package com.hm.project_glue.main.home.data;
 
 /**
- * Created by jongkook on 2016. 12. 16..
+ * Created by HM on 2016-12-16.
  */
 
 public class Group_image {
     private String thumbnail;
 
     private String full_size;
+
 
     public String getThumbnail ()
     {

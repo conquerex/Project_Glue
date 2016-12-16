@@ -20,7 +20,8 @@
         android:id="@+id/scrollView"
         android:layout_below="@+id/rL1"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:padding="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,26 +53,8 @@
         </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        style="@android:style/ButtonBar"
-        android:background="@color/com_facebook_button_background_color_disabled"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/ic_menu_gallery"
-            android:id="@+id/btnGallery"
-            android:layout_weight="1" />
-    </LinearLayout>
-
     <RelativeLayout
-        android:id="@+id/rL1"
+        android:id="@+id/rL0"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
 
@@ -83,66 +66,103 @@
         android:layout_alignParentStart="true">
 
 
-        <TextView
-            android:text="저장"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView3"
-            android:textSize="10sp"
-            android:textColor="@color/cardview_light_background"
-            android:gravity="center"
-            android:layout_below="@+id/btnWrite"
-            android:layout_alignParentRight="false"
-            android:layout_alignParentEnd="true" />
-
-        <TextView
-            android:text="글쓰기"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView2"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/cardview_light_background" />
-
-        <TextView
-            android:text="취소"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView4"
-            android:textSize="10sp"
-            android:textColor="@color/cardview_light_background"
-            android:gravity="center"
-            android:layout_below="@+id/btnWriteBack"
+        <Button
+            android:id="@+id/btnWriteBack"
+            android:background="@mipmap/ic_navigate_before_white_36dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
+        <TextView
+            android:text="새 글쓰기"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView2"
+            android:textColor="@android:color/white"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/activity_vertical_margin"
+            tools:textStyle="bold" />
+
         <Button
-            android:text="구룹선택"
+            android:text="저장"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnWrite"
+            android:background="@null"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_alignBaseline="@+id/textView2"
+            android:layout_alignBottom="@+id/textView2"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        style="@null"
+        android:background="@android:color/white"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/btnGallery">
+
+        <Button
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:id="@+id/button6"
+            android:background="@android:drawable/ic_menu_gallery"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
+
+        <Button
+            android:text="사진 추가하기"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnGallery"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:textColor="?android:attr/textColorTertiary" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rL1"
+        android:layout_below="@+id/rL0"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <Button
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:id="@+id/button5"
+            android:background="@mipmap/ic_group_black_36dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="5dp" />
+
+        <Button
+            android:text="글쓰기 구룹선택"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView2"
             android:layout_centerHorizontal="true"
-            android:id="@+id/btnGroupSelect" />
-
-        <Button
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/btnWrite"
-            android:background="@mipmap/ic_create_white_36dp"
-            android:layout_above="@+id/textView4"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-
-        <Button
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/btnWriteBack"
-            android:background="@mipmap/ic_navigate_before_white_36dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="5dp" />
-
-    </RelativeLayout>
+            android:id="@+id/btnGroupSelect"
+            android:background="@null"
+            android:gravity="left|center_vertical|center_horizontal"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:textColor="@color/cardview_dark_background" />
+    </LinearLayout>
 
 </RelativeLayout>
