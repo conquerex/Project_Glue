@@ -100,8 +100,11 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
     @Override
     public void dataChanged(HomeData res) {
         try{
-            homeResponses.addAll(res.getResponse());
-            adapter.notifyDataSetChanged();
+
+
+                homeResponses.addAll(res.getResponse());
+                adapter.notifyDataSetChanged();
+
         }catch (Exception e){
             Log.e("TEST", e.getMessage());
         }
@@ -142,7 +145,7 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
             if(response.getGroup_image()==null){
                 Glide.with(context).load(R.drawable.sample_card_img2).into(holder.ivHomeCard);
             }else{
-                String url = response.getGroup_image();
+                String url = response.getGroup_image().getThumbnail();
                 Log.i(TAG, "----------- image URL ---- "+ url);
                 Glide.with(context).load(url).listener(new RequestListener<String, GlideDrawable>() {
                     @Override

@@ -159,6 +159,7 @@ public class WriteActivity extends AppCompatActivity implements WritePresenter.V
         btnGroupSelect.setText(groupName);
         selectGroupId = groupId;
         selectGroupName = groupName;
+        btnGroupSelect.setText(groupName);
         viewgroupDialog.dismiss();
     }
     @Override

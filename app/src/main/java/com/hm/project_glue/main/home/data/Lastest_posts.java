@@ -14,7 +14,7 @@ public class Lastest_posts
 
     private String uploaded_user;
 
-    private ArrayList<String> lastest_photos;
+    private ArrayList<Lastest_photos> lastest_photos;
 
     private String dislikes_count;
 
@@ -50,12 +50,12 @@ public class Lastest_posts
         this.uploaded_user = uploaded_user;
     }
 
-    public ArrayList<String> getLastest_photos ()
+    public ArrayList<Lastest_photos> getLastest_photos ()
     {
         return lastest_photos;
     }
 
-    public void setLastest_photos (ArrayList<String> lastest_photos)
+    public void setLastest_photos (ArrayList<Lastest_photos> lastest_photos)
     {
         this.lastest_photos = lastest_photos;
     }

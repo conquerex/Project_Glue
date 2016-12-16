@@ -91,7 +91,6 @@ public class InfoFragment extends Fragment implements InfoPresenter.View {
         infoRelativeLayout.setOnClickListener(v -> { // keyboard
             InputMethodManager mgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             mgr.hideSoftInputFromWindow(view.getWindowToken(), 0);
-            mgr.hideSoftInputFromWindow(view.getWindowToken(), 0);
         });
 
         if( imgUrl.equals("") ){
@@ -101,8 +100,6 @@ public class InfoFragment extends Fragment implements InfoPresenter.View {
             Glide.with(getContext()).load(imgUrl).bitmapTransform(new CropCircleTransformation(getContext()))
                     .into(imgInfoMyImg);
         }
-
-
 
         return view;
     }
@@ -119,7 +116,9 @@ public class InfoFragment extends Fragment implements InfoPresenter.View {
         String password2   = etInfoPassword2.getText().toString();
         String email        = etInfoEmail.getText().toString();
 
-       infoPresenter.infoFormCheck(phone, name, password1, password2, email);
+
+
+       infoPresenter.infoFormCheck(phone, name, password1, password2, email, imgUrl);
 
     }
     @Override
