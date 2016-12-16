@@ -4,8 +4,8 @@ package com.hm.project_glue.main.home.data;
  * Created by HM on 2016-12-16.
  */
 
-public class Lastest_photos
-{
+public class Lastest_photos {
+
     private Photo photo;
 
     public Photo getPhoto ()

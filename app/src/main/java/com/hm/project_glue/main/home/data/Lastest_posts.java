@@ -1,20 +1,18 @@
 package com.hm.project_glue.main.home.data;
 
-import java.util.ArrayList;
-
 /**
- * Created by HM on 2016-12-15.
+ * Created by jongkook on 2016. 12. 15..
  */
 
-public class Lastest_posts
-{
+public class Lastest_posts {
+
     private String likes_count;
 
     private String content;
 
     private String uploaded_user;
 
-    private ArrayList<Lastest_photos> lastest_photos;
+    private Lastest_photos[] lastest_photos;
 
     private String dislikes_count;
 
@@ -50,12 +48,12 @@ public class Lastest_posts
         this.uploaded_user = uploaded_user;
     }
 
-    public ArrayList<Lastest_photos> getLastest_photos ()
+    public Lastest_photos[] getLastest_photos ()
     {
         return lastest_photos;
     }
 
-    public void setLastest_photos (ArrayList<Lastest_photos> lastest_photos)
+    public void setLastest_photos (Lastest_photos[] lastest_photos)
     {
         this.lastest_photos = lastest_photos;
     }
@@ -86,3 +84,4 @@ public class Lastest_posts
         return "ClassPojo [likes_count = "+likes_count+", content = "+content+", uploaded_user = "+uploaded_user+", lastest_photos = "+lastest_photos+", dislikes_count = "+dislikes_count+", pk = "+pk+"]";
     }
 }
+

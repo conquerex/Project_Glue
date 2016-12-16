@@ -215,7 +215,8 @@ public class WritePresenterImpl implements WritePresenter {
             public void onResponse(Call<HomeData> call, Response<HomeData> response) {
                 if(response.isSuccessful()) {
                     Log.i(TAG, "isSuccessful");
-                    view.setGroupListChanged(response.body().getResponse());
+                    // 손종국 12.16 pm 7:52 원인 불명으로 아래 주석 처리
+                    // view.setGroupListChanged(response.body().getResponse());
 
                 }else{
                     Log.e(TAG,response.message());

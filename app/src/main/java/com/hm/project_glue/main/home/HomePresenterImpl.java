@@ -1,11 +1,14 @@
 package com.hm.project_glue.main.home;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.hm.project_glue.main.home.data.HomeData;
 import com.hm.project_glue.util.Networking;
+import com.hm.project_glue.main.home.data.HomeData;
+import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 
@@ -19,7 +22,7 @@ public class HomePresenterImpl implements HomePresenter {
     private HomeModel model;
     private HomePresenter.View view;
     Context context;
-
+    HomeData homeData;
 
     // 2016.12.06
     public HomePresenterImpl(HomeFragment fragment) {
@@ -35,32 +38,46 @@ public class HomePresenterImpl implements HomePresenter {
 
     // 2016.12.06
     @Override
-    public void callHttp() {
+    public void callHttp(HomeData data) {
+        this.homeData = data;
+        ProgressDialog progress = new ProgressDialog(context);
         new AsyncTask<String, Void, HomeData>(){
             @Override
             protected HomeData doInBackground(String... params) {
                 String token = "Token "+ Networking.getToken();
-                HomeData res=null;
-                try{
-                    final Call<HomeData> response = HomeRestAdapter.getInstance().getData(token);
-                    res = response.execute().body();
+                Log.i(TAG, "----------- token ---- "+ token);
+                Map<String, String> queryMap = new HashMap<>();
 
+                try{
+                    final Call<HomeData> response = HomeRestAdapter.getInstance().getData(token, queryMap);
+                    homeData = response.execute().body();
+                    Log.i(TAG, "----------- response.execute().body() --- "+homeData);
                 } catch (Exception e) {
-                    Log.e(TAG, e.getMessage());
+                    e.printStackTrace();
                 }
-                return res;
+
+                return homeData;
             }
+
             @Override
             protected void onPreExecute() {
-                Log.i(TAG, "----------- in onPreExecute");
                 super.onPreExecute();
                 //TODO  메인쓰레드 프로그래스 바 보여주기
+                progress.setMessage("Loging....");
+                progress.setProgressStyle((ProgressDialog.STYLE_SPINNER));
+                progress.setCancelable(false);
+                progress.show();
+                Log.i(TAG, "----------- end of onPreExecute");
             }
+
             @Override
             protected void onPostExecute(HomeData res) {
                 super.onPostExecute(res);
+                Log.i(TAG, "----------- onPostExecute ------- " + res.getHomeResponses());
+                progress.dismiss();
                 view.dataChanged(res);
             }
+
         }.execute();
     }
 }

@@ -1,11 +1,10 @@
 package com.hm.project_glue.main.home.data;
 
 /**
- * Created by HM on 2016-12-16.
+ * Created by jongkook on 2016. 12. 15..
  */
 
-public class Photo
-{
+public class Photo {
     private String thumbnail;
 
     private String full_size;

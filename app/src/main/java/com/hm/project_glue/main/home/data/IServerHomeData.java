@@ -1,8 +1,11 @@
 package com.hm.project_glue.main.home.data;
 
+import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.QueryMap;
 
 /**
  * Created by jongkook on 2016. 12. 6..
@@ -16,5 +19,7 @@ public interface IServerHomeData {
     // HTTP 통신을 통해 수신한 JSON 등이 변환될 객체
     Call<HomeData> getData(
             // 헤더 : 요청, 응답 그리고 리소스에 대한 메타 정보를 전달
-            @Header("Authorization") String token);
+            @Header("Authorization") String authorization
+            , @QueryMap Map<String, String> Response
+    );
 }
