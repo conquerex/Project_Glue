@@ -22,10 +22,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:id="@+id/ivHomeCard"
-                android:scaleType="centerInside"
+                android:scaleType="centerCrop"
                 android:layout_weight="0.9"
                 android:background="@color/cardview_dark_background"
-                android:src="@drawable/gluelogo"/>
+                card_view:srcCompat="@drawable/gluelogo_pu" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"

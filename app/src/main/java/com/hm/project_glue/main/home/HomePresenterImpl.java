@@ -40,9 +40,7 @@ public class HomePresenterImpl implements HomePresenter {
     @Override
     public void callHttp(HomeData data) {
         this.homeData = data;
-        Log.i(TAG, "----------- callHttp");
         ProgressDialog progress = new ProgressDialog(context);
-        Log.i(TAG, "----------- after progress");
         new AsyncTask<String, Void, HomeData>(){
             @Override
             protected HomeData doInBackground(String... params) {
