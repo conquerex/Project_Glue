@@ -64,7 +64,6 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
         homeData = HomeData.newHomeInstance();
         Log.i(TAG, "----------- HomeData.newHomeInstance ----- " + homeData.getHomeResponses());
         homeResponses = new ArrayList<>();
-        Log.i(TAG, "----------- onCreate");
     }
 
     @Override
@@ -145,7 +144,7 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
                 url = "";
                 holder.ivHomeCard.setVisibility(View.GONE);
             }else{
-                url = response.getGroup_image();
+                url = response.getGroup_image().getThumbnail();
                 Log.i(TAG, "----------- image URL ---- "+ url);
                 Glide.with(context).load(url).listener(new RequestListener<String, GlideDrawable>() {
                     @Override
@@ -194,11 +193,16 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
                 ivHomeCard = (ImageView)itemView.findViewById(R.id.ivHomeCard);
                 tvHomeCard = (TextView) itemView.findViewById(R.id.tvHomeCard);
 
+                Log.i(TAG, "----------- metrics.xdpi / metrics.DENSITY_DEFAULT ---- " + metrics.xdpi
+                        + " // "+ metrics.DENSITY_DEFAULT);
                 int px = Math.round(3 * (metrics.xdpi / metrics.DENSITY_DEFAULT));
 
                 ViewGroup.LayoutParams params =  cardView.getLayoutParams();
                 params.width = (metrics.widthPixels / 2)-(px * 2);
                 params.height = params.width;
+                Log.i(TAG, "----------- px ------ " + px);
+                Log.i(TAG, "----------- params.width ------ " + params.width);
+
 
             }
         }

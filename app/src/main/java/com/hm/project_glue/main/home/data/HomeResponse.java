@@ -6,16 +6,23 @@ package com.hm.project_glue.main.home.data;
 
 public class HomeResponse {
 
-    private String id;
     private String group_name;
-    private String group_image;
-    private String last_updated;
-    private String user_count;
-    private String master;
-    private String[] members;
-    private String post_count;
-    //private String[] lastest_posts;
+
+    private String id;
+
     private Lastest_posts[] lastest_posts;
+
+    private Group_image group_image;
+
+    private String post_count;
+
+    private String user_count;
+
+    private String last_updated;
+
+    private String[] members;
+
+    private String master;
 
     public HomeResponse() {
 
@@ -29,13 +36,13 @@ public class HomeResponse {
         this.lastest_posts = lastest_posts;
     }
 
-//    public String[] getLastest_posts() {
-//        return lastest_posts;
-//    }
-//
-//    public void setLastest_posts(String[] lastest_posts) {
-//        this.lastest_posts = lastest_posts;
-//    }
+    public Group_image getGroup_image() {
+        return group_image;
+    }
+
+    public void setGroup_image(Group_image group_image) {
+        this.group_image = group_image;
+    }
 
     public String getGroup_name ()
     {
@@ -55,16 +62,6 @@ public class HomeResponse {
     public void setId (String id)
     {
         this.id = id;
-    }
-
-    public String getGroup_image ()
-    {
-        return group_image;
-    }
-
-    public void setGroup_image (String group_image)
-    {
-        this.group_image = group_image;
     }
 
     public String getPost_count ()

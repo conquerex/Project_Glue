@@ -76,7 +76,7 @@ public class HomeRestAdapter {
         X509TrustManager x509TrustManager = new X509TrustManager() {
             @Override
             public X509Certificate[] getAcceptedIssuers() {
-                //return null;
+                // return null;
                 return new X509Certificate[0];
             }
 

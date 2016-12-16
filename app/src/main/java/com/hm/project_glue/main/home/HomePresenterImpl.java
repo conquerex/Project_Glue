@@ -63,7 +63,6 @@ public class HomePresenterImpl implements HomePresenter {
 
             @Override
             protected void onPreExecute() {
-                Log.i(TAG, "----------- in onPreExecute");
                 super.onPreExecute();
                 //TODO  메인쓰레드 프로그래스 바 보여주기
                 progress.setMessage("Loging....");
