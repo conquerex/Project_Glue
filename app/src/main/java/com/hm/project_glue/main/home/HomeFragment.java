@@ -140,31 +140,34 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
 
             String url="";
             Log.i(TAG, "----------- onBindViewHolder : if ---- " + response.getGroup_image());
-            if(response.getGroup_image() == null){
-                url = "";
-                holder.ivHomeCard.setVisibility(View.GONE);
-            }else{
-                url = response.getGroup_image().getThumbnail();
+//            if(response.getGroup_image() == null){
+//                url = "";
+//                holder.ivHomeCard.setVisibility(View.GONE);
+//            }else{
+//
+//            }
+
+            url = response.getGroup_image().getThumbnail();
+            if(url == null){
+                Log.i(TAG, "----------- image URL ---- url == null");
+                // 서버에 이미지가 없을 경우, 로고를 기본 이미지로 보여준다.
+                holder.ivHomeCard.setImageResource(R.drawable.gluelogo_pu);
+            } else {
                 Log.i(TAG, "----------- image URL ---- "+ url);
-                if(url == null){
-                    // 서버에 이미지가 없을 경우, 로고를 기본 이미지로 보여준다.
-                    holder.ivHomeCard.setImageResource(R.drawable.gluelogo_pu);
-                } else {
-                    Glide.with(context).load(url).listener(new RequestListener<String, GlideDrawable>() {
-                        @Override
-                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                            holder.ivHomeCard.setVisibility(View.VISIBLE);
-                            return false;
-                        }
-                        @Override
-                        public boolean onResourceReady(GlideDrawable resource,
-                                                       String model, Target<GlideDrawable> target,
-                                                       boolean isFromMemoryCache, boolean isFirstResource) {
-                            holder.ivHomeCard.setVisibility(View.VISIBLE);
-                            return false;
-                        }
-                    }).into(holder.ivHomeCard);
-                }
+                Glide.with(context).load(url).listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        holder.ivHomeCard.setVisibility(View.VISIBLE);
+                        return false;
+                    }
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource,
+                                                   String model, Target<GlideDrawable> target,
+                                                   boolean isFromMemoryCache, boolean isFirstResource) {
+                        holder.ivHomeCard.setVisibility(View.VISIBLE);
+                        return false;
+                    }
+                }).into(holder.ivHomeCard);
             }
 
             holder.tvHomeCard.setText(response.getGroup_name());
