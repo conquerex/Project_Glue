@@ -61,7 +61,6 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".main.info.PhotoDetailActivity"></activity>
     </application>
 
 </manifest>

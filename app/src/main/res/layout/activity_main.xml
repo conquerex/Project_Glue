@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="0dp"
@@ -10,9 +9,8 @@
     android:paddingRight="0dp"
     android:paddingTop="0dp"
     tools:context="com.hm.project_glue.main.MainActivity"
-    android:background="@null">
-
-
+    android:background="@null"
+    android:id="@+id/mainRelativeLayout">
 
 
     <android.support.design.widget.TabLayout

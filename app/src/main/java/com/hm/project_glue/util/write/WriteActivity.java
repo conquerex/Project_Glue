@@ -11,21 +11,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.hm.project_glue.R;
-
 import com.hm.project_glue.main.home.data.Response;
-
 import com.hm.project_glue.util.write.photo.GalleryListMain;
 
 import java.util.ArrayList;
 
 public class WriteActivity extends AppCompatActivity implements WritePresenter.View  {
-    Button btnWrite, btnWriteBack,btnGroupSelect;
-    ImageButton btnGallery;
+    Button btnWrite, btnWriteBack,btnGroupSelect,btnGallery;
     EditText mEditText;
     HorizontalListView horizontalListView;
     ListView groupListView;
@@ -56,7 +52,7 @@ public class WriteActivity extends AppCompatActivity implements WritePresenter.V
         btnWrite        =   (Button)findViewById(R.id.btnWrite);
         btnWriteBack    =   (Button)findViewById(R.id.btnWriteBack);
         btnGroupSelect  =   (Button)findViewById(R.id.btnGroupSelect);
-        btnGallery      =   (ImageButton)findViewById(R.id.btnGallery);
+        btnGallery      =   (Button)findViewById(R.id.btnGallery);
         mEditText       =   (EditText) findViewById(R.id.mEditText);
         horizontalListView = (HorizontalListView) findViewById(R.id.horizontalListView);
         //TODO 완성되면 주석 풀기
@@ -78,7 +74,6 @@ public class WriteActivity extends AppCompatActivity implements WritePresenter.V
             if(content.equals("") || selectGroupId.equals("0")){
                 Toast.makeText(this,"input content or Select Group",Toast.LENGTH_SHORT).show();
             }else {
-
                 writePresenter.httpPosting(photosDatas, selectGroupId, content);
             }
         });
