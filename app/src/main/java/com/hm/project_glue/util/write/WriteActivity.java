@@ -1,5 +1,6 @@
 package com.hm.project_glue.util.write;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -15,12 +16,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.hm.project_glue.R;
-import com.hm.project_glue.util.write.data.GroupResponse;
+
+import com.hm.project_glue.main.home.data.HomeResponse;
+// import com.hm.project_glue.main.home.data.Response;
+
 import com.hm.project_glue.util.write.photo.GalleryListMain;
 
 import java.util.ArrayList;
-
-
 
 public class WriteActivity extends AppCompatActivity implements WritePresenter.View  {
     Button btnWrite, btnWriteBack,btnGroupSelect;
@@ -33,11 +35,12 @@ public class WriteActivity extends AppCompatActivity implements WritePresenter.V
     PhotosListAdapter listAdapter;
     PopupListAdapter popupAdapter;
     ArrayList<String> photosDatas;
-    ArrayList<GroupResponse> groupListDatas;
+    ArrayList<HomeResponse> groupListDatas;
     AlertDialog.Builder groupDialog =null;
     AlertDialog viewgroupDialog;
-    int REQ_CODE_IMAGE = 1;
+    int REQ_CODE_IMAGE = 10;
     WritePresenterImpl writePresenter;
+    ProgressDialog progress;
     private String selectGroupId ="0";
     private String selectGroupName ="GROUP";
     public final static String TAG= "TEST";
@@ -157,13 +160,30 @@ public class WriteActivity extends AppCompatActivity implements WritePresenter.V
         btnGroupSelect.setText(groupName);
         selectGroupId = groupId;
         selectGroupName = groupName;
+        btnGroupSelect.setText(groupName);
         viewgroupDialog.dismiss();
     }
     @Override
-    public void setGroupListChanged(ArrayList<GroupResponse> results) {
+    public void setGroupListChanged(ArrayList<HomeResponse> results) {
         groupListDatas.addAll(results);
         popupAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void progressShow(boolean status) {
+        if(status){
+            progress = new ProgressDialog(context);
+            progress.setMessage("Upload....");
+            progress.setProgressStyle((ProgressDialog.STYLE_SPINNER));
+            progress.setCancelable(false);
+            progress.show();
+        }else{
+            if(progress != null) {
+                progress.dismiss();
+            }
+        }
+    }
+
     @Override
     public void writeResult(int code){
         Log.i(TAG, "writeResult:"+code);

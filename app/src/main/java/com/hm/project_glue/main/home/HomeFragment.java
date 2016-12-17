@@ -35,7 +35,7 @@ import static com.hm.project_glue.main.MainActivity.metrics;
 
 public class HomeFragment extends Fragment implements HomePresenter.View{
     private static final String TAG = "HomeFragment";
-    private LinearLayoutManager linearLayoutManager;
+    // private LinearLayoutManager linearLayoutManager;
     private HomePresenter homePresenter;
     private RecyclerView recyclerView;
     public static ArrayList<HomeResponse> homeResponses = null;
@@ -67,6 +67,17 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
     }
 
     @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.i(TAG,"onDetach");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG,"onDestroy");
+    }
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
@@ -74,28 +85,25 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
         if(savedInstanceState == null){
             homePresenter.callHttp(homeData);
         }
-        FloatingActionButton fab;
 
-        fab = (FloatingActionButton)view.findViewById(R.id.floatingActionButton);
+        recyclerView = (RecyclerView)view.findViewById(R.id.homeRecyclerView);
+        // recyclerView.hasFixedSize();
+        adapter = new HomeRecyclerAdapter(homeResponses,
+                R.layout.fragment_home_item, recyclerView.getContext());
+        recyclerView.setAdapter(adapter);
+
+        FloatingActionButton fab =
+                (FloatingActionButton)view.findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 스낵바(화면 아래에 나타나는 상태줄) 출력 - Toast같이 테스트 용도
-                // Snackbar.make(v, "Hello World", Snackbar.LENGTH_LONG).show();
-
                 // 2016.12.13 임시로 WriteActivity.class로 이동하도록 설정
                 ((MainActivity)getActivity()).moveActivity(2);
             }
         });
 
-        linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView = (RecyclerView)view.findViewById(R.id.homeRecyclerView);
-        recyclerView.hasFixedSize();
+        RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-
-        adapter = new HomeRecyclerAdapter(homeResponses,
-                R.layout.fragment_home_item, recyclerView.getContext());
-        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         Log.i(TAG, "----------- end of onCreateView");
@@ -128,7 +136,7 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(ViewHolder holder, final int position) {
             HomeResponse response = datas.get(position);
 
             holder.ivHomeCard.setOnClickListener(new View.OnClickListener(){
@@ -139,36 +147,33 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
             });
 
             String url="";
-            Log.i(TAG, "----------- onBindViewHolder : if ---- " + response.getGroup_image());
-            if(response.getGroup_image() == null){
-                url = "";
-                holder.ivHomeCard.setVisibility(View.GONE);
-            }else{
-                url = response.getGroup_image().getThumbnail();
-                Log.i(TAG, "----------- image URL ---- "+ url);
-                if(url == null){
-                    // 서버에 이미지가 없을 경우, 로고를 기본 이미지로 보여준다.
-                    holder.ivHomeCard.setImageResource(R.drawable.gluelogo_pu);
-                } else {
-                    Glide.with(context).load(url).listener(new RequestListener<String, GlideDrawable>() {
-                        @Override
-                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                            holder.ivHomeCard.setVisibility(View.VISIBLE);
-                            return false;
-                        }
-                        @Override
-                        public boolean onResourceReady(GlideDrawable resource,
-                                                       String model, Target<GlideDrawable> target,
-                                                       boolean isFromMemoryCache, boolean isFirstResource) {
-                            holder.ivHomeCard.setVisibility(View.VISIBLE);
-                            return false;
-                        }
-                    }).into(holder.ivHomeCard);
-                }
+            url = response.getGroup_image().getThumbnail();
+
+            Log.i(TAG, "----------- image URL ---- "+ url);
+            if(url == null){
+                // 서버에 이미지가 없을 경우, 로고를 기본 이미지로 보여준다.
+                holder.ivHomeCard.setImageResource(R.drawable.gluelogo_pu);
+            } else {
+//                Glide.with(context).load(url).into(holder.ivHomeCard);
+                Glide.with(context).load(url).listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        holder.ivHomeCard.setVisibility(View.VISIBLE);
+                        return false;
+                    }
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource,
+                                                   String model, Target<GlideDrawable> target,
+                                                   boolean isFromMemoryCache, boolean isFirstResource) {
+                        holder.ivHomeCard.setVisibility(View.VISIBLE);
+                        return false;
+                    }
+                }).into(holder.ivHomeCard);
             }
 
             holder.tvHomeCard.setText(response.getGroup_name());
-            holder.cardView.setTag(response);
+            // holder.cardView.setTag(response);
+            holder.itemView.setTag(response);
             setAnimation(holder.cardView, position);
         }
 
@@ -206,8 +211,6 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
                 params.height = params.width;
                 Log.i(TAG, "----------- px ------ " + px);
                 Log.i(TAG, "----------- params.width ------ " + params.width);
-
-
             }
         }
 

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_photo_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.hm.project_glue.main.info.PhotoDetailActivity"
+    android:background="@android:color/black">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:gravity="center"
+        android:layout_below="@+id/btnPhotoDetailClose">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/com_facebook_profile_picture_blank_portrait"
+            android:id="@+id/imgDetail"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnPhotoDetailClose"
+        android:background="@null"
+        android:layout_height="36dp"
+        android:text="CLOSE"
+        android:textColor="@android:color/white"
+        android:layout_width="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="10dp" />
+
+    <Button
+        android:id="@+id/btnPhotoDetailLord"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:text="load IMage"
+        android:background="@null"
+        android:textColor="@android:color/white"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp" />
+
+    <Button
+        android:id="@+id/btnPhotoDetailSave"
+        android:background="@null"
+        android:layout_height="36dp"
+        android:layout_width="60dp"
+        android:text="Save"
+        android:textColor="@android:color/white"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="10dp" />
+
+</RelativeLayout>

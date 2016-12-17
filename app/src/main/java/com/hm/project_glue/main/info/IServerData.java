@@ -1,4 +1,4 @@
-package com.hm.project_glue.util.http;
+package com.hm.project_glue.main.info;
 
 import com.hm.project_glue.main.home.data.HomeData;
 import com.hm.project_glue.main.info.Data.InfoData;
@@ -26,7 +26,7 @@ import retrofit2.http.QueryMap;
  */
 
 public interface IServerData {
-    /******************************** Member API ********************************/
+/******************************** Member API ********************************/
     //회원가입
     @Multipart
     @POST("/member/signup/")
@@ -61,7 +61,7 @@ public interface IServerData {
     @GET("/member/id_check/")
     Call<String> checkId(@Query("phone_number")String phone_number);
 
-    /******************************** Group API ********************************/
+/******************************** Group API ********************************/
     // 구룹 리스트
     @GET("/group/group_list/")
     Call<HomeData> getGroupListData(@Header("Authorization") String authorization);
@@ -70,8 +70,8 @@ public interface IServerData {
     @Multipart
     @POST("/group/group_list/")
     Call<HomeData> createGroupData(@Header("Authorization") String authorization,
-                                   @Field("name") String name, //20자
-                                   @PartMap Map<String, RequestBody> group_image);
+                                                      @Field("name") String name, //20자
+                                                      @PartMap Map<String, RequestBody> group_image);
     //구룹 탈퇴
     @POST("/group/group_leave/{group_id}/")
     Call<PostData> groupLeavetData(@Header("Authorization") String authorization,
@@ -96,7 +96,7 @@ public interface IServerData {
                                    @Path("groupId") String groupId,
                                    @PartMap Map<String, String> phone_number);
 
-    /******************************** Post API ********************************/
+/******************************** Post API ********************************/
     //Post 올리기
     @Multipart
     @POST("/posts/post_list/{groupId}/")
