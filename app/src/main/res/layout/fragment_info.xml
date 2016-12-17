@@ -13,230 +13,251 @@
     <!-- TODO: Update blank fragment layout -->
 
 
-    <Button
-        android:text="Logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnLogOut"
-        android:background="@null"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:text="update"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnInfoUpdate"
-        android:background="@null"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <ImageView
-        app:srcCompat="@drawable/com_facebook_profile_picture_blank_portrait"
-        android:id="@+id/imgInfoMyImg"
-        android:scaleType="centerCrop"
-        android:layout_marginTop="40dp"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:elevation="0dp"
-        android:background="@null" />
-
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_below="@+id/imgInfoMyImg"
-        android:background="@android:color/darker_gray"
-        android:layout_height="1dp"
-        android:layout_marginTop="20dp"
-        android:id="@+id/linelini1"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"></LinearLayout>
+        android:layout_height="match_parent"
+        android:id="@+id/infoLayout">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/li1"
-        android:layout_below="@+id/linelini1"
-        android:layout_alignLeft="@+id/li2"
-        android:layout_alignStart="@+id/li2">
-
-        <TextView
-            android:text="Phone Number :"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView14"
-            android:layout_width="110dp" />
-
-        <EditText
+        <Button
+            android:text="Logout"
             android:layout_width="wrap_content"
-            android:inputType="phone"
-            android:ems="12"
-            android:id="@+id/etInfoPhone_number"
-            android:layout_weight="1"
-            android:background="@null"
-            android:hint="Phone Number"
-            android:layout_height="30dp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/li1"
-        android:id="@+id/li2"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
-
-        <TextView
-            android:text="Name : "
             android:layout_height="wrap_content"
-            android:id="@+id/textView15"
-            android:layout_width="110dp" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="13"
-            android:id="@+id/etInfoName"
-            android:layout_weight="1"
-            android:hint="Name"
+            android:id="@+id/btnLogOut"
             android:background="@null"
-            android:layout_height="30dp" />
-    </LinearLayout>
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/li2"
-        android:id="@+id/li3"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
-
-        <TextView
-            android:text="Password :"
+        <Button
+            android:text="update"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView16"
-            android:layout_width="110dp" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:ems="10"
-            android:id="@+id/etInfoPassword1"
-            android:layout_weight="1"
+            android:id="@+id/btnInfoUpdate"
             android:background="@null"
-            android:hint="*************"
-            android:inputType="textPassword"
-            android:layout_height="30dp" />
-    </LinearLayout>
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/li4"
-        android:layout_below="@+id/li3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
+        <ImageView
+            app:srcCompat="@drawable/com_facebook_profile_picture_blank_portrait"
+            android:id="@+id/imgInfoMyImg"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="40dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:elevation="0dp"
+            android:background="@null" />
 
-        <TextView
-            android:text="Password : "
-            android:layout_height="wrap_content"
-            android:id="@+id/textView18"
-            android:layout_width="110dp" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/imgInfoMyImg"
+            android:background="@android:color/darker_gray"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/linelini1"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"></LinearLayout>
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:ems="10"
-            android:id="@+id/etInfoPassword2"
-            android:layout_weight="1"
-            android:background="@null"
-            android:hint="*************"
-            android:inputType="textPassword"
-            android:layout_height="30dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:id="@+id/li5"
-        android:layout_below="@+id/li4"
-        android:layout_alignLeft="@+id/li4"
-        android:layout_alignStart="@+id/li4">
-
-        <TextView
-            android:text="E-Mail :"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView17" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:inputType="text"
-            android:ems="10"
-            android:id="@+id/etInfoEmail"
-            android:layout_weight="1"
-            android:background="@null"
-            android:hint="E - Mail"
-            android:layout_height="30dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/li5"
-        android:background="@android:color/darker_gray"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:id="@+id/lineli2"></LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_below="@+id/lineli2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:padding="5dp">
-
-        <Switch
-            android:text="새 글 알림"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/switch1"
-            android:layout_weight="1" />
+            android:id="@+id/li1"
+            android:layout_below="@+id/linelini1"
+            android:layout_alignLeft="@+id/li2"
+            android:layout_alignStart="@+id/li2">
 
-        <Switch
-            android:text="내 글 댓글 알림"
+            <TextView
+                android:text="Phone Number :"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView14"
+                android:layout_width="110dp" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:inputType="phone"
+                android:ems="12"
+                android:id="@+id/etInfoPhone_number"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="Phone Number"
+                android:layout_height="30dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/switch2"
-            android:layout_weight="1" />
+            android:layout_below="@+id/li1"
+            android:id="@+id/li2"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
 
-        <Switch
-            android:text="내 글 좋아요 알림"
+            <TextView
+                android:text="Name : "
+                android:layout_height="wrap_content"
+                android:id="@+id/textView15"
+                android:layout_width="110dp" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="13"
+                android:id="@+id/etInfoName"
+                android:layout_weight="1"
+                android:hint="Name"
+                android:background="@null"
+                android:layout_height="30dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/switch3"
-            android:layout_weight="1" />
+            android:layout_below="@+id/li2"
+            android:id="@+id/li3"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
 
-    </LinearLayout>
+            <TextView
+                android:text="Password :"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView16"
+                android:layout_width="110dp" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:ems="10"
+                android:id="@+id/etInfoPassword1"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="*************"
+                android:inputType="textPassword"
+                android:layout_height="30dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/li4"
+            android:layout_below="@+id/li3"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+            <TextView
+                android:text="Password : "
+                android:layout_height="wrap_content"
+                android:id="@+id/textView18"
+                android:layout_width="110dp" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:ems="10"
+                android:id="@+id/etInfoPassword2"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="*************"
+                android:inputType="textPassword"
+                android:layout_height="30dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:id="@+id/li5"
+            android:layout_below="@+id/li4"
+            android:layout_alignLeft="@+id/li4"
+            android:layout_alignStart="@+id/li4">
+
+            <TextView
+                android:text="E-Mail :"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView17" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:inputType="text"
+                android:ems="10"
+                android:id="@+id/etInfoEmail"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="E - Mail"
+                android:layout_height="30dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/li5"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:id="@+id/lineli2"></LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_below="@+id/lineli2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:padding="5dp">
+
+            <Switch
+                android:text="새 글 알림"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/switch1"
+                android:layout_weight="1"
+                android:checked="true" />
+
+            <Switch
+                android:text="내 글 댓글 알림"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/switch2"
+                android:layout_weight="1"
+                android:checked="true" />
+
+            <Switch
+                android:text="내 글 좋아요 알림"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/switch3"
+                android:layout_weight="1"
+                android:checked="true" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/info_photodetail"
+        android:visibility="gone">
+
+        <include
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/info_photo_detail" />
+    </RelativeLayout>
 
 </RelativeLayout>

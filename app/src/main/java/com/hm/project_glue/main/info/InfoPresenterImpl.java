@@ -3,16 +3,22 @@ package com.hm.project_glue.main.info;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.facebook.login.widget.ProfilePictureView;
 import com.hm.project_glue.main.info.Data.InfoData;
 import com.hm.project_glue.util.Networking;
 import com.hm.project_glue.util.http.ListRestAdapter;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.FileInputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -156,8 +162,8 @@ public class InfoPresenterImpl implements InfoPresenter {
             e.printStackTrace();
         }
     }
-
-    private Bitmap imgReSizing(String path){
+    @Override
+    public Bitmap imgReSizing(String path){
         DisplayMetrics dm = context.getResources().getDisplayMetrics();
         int reqWidth = dm.widthPixels;
         int reqHeight = dm.heightPixels;
@@ -187,7 +193,99 @@ public class InfoPresenterImpl implements InfoPresenter {
         return bitmap;
 
     }
+    private void saveMyImage(Bitmap bitmap, String imagePath){
+        new AsyncTask<String, Void, Integer>(){
+            String boundary="----------";
+            String lineEnd = "\r\n";
+            String twoHyphens = "--";
 
+            int responseCode = 0;
+
+            @Override
+            protected Integer doInBackground(String... params) {
+                int responeCode = 0;
+
+                try {
+                    URL connectUrl = new URL(Networking.getBASE_URL() + "/member/myinfo/");
+                    HttpURLConnection conn = (HttpURLConnection) connectUrl.openConnection();
+                    conn.setDoOutput(true);
+                    conn.setDoInput(true);
+                    conn.setRequestMethod("PUT");
+                    conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+                    conn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+                    conn.setRequestProperty("Authorization", "Token " + Networking.getToken());
+                    conn.setRequestProperty("cache-control", "no-cache");
+                    conn.connect();
+
+                    DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
+
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream() ;
+                    bitmap.compress( Bitmap.CompressFormat.JPEG, 100, stream) ;
+                    byte[] byteArray = stream.toByteArray();
+                    ByteArrayInputStream inputStream = new ByteArrayInputStream(byteArray);
+
+                    dos.writeBytes("\r\n--" + boundary + "\r\n");
+                    dos.writeBytes("Content-Disposition: form-data; name=\"image\";filename=\"" + imagePath + "\"" + lineEnd);
+                    dos.writeBytes("Content-Type: application/octet-stream" + lineEnd);
+                    dos.writeBytes(lineEnd);
+
+                    int bytesAvailable = inputStream.available();
+                    int maxBufferSize = 1024;
+                    int bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                    byte[] buffer = new byte[bufferSize];
+                    int bytesRead = inputStream.read(buffer, 0, bufferSize);
+
+                    Log.d("Test", "image byte is " + bytesRead);
+
+                    // read image
+                    while (bytesRead > 0) {
+                        dos.write(buffer, 0, bufferSize);
+                        bytesAvailable = inputStream.available();
+                        bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                        bytesRead = inputStream.read(buffer, 0, bufferSize);
+                    }
+                    dos.write(buffer, 0, bufferSize);
+                    inputStream.close();
+
+                    dos.writeBytes(lineEnd);
+                    dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+
+                    dos.flush();
+                    dos.close();
+                    if (conn.getResponseCode() == 200 || conn.getResponseCode() == 201) {
+                        Log.i(ProfilePictureView.TAG, "conn.getResponseCode(): " + conn.getResponseCode());
+                        responeCode = conn.getResponseCode();
+                    } else {
+                        Log.i(ProfilePictureView.TAG, "conn.getResponseCode(): " + conn.getResponseCode());
+                        responeCode = conn.getResponseCode();
+                    }
+                } catch (Exception e) {
+                    Log.e(ProfilePictureView.TAG, e.getMessage());
+                }
+                return responeCode;
+            }
+
+            @Override
+            protected void onPostExecute(Integer code) {
+                super.onPostExecute(code);
+
+                Log.i(ProfilePictureView.TAG,"onPostExecute");
+
+            }
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+                Log.i(ProfilePictureView.TAG,"onPreExecute");
+            }
+            @Override
+            protected void onProgressUpdate(Void... values) {
+                super.onProgressUpdate(values);
+            }
+        }.execute();
+
+
+    }
 
 
 
