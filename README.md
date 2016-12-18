@@ -9,3 +9,7 @@
 0. 작성중
 1. 작성중
 2. 작성중
+
+### 화면전환Flow
+![Glue logo](https://github.com/baekcedar/img/blob/master/flow.png)
+
