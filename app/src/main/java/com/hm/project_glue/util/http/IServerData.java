@@ -2,7 +2,8 @@ package com.hm.project_glue.util.http;
 
 import com.hm.project_glue.main.home.data.HomeData;
 import com.hm.project_glue.main.info.Data.InfoData;
-import com.hm.project_glue.main.list.data.PostData;
+import com.hm.project_glue.main.timeline.data.PostData;
+import com.hm.project_glue.main.list.timeline.data.Timeline;
 
 import java.util.Map;
 
@@ -107,6 +108,10 @@ public interface IServerData {
     @GET("/posts/post_list/{groupId}/")
     Call<PostData> getListData(     @Header("Authorization") String authorization,
                                     @Path("groupId") String groupId,
+                                    @QueryMap Map<String, String> page);
+    // Post 목록 보기  QueryMap-> ex) page=2
+    @GET("/timeline/")
+    Call<Timeline> getTimeLinetData(@Header("Authorization") String authorization,
                                     @QueryMap Map<String, String> page);
     // 좋아요
     @POST("/posts/post_like/{post_id}/")

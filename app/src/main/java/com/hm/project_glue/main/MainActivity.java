@@ -18,7 +18,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
@@ -32,7 +31,7 @@ import com.hm.project_glue.sign.SignActivity;
 import com.hm.project_glue.util.Networking;
 import com.hm.project_glue.util.write.WriteActivity;
 
-public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
     public static DisplayMetrics metrics;
     private HomeFragment home;
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     private Networking networking;
     private TabLayout tab;
 
-
+    public static ViewPager pager;
     private final int facebookResultCode = -1,galleyResultCode = 2;
     public static String TAG = "TEST";
 
@@ -64,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         list =  ListFragment.newInstance();
 
         tab = (TabLayout) findViewById(R.id.tabLayout);
-        ViewPager pager = (ViewPager) findViewById(R.id.pager);
+        pager = (ViewPager) findViewById(R.id.pager);
         tab.addTab(tab.newTab().setIcon(R.mipmap.ic_supervisor_account_white_36dp));
         tab.addTab(tab.newTab().setIcon(R.mipmap.ic_photo_library_gray_36dp));
         tab.addTab(tab.newTab().setIcon(R.mipmap.ic_sms_gray_36dp));
@@ -104,23 +103,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         WindowManager windowManager = (WindowManager)getApplicationContext()
                 .getSystemService(Context.WINDOW_SERVICE);
         windowManager.getDefaultDisplay().getMetrics(metrics);
-    }
-
-    // instanceof <-- Fragment 확인
-    @Override
-    public void onFragmentInteraction(Fragment  fragment) {
-        if (fragment instanceof  HomeFragment){
-            Toast.makeText(MainActivity.this, "HomeFragment", Toast.LENGTH_SHORT).show();
-        }
-        else if (fragment instanceof  ListFragment) {
-            Toast.makeText(MainActivity.this, "ListFragment", Toast.LENGTH_SHORT).show();
-        }
-        else if(fragment instanceof  InfoFragment) {
-            Toast.makeText(MainActivity.this, "InfoFragment", Toast.LENGTH_SHORT).show();
-        }
-        else if(fragment instanceof  MsgFragment) {
-            Toast.makeText(MainActivity.this, "MsgFragment", Toast.LENGTH_SHORT).show();
-        }
     }
 
     class MainPagerAdapter extends FragmentStatePagerAdapter {

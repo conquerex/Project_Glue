@@ -54,7 +54,7 @@ public class WriteActivity extends AppCompatActivity implements WritePresenter.V
         btnGroupSelect  =   (Button)findViewById(R.id.btnGroupSelect);
         btnGallery      =   (Button)findViewById(R.id.btnGallery);
         mEditText       =   (EditText) findViewById(R.id.mEditText);
-        horizontalListView = (HorizontalListView) findViewById(R.id.horizontalListView);
+        horizontalListView = (HorizontalListView) findViewById(R.id.writehorizontalListView);
         //TODO 완성되면 주석 풀기
 //        selectGroupId = getGroupId();
 //        selectGroupName = getGroupName();
