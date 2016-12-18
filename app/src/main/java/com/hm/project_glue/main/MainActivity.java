@@ -24,6 +24,7 @@ import com.hm.project_glue.main.list.ListFragment;
 import com.hm.project_glue.main.msg.MsgFragment;
 import com.hm.project_glue.sign.SignActivity;
 import com.hm.project_glue.util.Networking;
+import com.hm.project_glue.util.addGroup.AddGroupActivity;
 import com.hm.project_glue.util.write.WriteActivity;
 
 public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener{
@@ -145,11 +146,12 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         switch (activityCode){
             case 1 :
                 i = new Intent(MainActivity.this, SignActivity.class);
-
                 break;
             case 2 :
                 i = new Intent(MainActivity.this, WriteActivity.class);
-
+                break;
+            case 3 :
+                i = new Intent(MainActivity.this, AddGroupActivity.class);
                 break;
         }
         startActivity(i);
