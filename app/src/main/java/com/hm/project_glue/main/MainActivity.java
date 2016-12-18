@@ -38,11 +38,10 @@ public class MainActivity extends AppCompatActivity {
     private  MsgFragment msg;
     private InfoFragment info;
     private ListFragment list;
-    private  PagerAdapter adapter;
     private Networking networking;
     private TabLayout tab;
 
-    public static ViewPager pager;
+    public  ViewPager pager;
     private final int facebookResultCode = -1,galleyResultCode = 2;
     public static String TAG = "TEST";
 
@@ -93,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {}
         });
 
-        adapter = new MainPagerAdapter(getSupportFragmentManager());
+        PagerAdapter adapter = new MainPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);
         pager.setOffscreenPageLimit(3);
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab));

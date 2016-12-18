@@ -15,5 +15,6 @@ public interface InfoPresenter {
     Bitmap imgReSizing(String path);
     interface View{
         void setInfo(InfoData infoData);
+        void toast(String msg);
     }
 }

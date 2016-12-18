@@ -23,10 +23,7 @@ public class PopupListAdapter extends BaseAdapter{
     LayoutInflater inflater;
     Context context;
 
-
-
     PopupListAdapter(Context context, ArrayList<Response> datas){ //생성자
-
         this.context = context;
         this.datas = datas;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

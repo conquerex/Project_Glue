@@ -53,6 +53,11 @@ public interface IServerData {
     @PUT("/member/myinfo/")
     Call<InfoData> myInfoUpdateData(@Header("Authorization") String authorization,
                                     @PartMap Map<String, RequestBody> imgMap);
+    //프로필 사진 수정
+    @Multipart
+    @PATCH("/member/myinfo/")
+    Call<InfoData> myPhotoUpdateData(@Header("Authorization") String authorization,
+                                    @PartMap Map<String, RequestBody> imgMap);
     // 내정보 삭제
     @DELETE("/member/myinfo/{userId}/")
     Call<String> myInfoDeleteData(@Header("Authorization") String authorization,
@@ -126,6 +131,7 @@ public interface IServerData {
     Call<PostData> postDeleteData(  @Header("Authorization") String authorization,
                                     @Path("post_id") String post_id);
     // post 수정
+    @Multipart
     @PATCH("/posts/post_detail/{post_id}/")
     Call<PostData> postDeleteData(     @Header("Authorization") String authorization,
                                        @Path("post_id") String post_id,

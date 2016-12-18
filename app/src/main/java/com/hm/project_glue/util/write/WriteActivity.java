@@ -63,7 +63,6 @@ public class WriteActivity extends AppCompatActivity implements WritePresenter.V
         });
         btnGroupSelect.setOnClickListener(v ->{
             setGroupDialog();
-
             viewgroupDialog = groupDialog.show();
         });
         btnWrite.setOnClickListener(v -> {

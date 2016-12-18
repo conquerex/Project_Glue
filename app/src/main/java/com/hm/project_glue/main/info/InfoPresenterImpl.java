@@ -114,6 +114,32 @@ public class InfoPresenterImpl implements InfoPresenter {
             e.printStackTrace();
         }
     }
+    public void photoUpdate(Bitmap bitmap){
+        if(bitmap!=null){
+            ByteArrayOutputStream stream = new ByteArrayOutputStream() ;
+            bitmap.compress( Bitmap.CompressFormat.JPEG, 100, stream) ;
+            byte[] byteArray = stream.toByteArray();
+            String authorization = "Token "+ Networking.getToken();
+            Map<String, RequestBody> imgMap = new HashMap<>();
+            RequestBody body  = RequestBody.create(MediaType.parse("image/*"), byteArray, 0, byteArray.length);
+            imgMap.put("image\"; filename=\"profile.jpg", body);
+            final Call<InfoData> response = ListRestAdapter.getInstance().myPhotoUpdateData(authorization, imgMap);
+            response.enqueue(new Callback<InfoData>() {
+                @Override
+                public void onResponse(Call<InfoData> call, Response<InfoData> response) {
+                    if(response.isSuccessful()){
+                        view.toast("upload");
+                    }
+                    Log.i(TAG, "myInfoData response Code : "+response.code());
+                }
+                @Override
+                public void onFailure(Call<InfoData> call, Throwable t) {
+                    Log.e(TAG, t.getMessage());
+                }
+            });
+        }
+
+    }
     private void setUserInfoUpdate(String phone_number, String name, String password,  String email, String img){
         try {
             String authorization = "Token "+ Networking.getToken();
@@ -126,21 +152,10 @@ public class InfoPresenterImpl implements InfoPresenter {
 //            tmpFile.createNewFile();
 //            FileOutputStream out = new FileOutputStream(tmpFile);
             // bitmap Byte로 처리
-            Bitmap bitmap = imgReSizing(img);
-            ByteArrayOutputStream stream = new ByteArrayOutputStream() ;
-            bitmap.compress( Bitmap.CompressFormat.JPEG, 100, stream) ;
-            byte[] byteArray = stream.toByteArray();
-
-
-
-
             bodyMap.put("phone_number",RequestBody.create(MediaType.parse("multipart/form-data"), phone_number));
             bodyMap.put("name",RequestBody.create(MediaType.parse("multipart/form-data"), name));
             bodyMap.put("password",RequestBody.create(MediaType.parse("multipart/form-data"), password));
             bodyMap.put("email",RequestBody.create(MediaType.parse("multipart/form-data"), email));
-            RequestBody body  = RequestBody.create(MediaType.parse("image/*"), byteArray, 0, byteArray.length);
-            bodyMap.put("\"image\"; filename=\"profile.jpg\"", body);
-
             final Call<InfoData> response = ListRestAdapter.getInstance().myInfoUpdateData(authorization, bodyMap);
             response.enqueue(new Callback<InfoData>() {
                 @Override

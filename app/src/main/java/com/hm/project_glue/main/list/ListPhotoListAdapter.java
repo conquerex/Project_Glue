@@ -63,9 +63,10 @@ public class ListPhotoListAdapter extends BaseAdapter {
         ImageView itemImg = (ImageView) convertView.findViewById(R.id.img_list_item);
         ProgressBar bar = (ProgressBar) convertView.findViewById(R.id.bar_list_item);
         if( datas.size() > 1){
-            itemImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        }else{
             itemImg.setScaleType(ImageView.ScaleType.FIT_XY);
+
+        }else{
+            itemImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
 
         Glide.with(context).load(imageurl).listener(new RequestListener<String, GlideDrawable>() {
