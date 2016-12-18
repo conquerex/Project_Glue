@@ -1,4 +1,4 @@
-package com.hm.project_glue.main.list.data;
+package com.hm.project_glue.main.timeline.data;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
 package com.hm.project_glue.main.list;
 
-import com.hm.project_glue.main.list.data.PostData;
+import com.hm.project_glue.main.timeline.data.PostData;
 
 /**
  * Created by HM on 2016-11-29.
@@ -8,8 +8,9 @@ import com.hm.project_glue.main.list.data.PostData;
 
 public interface ListPresenter {
     void setView(ListPresenter.View view);
-    void callHttp(String GroupId);
-    public interface View {
-        void dataChanged(PostData post);
+    void callHttp(String GroupId, String page, boolean upDownCode);
+    interface View {
+        void setProgress(int code);
+        void dataChanged(PostData res);
     }
 }
