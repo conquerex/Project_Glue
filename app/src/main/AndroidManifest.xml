@@ -62,7 +62,8 @@
         </service>
 
         <activity android:name=".main.info.PhotoDetailActivity" />
-        <activity android:name=".util.addGroup.AddGroupActivity"></activity>
+        <activity android:name=".util.addGroup.AddGroupActivity"
+            android:theme="@style/ActivityTheme"></activity>
     </application>
 
 </manifest>

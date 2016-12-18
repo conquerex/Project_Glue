@@ -54,22 +54,52 @@
             android:layout_alignBottom="@+id/tvAddGroupBarText"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
-
     </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/scAddGroupScrollView"
         android:padding="5dp"
         android:layout_below="@+id/layoutAddGroupActionBar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvAddGroupName"
-            android:text="그룹 이름"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:id="@+id/btnAddGroupGalleryIcon"
+                android:background="@android:drawable/ic_menu_gallery"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+            <EditText
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                android:id="@+id/etAddGroupName"
+                android:hint="그룹 이름을 입력하세요."
+                style="@style/SignUpEditTextTheme"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="* * * * *\n그룹원 추가는 그룹 수정에서 가능합니다."
+                android:layout_gravity="center"
+                android:paddingTop="40dp"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+
     </ScrollView>
 
 </RelativeLayout>
