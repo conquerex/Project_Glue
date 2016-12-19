@@ -3,7 +3,7 @@ package com.hm.project_glue.main.list;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.hm.project_glue.main.list.data.PostData;
+import com.hm.project_glue.main.timeline.data.PostData;
 import com.hm.project_glue.util.Networking;
 import com.hm.project_glue.util.http.ListRestAdapter;
 
@@ -38,43 +38,35 @@ public class ListPresenterImpl implements ListPresenter {
     }
 
     @Override
-    public void callHttp(String GroupId){
-
-         new AsyncTask<String, Void, PostData>(){
-             PostData postData;
-            @Override
-            protected PostData doInBackground(String... params) {
-
-                String authorization = "Token "+ Networking.getToken();
-                Map<String, String> queryMap = new HashMap<>();
-                queryMap.put("page", "1");
+    public void callHttp(String GroupId, String page , boolean refresh) {
+        String authorization = "Token " + Networking.getToken();
+        Map<String, String> queryMap = new HashMap<>();
+        queryMap.put("page", page);
+        new AsyncTask<String, Void, String>() {
+            PostData postData = null;
+            protected String doInBackground(String... params) {
                 try {
-                    final Call<PostData> response = ListRestAdapter.getInstance().getListData(authorization, GroupId, queryMap);
+                    final Call<PostData> response = ListRestAdapter.getInstance().getListData(authorization,GroupId, queryMap);
                     postData = response.execute().body();
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                return postData;
+                  return GroupId;
             }
-            @Override
             protected void onPreExecute() {
                 super.onPreExecute();
                 //TODO  메인쓰레드 프로그래스 바 보여주기
+                if (refresh) view.setProgress(1);
+                else view.setProgress(3);
             }
-            @Override
-            protected void onPostExecute(PostData postData) {
-                super.onPostExecute(postData);
-                view.dataChanged(postData);
+            protected void onPostExecute(String  str) {
+                super.onPostExecute(str);
+                if (refresh) view.setProgress(2);
+                else view.setProgress(4);
+                if (postData != null) view.dataChanged(postData);
             }
         }.execute();
 
 
-
     }
-
-
-
-
-
 }

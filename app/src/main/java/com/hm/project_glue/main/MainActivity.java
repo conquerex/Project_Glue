@@ -2,7 +2,11 @@ package com.hm.project_glue.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,8 +15,9 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
@@ -27,18 +32,18 @@ import com.hm.project_glue.util.Networking;
 import com.hm.project_glue.util.addGroup.AddGroupActivity;
 import com.hm.project_glue.util.write.WriteActivity;
 
-public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
     public static DisplayMetrics metrics;
     private HomeFragment home;
     private  MsgFragment msg;
     private InfoFragment info;
     private ListFragment list;
-    private  PagerAdapter adapter;
     private Networking networking;
     private TabLayout tab;
 
-    private final int facebookResultCode = -1;
+    public  ViewPager pager;
+    private final int facebookResultCode = -1,galleyResultCode = 2;
     public static String TAG = "TEST";
 
 
@@ -58,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         list =  ListFragment.newInstance();
 
         tab = (TabLayout) findViewById(R.id.tabLayout);
-        ViewPager pager = (ViewPager) findViewById(R.id.pager);
+        pager = (ViewPager) findViewById(R.id.pager);
         tab.addTab(tab.newTab().setIcon(R.mipmap.ic_supervisor_account_white_36dp));
         tab.addTab(tab.newTab().setIcon(R.mipmap.ic_photo_library_gray_36dp));
         tab.addTab(tab.newTab().setIcon(R.mipmap.ic_sms_gray_36dp));
@@ -88,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             public void onTabReselected(TabLayout.Tab tab) {}
         });
 
-        adapter = new MainPagerAdapter(getSupportFragmentManager());
+        PagerAdapter adapter = new MainPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);
         pager.setOffscreenPageLimit(3);
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab));
@@ -98,23 +103,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         WindowManager windowManager = (WindowManager)getApplicationContext()
                 .getSystemService(Context.WINDOW_SERVICE);
         windowManager.getDefaultDisplay().getMetrics(metrics);
-    }
-
-    // instanceof <-- Fragment 확인
-    @Override
-    public void onFragmentInteraction(Fragment  fragment) {
-        if (fragment instanceof  HomeFragment){
-            Toast.makeText(MainActivity.this, "HomeFragment", Toast.LENGTH_SHORT).show();
-        }
-        else if (fragment instanceof  ListFragment) {
-            Toast.makeText(MainActivity.this, "ListFragment", Toast.LENGTH_SHORT).show();
-        }
-        else if(fragment instanceof  InfoFragment) {
-            Toast.makeText(MainActivity.this, "InfoFragment", Toast.LENGTH_SHORT).show();
-        }
-        else if(fragment instanceof  MsgFragment) {
-            Toast.makeText(MainActivity.this, "MsgFragment", Toast.LENGTH_SHORT).show();
-        }
     }
 
     class MainPagerAdapter extends FragmentStatePagerAdapter {
@@ -141,6 +129,11 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         }
     }
 
+    public void galleyActivity(){
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, 2);
+    }
     public void moveActivity(int activityCode){
         Intent i = null;
         switch (activityCode){
@@ -159,14 +152,29 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
 
     }
-    @Override   //facebook
+    @Override   //facebook(-1) , PhotoDetail ( 2 )
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (resultCode){
+        switch (requestCode){
             case 1 :
                 break;
-            case 2 :
-                info.setBitmap(data.getStringExtra("imagePath"));
+            case galleyResultCode :
+                Log.i(TAG, "galleyResultCode");
+                if(data != null){
+                    Uri imageUri = data.getData();    // Intent에서 받아온 갤러리 URI
+                    String selections[] = { MediaStore.Images.Media.DATA}; // 실제 이미지 패스 데이터
+                    if( Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
+                    }
+                    else {
+//                        checkPermissions();
+                    }
+                    Cursor cursor = getContentResolver().query(imageUri, selections, null,null,null);
+                    if(cursor.moveToNext()){
+                        String imagePath = cursor.getString(0);                        // 사이즈 지정 옵션
+                        info.setBitmap(imagePath);
+                        Log.i(TAG, "info.setBitmap(imagePath)");
+                    }
+                }
                 break;
             case facebookResultCode :
                 callbackManager.onActivityResult(requestCode, resultCode, data);
@@ -183,5 +191,17 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         moveActivity(SignActivity);
     }
 
+    public void setTabBar(int setTabBarCode){
+
+        switch (setTabBarCode){
+            case 1 :
+                tab.setVisibility(View.VISIBLE);
+                break;
+            case 2 :
+                Log.i(TAG, "tab 2");
+               tab.setVisibility(View.GONE);
+                break;
+        }
+    }
 
 }

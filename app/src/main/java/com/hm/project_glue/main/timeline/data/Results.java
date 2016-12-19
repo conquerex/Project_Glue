@@ -1,4 +1,4 @@
-package com.hm.project_glue.main.list.data;
+package com.hm.project_glue.main.timeline.data;
 
 import java.util.ArrayList;
 
@@ -12,6 +12,10 @@ public class Results
     ArrayList<Photos> photos;
     String content="";
     String uploaded_user="";
+    User user;
+
+
+
     String[] dislike;
     String[] like;
     String group="";
@@ -22,7 +26,9 @@ public class Results
 
     }
 
+    public User getUser() {    return user;    }
 
+    public void setUser(User user) {        this.user = user;    }
     public String getLikes_count ()
     {
         return likes_count;
