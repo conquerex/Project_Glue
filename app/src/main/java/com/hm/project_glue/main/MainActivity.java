@@ -36,6 +36,7 @@ import com.hm.project_glue.util.write.WriteActivity;
 public class MainActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
     public static DisplayMetrics metrics;
+    public static Context mainContext;
     private HomeFragment home;
     private MsgFragment msg;
     private InfoFragment info;
@@ -46,12 +47,15 @@ public class MainActivity extends AppCompatActivity {
 
     public  ViewPager pager;
     private final int facebookResultCode = -1,galleyResultCode = 2;
+    private final int addGroupCode = 3;
     public static String TAG = "TEST";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 2016.12.20 다른 액티비티에서 함수 호출을 위함
+        mainContext = this;
 
         if(savedInstanceState!=null) {
             finish();
@@ -132,10 +136,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void galleyActivity(){
+    // 2016.12.20 galleyActivity 재사용을 위해 int로 구분
+    public void galleyActivity(int code){
         Intent intent = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, 2);
+        startActivityForResult(intent, code);
     }
     public void moveActivity(int activityCode){
         Intent i = null;
@@ -182,6 +187,24 @@ public class MainActivity extends AppCompatActivity {
             case facebookResultCode :
                 callbackManager.onActivityResult(requestCode, resultCode, data);
                 break;
+            case addGroupCode :
+                Log.i(TAG, "galleyResultCode");
+                if(data != null){
+                    Uri imageUri = data.getData();    // Intent에서 받아온 갤러리 URI
+                    String selections[] = { MediaStore.Images.Media.DATA}; // 실제 이미지 패스 데이터
+                    if( Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
+                    }
+                    else {
+//                        checkPermissions();
+                    }
+                    Cursor cursor = getContentResolver().query(imageUri, selections, null,null,null);
+                    if(cursor.moveToNext()){
+                        String imagePath = cursor.getString(0);                        // 사이즈 지정 옵션
+                        info.setBitmap(imagePath);
+                        Log.i(TAG, "info.setBitmap(imagePath)");
+                    }
+                }
+                break;
         }
     }
 
@@ -202,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 2 :
                 Log.i(TAG, "tab 2");
-               tab.setVisibility(View.GONE);
+                tab.setVisibility(View.GONE);
                 break;
         }
     }

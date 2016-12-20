@@ -2,22 +2,61 @@ package com.hm.project_glue.util.addGroup;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.hm.project_glue.R;
+import com.hm.project_glue.main.MainActivity;
 
 public class AddGroupActivity extends AppCompatActivity implements AddGroupPresenter.View {
     private static final String TAG = "AddGroupActivity";
+    private Bitmap bitmap;
+    private String imgUrl;
     ProgressDialog progress;
     Context context;
+
+    Button btnAddGroupBack;
+    Button btnAddGroupSave;
+    ImageView ivAddGroupGallery;
+    EditText etAddGroupName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_group);
+
+        ivAddGroupGallery = (ImageView)findViewById(R.id.ivAddGroupGallery);
+        etAddGroupName    = (EditText)findViewById(R.id.etAddGroupName);
+        btnAddGroupBack   = (Button)findViewById(R.id.btnAddGroupBack);
+        btnAddGroupSave   = (Button)findViewById(R.id.btnAddGroupSave);
+
+        ivAddGroupGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)MainActivity.mainContext).galleyActivity(2);
+            }
+        });
+
+        btnAddGroupBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        btnAddGroupSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override

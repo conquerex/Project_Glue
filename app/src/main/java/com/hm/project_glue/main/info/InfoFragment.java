@@ -93,7 +93,8 @@ public class InfoFragment extends Fragment implements InfoPresenter.View {
         btnInfoLogOut.setOnClickListener(v -> ((MainActivity)getActivity()).logOut() );
         btnInfoUpdate.setOnClickListener(v -> infoFormCheck() );
         btnPhotoDetailLord.setOnClickListener(v-> {
-            ((MainActivity)getActivity()).galleyActivity();
+            // 2016.12.20 galleyActivity 재사용을 위해 int로 구분
+            ((MainActivity)getActivity()).galleyActivity(2);
         });
         infoRelativeLayout.setOnClickListener(v -> {
             InputMethodManager mgr = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
