@@ -1,6 +1,8 @@
 package com.hm.project_glue.util.write;
 
 import com.hm.project_glue.main.home.data.Response;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 public interface WritePresenter{
 
     void setView(WritePresenter.View view);
-    void httpPosting(ArrayList<String> photosDatas, String selectGroupId, String content);
+    void httpPosting(ArrayList<String> photosDatas, String selectGroupId, String content) throws IOException;
 
     interface View {
         void writeResult(int Code);
