@@ -4,12 +4,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.hm.project_glue.main.info.data.InfoData;
+import com.hm.project_glue.main.home.data.HomeData;
 import com.hm.project_glue.util.Networking;
 import com.hm.project_glue.util.http.ListRestAdapter;
 
@@ -34,6 +33,7 @@ public class AddGroupPresenterImpl implements AddGroupPresenter {
     private static final String TAG = "AddGroupPresenterImpl";
     private Context context;
     AddGroupPresenter.View view;
+    ProgressDialog progress;
 
     public AddGroupPresenterImpl(Context context) {
         this.context = context;
@@ -109,29 +109,37 @@ public class AddGroupPresenterImpl implements AddGroupPresenter {
     }
 
     @Override
-    public void photoAddGroupUpdate(Bitmap bitmap) {
+    public void addGroupSave(Bitmap bitmap, String groupName) {
+        view.progressAddGroupShow(true);
+        String authorization = "Token "+ Networking.getToken();
+        Log.i(TAG, "-------- addGroupSave : "+authorization);
+        Map<String, RequestBody> imgMap = new HashMap<>();
+
         if(bitmap!=null){
+            Log.i(TAG, "-------- bitmap ");
             ByteArrayOutputStream stream = new ByteArrayOutputStream() ;
             bitmap.compress( Bitmap.CompressFormat.JPEG, 100, stream) ;
             byte[] byteArray = stream.toByteArray();
-            String authorization = "Token "+ Networking.getToken();
-            Map<String, RequestBody> imgMap = new HashMap<>();
             RequestBody body  = RequestBody.create(MediaType.parse("image/*"), byteArray, 0, byteArray.length);
             imgMap.put("image\"; filename=\"profile.jpg", body);
-            final Call<InfoData> response = ListRestAdapter.getInstance().myPhotoUpdateData(authorization, imgMap);
-            response.enqueue(new Callback<InfoData>() {
-                @Override
-                public void onResponse(Call<InfoData> call, Response<InfoData> response) {
-                    if(response.isSuccessful()){
-                        Toast.makeText(context, "Update Successful", Toast.LENGTH_SHORT).show();
-                    }
-                    Log.i(TAG, "-------- photoAddGroupUpdate : "+response.code());
-                }
-                @Override
-                public void onFailure(Call<InfoData> call, Throwable t) {
-                    Log.e(TAG, t.getMessage());
-                }
-            });
         }
+
+        imgMap.put("group_name",RequestBody.create(MediaType.parse("multipart/form-data"), groupName));
+
+        final Call<HomeData> response = ListRestAdapter.getInstance().createGroupData(authorization, imgMap);
+        response.enqueue(new Callback<HomeData>() {
+            @Override
+            public void onResponse(Call<HomeData> call, Response<HomeData> response) {
+                Log.i(TAG, "-------- onResponse : "+groupName);
+                if(response.isSuccessful()){
+                    Toast.makeText(context, "Update Successful", Toast.LENGTH_SHORT).show();
+                }
+                Log.i(TAG, "-------- photoAddGroupUpdate : "+response.code());
+            }
+            @Override
+            public void onFailure(Call<HomeData> call, Throwable t) {
+                Log.e(TAG, t.getMessage());
+            }
+        });
     }
 }

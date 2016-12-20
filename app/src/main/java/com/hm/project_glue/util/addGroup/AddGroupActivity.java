@@ -15,14 +15,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
 import com.hm.project_glue.R;
-
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import com.hm.project_glue.main.MainActivity;
 
 public class AddGroupActivity extends AppCompatActivity implements AddGroupPresenter.View {
     private static final String TAG = "AddGroupActivity";
+    MainActivity mainActivity = (MainActivity)MainActivity.mainContext;
     private Bitmap bitmap;
     private String imgUrl;
     private AddGroupPresenterImpl addGroupPresenter;
@@ -68,10 +66,17 @@ public class AddGroupActivity extends AppCompatActivity implements AddGroupPrese
         btnAddGroupSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Glide.with(context).load(imgUrl).bitmapTransform(new CropCircleTransformation(context))
-                        .into(ivAddGroupGallery);
-                addGroupPresenter.photoAddGroupUpdate(bitmap);
-                finish();
+                String groupName = etAddGroupName.getText().toString();
+                if(groupName.equals("")){
+                    Toast.makeText(context,"input content or Select Group",Toast.LENGTH_SHORT).show();
+                }else {
+                    addGroupPresenter.addGroupSave(bitmap, groupName);
+                    Intent intent = new Intent(AddGroupActivity.this, MainActivity.class);
+                    mainActivity.finish();
+                    startActivity(intent);
+                }
+//                Glide.with(context).load(imgUrl).bitmapTransform(new CropCircleTransformation(context))
+//                        .into(ivAddGroupGallery);
             }
         });
     }
