@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.hm.project_glue.main.list.data.Dislike;
 import com.hm.project_glue.main.list.data.Like;
+import com.hm.project_glue.main.timeline.TimelineFragment;
 import com.hm.project_glue.util.Networking;
 
 import retrofit2.Call;
@@ -43,6 +44,7 @@ public class CallRest {
 
 
     public static void callHttpLike(String postId, boolean likeType, TextView tvLike, TextView tvDislike){
+        TimelineFragment.loadingFlag=true;
         String authorization = "Token " + Networking.getToken();
 
         if(likeType){
@@ -50,14 +52,20 @@ public class CallRest {
             response.enqueue(new Callback<Like>() {
                 @Override
                 public void onResponse(Call<Like> call, Response<Like> response) {
-                    String resLike = response.body().getLike_count();
-                    String resDislike = response.body().getDislike_count();
-                    likeChanged(tvLike,tvDislike, resLike, resDislike);
-                }
+                    if(response.isSuccessful()){
 
+                        String resLike = response.body().getLike_count();
+                        String resDislike = response.body().getDislike_count();
+                        if( resLike!=null && resDislike!=null){
+                            likeChanged(tvLike,tvDislike, resLike, resDislike);
+                        }
+                    }else{
+                        TimelineFragment.loadingFlag=false;
+                    }
+                }
                 @Override
                 public void onFailure(Call<Like> call, Throwable t) {
-
+                    TimelineFragment.loadingFlag=false;
                 }
             });
 
@@ -66,15 +74,20 @@ public class CallRest {
             response.enqueue(new Callback<Dislike>() {
                 @Override
                 public void onResponse(Call<Dislike> call, Response<Dislike> response) {
-                    String res = response.body().getDislike_count();
-                    String resLike = response.body().getLike_count();
-                    String resDislike = response.body().getDislike_count();
-                    likeChanged(tvLike,tvDislike, resLike, resDislike);
+                    if(response.isSuccessful()){
+                        String resLike = response.body().getLike_count();
+                        String resDislike = response.body().getDislike_count();
+                        if( resLike!=null && resDislike!=null){
+                            likeChanged(tvLike,tvDislike, resLike, resDislike);
+                        }
+                    }else{
+                        TimelineFragment.loadingFlag=false;
+                    }
                 }
 
                 @Override
                 public void onFailure(Call<Dislike> call, Throwable t) {
-
+                    TimelineFragment.loadingFlag=false;
                 }
             });
         }

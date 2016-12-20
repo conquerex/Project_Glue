@@ -47,8 +47,10 @@ public class SignInPresenterImpl implements SignInPresenter {
     public void signIn(){
         MyFirebaseInstanceIDService service  = new MyFirebaseInstanceIDService();
         String device_token = "";
+        device_token = service.getToken();
+        Log.e(TAG, device_token);
         try {
-            device_token = service.getToken();
+
         }catch (Exception e){
             e.printStackTrace();
         }

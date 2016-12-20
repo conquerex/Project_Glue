@@ -54,23 +54,23 @@ public class InfoPresenterImpl implements InfoPresenter {
             msg = "Phone Number Minimum lenth 8";
         }else{
             if(name.length() < 3){
-                msg = "Name Minimum lenth 3";
-            }else{
-                if(password1.length() < 13){
-                    msg = "password Minimum lenth 13";
+                    msg = "Name Minimum lenth 3";
                 }else{
-                    if(!password1.equals(password2)){
-                        msg = "password not same";
+                    if(password1.length() < 13){
+                        msg = "password Minimum lenth 13";
                     }else{
-                        if(!isEmailPattern(email)){
-                            msg = "email address mismatch";
+                        if(!password1.equals(password2)){
+                            msg = "password not same";
                         }else{
-                            // 모두 검증 통과
-                            setUserInfoUpdate(phone, name, password1, email);
-                            return;
+                            if(!isEmailPattern(email)){
+                                msg = "email address mismatch";
+                            }else{
+                                // 모두 검증 통과
+                                setUserInfoUpdate(phone, name, password1, email);
+                                return;
+                            }
                         }
                     }
-                }
             }
         }
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show();

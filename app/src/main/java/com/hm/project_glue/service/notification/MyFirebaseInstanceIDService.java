@@ -1,29 +1,20 @@
 package com.hm.project_glue.service.notification;
 
-import android.util.Log;
-
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
-    private static final String TAG = "MyFirebaseIIDService";
-    private static String refreshedToken = "";
+    private static final String TAG = "TEST";
+
     @Override
     public void onTokenRefresh() {
         // Get updated InstanceID token.
-        try{
-            refreshedToken = FirebaseInstanceId.getInstance().getToken();
-            Log.d(TAG, "Refreshed token: " + refreshedToken);
-            sendRegistrationToServer(refreshedToken);
-        }catch (Exception e){
-            Log.e(TAG, e.getMessage());
-        }
-
+       FirebaseInstanceId.getInstance().getToken();
     }
 
     public String getToken(){
-
-        return refreshedToken;
+        String token = FirebaseInstanceId.getInstance().getToken();
+        return token;
     }
 
     private void sendRegistrationToServer(String token) {

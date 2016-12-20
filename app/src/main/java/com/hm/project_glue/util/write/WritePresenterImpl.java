@@ -3,6 +3,7 @@ package com.hm.project_glue.util.write;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
@@ -13,6 +14,7 @@ import com.hm.project_glue.util.cache.Cache;
 import com.hm.project_glue.util.http.ListRestAdapter;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,7 +82,7 @@ public class WritePresenterImpl implements WritePresenter {
     }
 
     @Override
-    public void httpPosting(ArrayList<String> photosPath, String groupId, String content){
+    public void httpPosting(ArrayList<String> photosPath, String groupId, String content) {
             Log.i(TAG, "httpPosting");
 
 //        new AsyncTask<String, Void, Integer>(){
@@ -244,15 +246,23 @@ public class WritePresenterImpl implements WritePresenter {
 //            }
 //        }.execute();
         view.progressShow(true);
+
+        Cache cache = new Cache(context);
         String authorization = "Token "+ Networking.getToken();
         String fileName="";
         Map<String, RequestBody> bodyMap = new HashMap<>();
         for(int i =0; i < photosPath.size(); i++ ){
             fileName = "photo" + i +".jpg";
-
-            byte[] byteArray = imgResizeBitmap(photosPath.get(i));
-            RequestBody body  = RequestBody.create(MediaType.parse("image/*"), byteArray, 0, byteArray.length);
-            bodyMap.put("photos\"; filename=\""+fileName+"\"", body);
+            try {
+                cache.write(photosPath.get(i), i);
+            }catch (Exception e){
+                e.getMessage();
+            }
+            File file = new File(Environment.getExternalStorageDirectory()+"/mycachefolder/",fileName);
+            if(file.exists()){
+                RequestBody body  = RequestBody.create(MediaType.parse("image/*"),file);
+                bodyMap.put("photos\"; filename=\""+fileName, body);
+            }
         }
         bodyMap.put("groupId",RequestBody.create(MediaType.parse("multipart/form-data"), groupId));
         bodyMap.put("content",RequestBody.create(MediaType.parse("multipart/form-data"), content));
