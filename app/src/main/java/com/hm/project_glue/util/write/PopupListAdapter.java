@@ -7,8 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.hm.project_glue.R;
-
-import com.hm.project_glue.main.home.data.Response;
+import com.hm.project_glue.main.home.data.HomeResponse;
 
 import java.util.ArrayList;
 
@@ -19,11 +18,11 @@ import java.util.ArrayList;
 
 public class PopupListAdapter extends BaseAdapter{
 
-    ArrayList<Response> datas;
+    ArrayList<HomeResponse> datas;
     LayoutInflater inflater;
     Context context;
 
-    PopupListAdapter(Context context, ArrayList<Response> datas){ //생성자
+    PopupListAdapter(Context context, ArrayList<HomeResponse> datas){ //생성자
         this.context = context;
         this.datas = datas;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -49,6 +48,7 @@ public class PopupListAdapter extends BaseAdapter{
         if(convertView == null) {
             convertView = inflater.inflate(R.layout.grouplist_custom_item, parent, false);
         }
+
         TextView textView = (TextView) convertView.findViewById(R.id.groupListTextViewItem);
         textView.setText(datas.get(position).getGroup_name());
 

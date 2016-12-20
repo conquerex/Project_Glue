@@ -22,9 +22,9 @@ import com.bumptech.glide.Glide;
 import com.hm.project_glue.R;
 import com.hm.project_glue.main.MainActivity;
 import com.hm.project_glue.main.home.data.HomeResponse;
-import com.hm.project_glue.main.timeline.data.Photos;
-import com.hm.project_glue.main.timeline.data.PostData;
-import com.hm.project_glue.main.timeline.data.Results;
+import com.hm.project_glue.main.list.data.Photos;
+import com.hm.project_glue.main.list.data.PostData;
+import com.hm.project_glue.main.list.data.Results;
 
 import java.util.ArrayList;
 
@@ -32,6 +32,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_SETTLING;
 import static com.hm.project_glue.main.home.HomeFragment.homeResponses;
+import static com.hm.project_glue.util.http.CallRest.callHttpLike;
 
 public class ListFragment extends Fragment implements ListPresenter.View {
 
@@ -39,10 +40,10 @@ public class ListFragment extends Fragment implements ListPresenter.View {
     private static ArrayList<Results> datas = null;
     private static RecyclerView listRecyclerView;
     private RecyclerCardAdapter adapter;
-    private LinearLayout listLinearProgressTop, listLinearProgressBottom,linearListNew;
+    private LinearLayout listLinearProgressTop, listLinearProgressBottom, linearListNew;
     private PostData post;
-    private  View view;
-    private boolean loadingFlag = true, refresh=false;
+    private View view;
+    private boolean loadingFlag = true;
     private int indexOf = 1;
     private String selectGroup="1", nextPage ="";
     private static final String TAG = "TEST";
@@ -59,29 +60,15 @@ public class ListFragment extends Fragment implements ListPresenter.View {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(savedInstanceState!=null){
-
             return;
         }
-
         listPresenter = new ListPresenterImpl(ListFragment.this);
         listPresenter.setView(this);
-        post = PostData.newPostInstance();
+        post = new PostData();
         datas = new ArrayList<>();
 
         Log.i(TAG,"onCreate");
 
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        Log.i(TAG,"onDetach");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.i(TAG,"onDestroy");
     }
 
     @Override
@@ -130,7 +117,8 @@ public class ListFragment extends Fragment implements ListPresenter.View {
                             postListUpdate();
                         }
                         else{ // Last page
-                            Toast.makeText(getContext(),getContext().getResources().getString(R.string.listEndPosition), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(),getContext().getResources().getString(R.string.listEndPosition),
+                                    Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -221,7 +209,6 @@ public class ListFragment extends Fragment implements ListPresenter.View {
             }else{
                 if(data.getPhotos().size() > 1){
                     holder.gridView.setNumColumns(2);
-
                 }else{
                     holder.gridView.setNumColumns(1);
                 }
@@ -232,9 +219,7 @@ public class ListFragment extends Fragment implements ListPresenter.View {
                 holder.gridView.setVisibility(View.VISIBLE);
                 ListPhotoListAdapter listPhotoListAdapter = new ListPhotoListAdapter(context,photosurl, R.layout.list_photo_list_item);
                 holder.gridView.setAdapter(listPhotoListAdapter);
-
             }
-
             // 작성자 이미지
             if(data.getUser().getImage()!=null){
                 Glide.with(context).load(data.getUser().getImage()).override(70,70)
@@ -249,7 +234,7 @@ public class ListFragment extends Fragment implements ListPresenter.View {
                 holder.tvListCardContents.setText(data.getContent());
             }
             // 이름
-            holder.tvListCardGroupName.setText(data.getUser().getName());
+            holder.tvListCardTitle.setText(data.getUser().getName());
             // 구룹이름
             for(HomeResponse s : homeResponses){
                 if(data.getUploaded_user().equals(s.getId())){
@@ -257,7 +242,25 @@ public class ListFragment extends Fragment implements ListPresenter.View {
                     break;
                 }
             }
+            //날짜
             holder.tvListCardTime.setText("2016/12/06");
+            // like
+            holder.tvListCardLike.setText(data.getLikes_count());
+            holder.tvListCardDislike.setText(data.getDislikes_count());
+
+            holder.like.setOnClickListener(v->{
+                holder.like.setBackgroundResource(R.drawable.likeup);
+                holder.dislike.setBackgroundResource(R.drawable.dislike);
+                callHttpLike(data.getPk(), true, holder.tvListCardLike, holder.tvListCardDislike);
+
+            });
+            holder.dislike.setOnClickListener(v->{
+                holder.like.setBackgroundResource(R.drawable.like);
+                holder.dislike.setBackgroundResource(R.drawable.dislikeup);
+                callHttpLike(data.getPk(), false, holder.tvListCardLike, holder.tvListCardDislike);
+            });
+
+
             holder.itemView.setTag(data);
         }
 
@@ -268,25 +271,30 @@ public class ListFragment extends Fragment implements ListPresenter.View {
 
         public static class ViewHolder extends RecyclerView.ViewHolder {
             ImageView imgListCardGroupImg;
-            TextView tvListCardContents;
-            TextView tvListCardGroupName;
-            TextView tvListCardTime;
+            TextView tvListCardContents, tvListCardGroupName, tvListCardTime,tvListCardTitle, tvListCardLike, tvListCardDislike;
             CardView listCardItem;
+            Button like, dislike;
             GridView gridView;
 
             public ViewHolder(View itemView) {
                 super(itemView);
-
                 imgListCardGroupImg = (ImageView) itemView.findViewById(R.id.imgListCardGroupImg);
                 tvListCardContents  = (TextView) itemView.findViewById(R.id.tvListCardContents);
                 tvListCardGroupName = (TextView) itemView.findViewById(R.id.tvListCardGroupName);
+                tvListCardTitle     = (TextView) itemView.findViewById(R.id.tvListCardTitle);
                 tvListCardTime      = (TextView) itemView.findViewById(R.id.tvListCardTime);
+                tvListCardLike      = (TextView) itemView.findViewById(R.id.tvListCardLike);
+                tvListCardDislike   = (TextView) itemView.findViewById(R.id.tvListCardDislike);
                 gridView            = (GridView) itemView.findViewById(R.id.gridView);
                 listCardItem        = (CardView) itemView.findViewById(R.id.listCardItem);
-
+                like                = (Button) itemView.findViewById(R.id.list_btnLike);
+                dislike             = (Button) itemView.findViewById(R.id.list_btnDislike);
 
             }
         }
+    }
+    private static void test(){
+
     }
 
 

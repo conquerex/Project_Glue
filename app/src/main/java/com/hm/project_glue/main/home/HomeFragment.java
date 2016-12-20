@@ -19,13 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.hm.project_glue.R;
 import com.hm.project_glue.main.MainActivity;
-import com.hm.project_glue.main.home.data.HomeData;
 import com.hm.project_glue.main.OnFragmentInteractionListener;
+import com.hm.project_glue.main.home.data.HomeData;
 import com.hm.project_glue.main.home.data.HomeResponse;
 
 import java.util.ArrayList;

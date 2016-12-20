@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 
 import com.hm.project_glue.R;
 
+import static com.hm.project_glue.util.http.CallRest.callHttpLogout;
+
 /**
  * Created by HM on 2016-12-02.
  */
@@ -54,6 +56,7 @@ public class Networking {
         return responseCode;
     }
     public void logout(){
+        callHttpLogout();
         editor.putString("user", "");
         editor.putString("token", "");
         editor.putBoolean("SIGN", false);

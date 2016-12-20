@@ -73,9 +73,11 @@ public class HomePresenterImpl implements HomePresenter {
             @Override
             protected void onPostExecute(HomeData res) {
                 super.onPostExecute(res);
-                Log.i(TAG, "----------- onPostExecute ------- " + res.getHomeResponses());
+                if (res != null) {
+                    view.dataChanged(res);
+                }
                 progress.dismiss();
-                view.dataChanged(res);
+
             }
 
         }.execute();
