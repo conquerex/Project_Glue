@@ -1,14 +1,26 @@
-package com.hm.project_glue.main.list.timeline.data;
+package com.hm.project_glue.main.list.data;
 
 /**
- * Created by HM on 2016-12-18.
+ * Created by HM on 2016-12-19.
  */
 
-public class User
+public class LikeUser
 {
+    private String user_pk;
+
     private String name;
 
     private String image;
+
+    public String getUser_pk ()
+    {
+        return user_pk;
+    }
+
+    public void setUser_pk (String user_pk)
+    {
+        this.user_pk = user_pk;
+    }
 
     public String getName ()
     {
@@ -33,7 +45,6 @@ public class User
     @Override
     public String toString()
     {
-        return "ClassPojo [name = "+name+", image = "+image+"]";
+        return "ClassPojo [user_pk = "+user_pk+", name = "+name+", image = "+image+"]";
     }
 }
-

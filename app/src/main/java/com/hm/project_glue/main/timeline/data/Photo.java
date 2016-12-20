@@ -1,19 +1,15 @@
 package com.hm.project_glue.main.timeline.data;
 
 /**
- * Created by HM on 2016-12-08.
+ * Created by HM on 2016-12-18.
  */
 
 public class Photo
 {
-    String thumbnail="";
-    String medium_thumbnail="";
-    String full_size="";
-    String small_thumbnail="";
+    private String thumbnail;
 
-    public Photo(){
+    private String full_size;
 
-    }
     public String getThumbnail ()
     {
         return thumbnail;
@@ -22,16 +18,6 @@ public class Photo
     public void setThumbnail (String thumbnail)
     {
         this.thumbnail = thumbnail;
-    }
-
-    public String getMedium_thumbnail ()
-    {
-        return medium_thumbnail;
-    }
-
-    public void setMedium_thumbnail (String medium_thumbnail)
-    {
-        this.medium_thumbnail = medium_thumbnail;
     }
 
     public String getFull_size ()
@@ -44,14 +30,9 @@ public class Photo
         this.full_size = full_size;
     }
 
-    public String getSmall_thumbnail ()
+    @Override
+    public String toString()
     {
-        return small_thumbnail;
+        return "ClassPojo [thumbnail = "+thumbnail+", full_size = "+full_size+"]";
     }
-
-    public void setSmall_thumbnail (String small_thumbnail)
-    {
-        this.small_thumbnail = small_thumbnail;
-    }
-
 }

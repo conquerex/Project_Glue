@@ -6,9 +6,21 @@ package com.hm.project_glue.main.timeline.data;
 
 public class User
 {
+    private String user_pk;
+
     private String name;
 
     private String image;
+
+    public String getUser_pk ()
+    {
+        return user_pk;
+    }
+
+    public void setUser_pk (String user_pk)
+    {
+        this.user_pk = user_pk;
+    }
 
     public String getName ()
     {
@@ -33,6 +45,7 @@ public class User
     @Override
     public String toString()
     {
-        return "ClassPojo [name = "+name+", image = "+image+"]";
+        return "ClassPojo [user_pk = "+user_pk+", name = "+name+", image = "+image+"]";
     }
 }
+

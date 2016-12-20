@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="0dp"
+    android:background="@color/windowBackground">
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/time_listCardItem"
+        card_view:cardElevation="@dimen/com_facebook_auth_dialog_corner_radius_oversized"
+        android:elevation="2dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="1">
+
+            <TextView
+                android:text="qqqq"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:id="@+id/time_tvListCardGroupName"
+                android:textColor="@color/com_facebook_button_background_color_focused_disabled"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="@color/windowBackground"
+
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_margin="10dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    card_view:srcCompat="@drawable/noprofile"
+                    android:id="@+id/time_imgListCardGroupImg" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:gravity="center_vertical"
+                    android:layout_weight="0.5">
+
+                    <TextView
+                        android:text="TextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/time_tvListCardTitle"
+                        android:textSize="@dimen/activity_vertical_margin"
+                        android:textStyle="normal|bold" />
+
+                    <TextView
+                        android:text="TextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/time_tvListCardTime"
+                        android:textSize="12sp" />
+                </LinearLayout>
+                <Button
+                    android:id="@+id/time_btnLike"
+                    android:background="@drawable/like"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/time_tvTimeCardLike"
+                    android:hint="0" />
+
+                <Button
+                    android:layout_height="30dp"
+                    android:id="@+id/time_btnDislike"
+                    android:background="@drawable/dislike"
+                    android:layout_width="30dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/time_tvTimeCardDislike"
+                    android:hint="0" />
+            </LinearLayout>
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/time_tvListCardContents"
+                android:textSize="14dp"
+                android:layout_weight="0.11"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/time_linar_list_item_grid"
+                android:layout_weight="2">
+
+                <GridView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/time_gridView"
+                    android:numColumns="2"
+                    android:scrollbars="none"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:padding="2dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:gravity="center_vertical"
+                android:background="@color/windowBackground"
+                android:layout_height="40dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    card_view:srcCompat="@mipmap/ic_comment_gray_24dp"
+                    android:id="@+id/imageView8"
+                    android:layout_marginLeft="20dp" />
+
+                <TextView
+                    android:text="댓글 달기"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:id="@+id/textView11"
+                    android:layout_weight="0.8"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginRight="20dp" />
+
+                <TextView
+                    android:text="댓글 "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView3"
+                    android:layout_marginRight="5dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/time_tvCommentCount"
+                    android:hint="0"
+                    android:layout_marginRight="5dp" />
+
+                <TextView
+                    android:text="개"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView5"
+                    android:layout_marginRight="20dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="5dp"
+                    android:id="@+id/time_linearCon1"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        card_view:srcCompat="@drawable/noprofile"
+                        android:id="@+id/time_imgComment1"
+                        android:layout_height="40dp"
+                        android:layout_margin="5dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/time_tvCommenttime1"
+                        android:layout_weight="0.1"
+                        android:hint="Time" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/time_tvCommentName1"
+                        android:layout_margin="5dp"
+                        android:layout_weight="0.1"
+                        android:hint="Name" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/time_tvCommentCon1"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="4"
+                        android:hint="Comment" />
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="5dp"
+                    android:id="@+id/time_linearCon2"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        card_view:srcCompat="@drawable/noprofile"
+                        android:id="@+id/time_imgComment2"
+                        android:layout_height="40dp"
+                        android:layout_margin="5dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/time_tvCommenttime2"
+                        android:hint="Time"
+                        android:layout_weight="0.1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/time_tvCommentName2"
+                        android:layout_margin="5dp"
+                        android:layout_weight="0.1"
+                        android:hint="Name" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/time_tvCommentCon2"
+                        android:layout_marginLeft="10dp"
+                        android:hint="Comment"
+                        android:layout_weight="4" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

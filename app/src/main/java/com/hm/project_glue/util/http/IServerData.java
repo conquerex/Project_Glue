@@ -1,9 +1,12 @@
 package com.hm.project_glue.util.http;
 
 import com.hm.project_glue.main.home.data.HomeData;
-import com.hm.project_glue.main.info.Data.InfoData;
-import com.hm.project_glue.main.timeline.data.PostData;
-import com.hm.project_glue.main.list.timeline.data.Timeline;
+import com.hm.project_glue.main.info.data.InfoData;
+import com.hm.project_glue.main.list.data.Dislike;
+import com.hm.project_glue.main.list.data.Like;
+import com.hm.project_glue.main.list.data.PostData;
+import com.hm.project_glue.main.timeline.data.Posts;
+import com.hm.project_glue.main.timeline.data.TimelineData;
 
 import java.util.Map;
 
@@ -52,7 +55,7 @@ public interface IServerData {
     @Multipart
     @PUT("/member/myinfo/")
     Call<InfoData> myInfoUpdateData(@Header("Authorization") String authorization,
-                                    @PartMap Map<String, RequestBody> imgMap);
+                                    @PartMap Map<String, RequestBody> bodyMap);
     //프로필 사진 수정
     @Multipart
     @PATCH("/member/myinfo/")
@@ -106,26 +109,28 @@ public interface IServerData {
     //Post 올리기
     @Multipart
     @POST("/posts/post_list/{groupId}/")
-    Call<PostData> postingData(     @Header("Authorization") String authorization,
-                                    @Path("groupId") String groupId,
-                                    @PartMap Map<String, RequestBody> params);
+    Call<Posts> postingData(@Header("Authorization") String authorization,
+                                     @Path("groupId") String groupId,
+                                     @PartMap Map<String, RequestBody> bodyMap);
     // Post 목록 보기  QueryMap-> ex) page=2
     @GET("/posts/post_list/{groupId}/")
     Call<PostData> getListData(     @Header("Authorization") String authorization,
                                     @Path("groupId") String groupId,
                                     @QueryMap Map<String, String> page);
-    // Post 목록 보기  QueryMap-> ex) page=2
+    // TimeLine Post 목록 보기  QueryMap-> ex) page=2
+
+    //TODO
     @GET("/timeline/")
-    Call<Timeline> getTimeLinetData(@Header("Authorization") String authorization,
-                                    @QueryMap Map<String, String> page);
+    Call<TimelineData> getTimeLinetData(@Header("Authorization") String authorization,
+                                        @QueryMap Map<String, String> page);
     // 좋아요
     @POST("/posts/post_like/{post_id}/")
-    Call<PostData> postLikeData(    @Header("Authorization") String authorization,
-                                    @Path("post_id") String post_id);
+    Call<Like> postLikeData(@Header("Authorization") String authorization,
+                            @Path("post_id") String post_id);
     // 싫어요
     @POST("/posts/post_dislike/{post_id}/")
-    Call<PostData> postDislikeData( @Header("Authorization") String authorization,
-                                    @Path("post_id") String post_id);
+    Call<Dislike> postDislikeData(@Header("Authorization") String authorization,
+                                  @Path("post_id") String post_id);
     // post 삭제
     @DELETE("/posts/post_detail/{post_id}/")
     Call<PostData> postDeleteData(  @Header("Authorization") String authorization,
@@ -142,8 +147,8 @@ public interface IServerData {
                                        @PartMap Map<String, String> delete_photos);
     // post Detail
     @GET("/posts/post_detail/{post_id}/")
-    Call<PostData> postDetailData(     @Header("Authorization") String authorization,
-                                       @Path("post_id") String post_id);
+    Call<Posts> postDetailData(@Header("Authorization") String authorization,
+                               @Path("post_id") String post_id);
 
 
 }

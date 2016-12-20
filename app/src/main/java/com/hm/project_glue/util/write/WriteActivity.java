@@ -20,6 +20,8 @@ import com.hm.project_glue.util.write.photo.GalleryListMain;
 
 import java.util.ArrayList;
 
+import static com.hm.project_glue.main.home.HomeFragment.homeResponses;
+
 public class WriteActivity extends AppCompatActivity implements WritePresenter.View  {
     Button btnWrite, btnWriteBack,btnGroupSelect,btnGallery;
     EditText mEditText;
@@ -30,7 +32,6 @@ public class WriteActivity extends AppCompatActivity implements WritePresenter.V
     PhotosListAdapter listAdapter;
     PopupListAdapter popupAdapter;
     ArrayList<String> photosDatas;
-    ArrayList<Response> groupListDatas;
     AlertDialog.Builder groupDialog =null;
     AlertDialog viewgroupDialog;
     int REQ_CODE_IMAGE = 10;
@@ -47,7 +48,8 @@ public class WriteActivity extends AppCompatActivity implements WritePresenter.V
         writePresenter = new WritePresenterImpl(this);
         writePresenter.setView(this);
         photosDatas = new ArrayList<>();
-        groupListDatas = new ArrayList<>();
+
+
         this.context = this;
         btnWrite        =   (Button)findViewById(R.id.btnWrite);
         btnWriteBack    =   (Button)findViewById(R.id.btnWriteBack);
@@ -79,7 +81,7 @@ public class WriteActivity extends AppCompatActivity implements WritePresenter.V
         btnWriteBack.setOnClickListener(v -> {
             this.finish();
         });
-        popupAdapter = new PopupListAdapter(this, groupListDatas);
+        popupAdapter = new PopupListAdapter(this,homeResponses);
         listAdapter = new PhotosListAdapter(
                 this, photosDatas, R.layout.write_photos_list_item);
         horizontalListView.setAdapter(listAdapter);
@@ -90,7 +92,7 @@ public class WriteActivity extends AppCompatActivity implements WritePresenter.V
         groupListView.setAdapter(popupAdapter);
         groupDialog = new AlertDialog.Builder(this);
         groupDialog.setView(groupView);
-        if(groupListDatas.size() > 0 ){
+        if(homeResponses.size() > 0 ){
 
         }else{
             groupDialog.setTitle("not found Group");
@@ -158,7 +160,7 @@ public class WriteActivity extends AppCompatActivity implements WritePresenter.V
     }
     @Override
     public void setGroupListChanged(ArrayList<Response> results) {
-        groupListDatas.addAll(results);
+//        groupListDatas.addAll(results);
         popupAdapter.notifyDataSetChanged();
     }
 

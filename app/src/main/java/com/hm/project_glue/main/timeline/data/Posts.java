@@ -1,4 +1,4 @@
-package com.hm.project_glue.main.list.timeline.data;
+package com.hm.project_glue.main.timeline.data;
 
 import java.util.ArrayList;
 
@@ -14,15 +14,15 @@ public class Posts
 
     private String content;
 
-    private ArrayList<String> dislike;
+    private ArrayList<Dislike> dislike;
 
-    private ArrayList<String> like;
+    private ArrayList<Like> like;
 
     private String group;
 
     private User user;
 
-    private ArrayList<String> comments;
+    private ArrayList<Comments> comments;
 
     private String dislikes_count;
 
@@ -58,22 +58,22 @@ public class Posts
         this.content = content;
     }
 
-    public ArrayList<String> getDislike ()
+    public ArrayList<Dislike> getDislike ()
     {
         return dislike;
     }
 
-    public void setDislike (ArrayList<String> dislike)
+    public void setDislike (ArrayList<Dislike> dislike)
     {
         this.dislike = dislike;
     }
 
-    public ArrayList<String> getLike ()
+    public ArrayList<Like> getLike ()
     {
         return like;
     }
 
-    public void setLike (ArrayList<String> like)
+    public void setLike (ArrayList<Like> like)
     {
         this.like = like;
     }
@@ -98,12 +98,12 @@ public class Posts
         this.user = user;
     }
 
-    public ArrayList<String> getComments ()
+    public ArrayList<Comments> getComments ()
     {
         return comments;
     }
 
-    public void setComments (ArrayList<String> comments)
+    public void setComments (ArrayList<Comments> comments)
     {
         this.comments = comments;
     }

@@ -1,4 +1,4 @@
-package com.hm.project_glue.main.info.Data;
+package com.hm.project_glue.main.info.data;
 
 import java.util.ArrayList;
 

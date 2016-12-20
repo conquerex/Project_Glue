@@ -1,4 +1,4 @@
-package com.hm.project_glue.main.list.timeline.data;
+package com.hm.project_glue.main.timeline.data;
 
 
 
@@ -6,7 +6,7 @@ package com.hm.project_glue.main.list.timeline.data;
  * Created by HM on 2016-12-18.
  */
 
-public class Timeline
+public class TimelineData
 {
     private Results results;
 

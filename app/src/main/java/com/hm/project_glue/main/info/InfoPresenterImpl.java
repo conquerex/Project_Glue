@@ -9,7 +9,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.facebook.login.widget.ProfilePictureView;
-import com.hm.project_glue.main.info.Data.InfoData;
+import com.hm.project_glue.main.info.data.InfoData;
 import com.hm.project_glue.util.Networking;
 import com.hm.project_glue.util.http.ListRestAdapter;
 
@@ -36,32 +36,25 @@ import static android.content.ContentValues.TAG;
  */
 
 public class InfoPresenterImpl implements InfoPresenter {
-
     private InfoPresenter.View view;
     private Context context;
     private InfoModel infoModel;
-    private static String userId ="17"; // 임시 아이디 폰번호 ( 12121212 )
-//    private InfoData infoData;
     public InfoPresenterImpl(InfoFragment fragment){
         this.context = fragment.getContext();
         infoModel = new InfoModel(fragment.getContext());
-//        infoData = new InfoData();
         getUserInfo();
     }
     @Override
     public void setView(View view) { this.view = view; }
 
-
-
-
     @Override
-    public void infoFormCheck(String phone, String name, String password1, String password2, String email, String img){
+    public void infoFormCheck(String phone, String name, String password1, String password2, String email){
         String msg="";
         if(phone.length() < 8){
             msg = "Phone Number Minimum lenth 8";
         }else{
-            if(name.length() < 5){
-                msg = "Name Minimum lenth 8";
+            if(name.length() < 3){
+                msg = "Name Minimum lenth 3";
             }else{
                 if(password1.length() < 13){
                     msg = "password Minimum lenth 13";
@@ -73,7 +66,7 @@ public class InfoPresenterImpl implements InfoPresenter {
                             msg = "email address mismatch";
                         }else{
                             // 모두 검증 통과
-                            setUserInfoUpdate(phone, name, password1, email, img);
+                            setUserInfoUpdate(phone, name, password1, email);
                             return;
                         }
                     }
@@ -108,8 +101,6 @@ public class InfoPresenterImpl implements InfoPresenter {
                    Log.e(TAG, t.getMessage());
                 }
             });
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -140,18 +131,10 @@ public class InfoPresenterImpl implements InfoPresenter {
         }
 
     }
-    private void setUserInfoUpdate(String phone_number, String name, String password,  String email, String img){
+    private void setUserInfoUpdate(String phone_number, String name, String password,  String email){
         try {
             String authorization = "Token "+ Networking.getToken();
             Map<String, RequestBody> bodyMap = new HashMap<>();
-
-            //캐시 파일로 처리
-//            File cache = context.getCacheDir();
-//            String filename = "image.jpg";
-//            File tmpFile = new File(cache, filename);
-//            tmpFile.createNewFile();
-//            FileOutputStream out = new FileOutputStream(tmpFile);
-            // bitmap Byte로 처리
             bodyMap.put("phone_number",RequestBody.create(MediaType.parse("multipart/form-data"), phone_number));
             bodyMap.put("name",RequestBody.create(MediaType.parse("multipart/form-data"), name));
             bodyMap.put("password",RequestBody.create(MediaType.parse("multipart/form-data"), password));
@@ -163,6 +146,7 @@ public class InfoPresenterImpl implements InfoPresenter {
                     if(response.isSuccessful()){
                         InfoData infoData = response.body();
                         view.setInfo(infoData);
+                        view.toast("Update Successful");
                     }
                     Log.i(TAG, "myInfoData response Code : "+response.code());
                 }
@@ -171,8 +155,6 @@ public class InfoPresenterImpl implements InfoPresenter {
                     Log.e(TAG, t.getMessage());
                 }
             });
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -208,18 +190,16 @@ public class InfoPresenterImpl implements InfoPresenter {
         return bitmap;
 
     }
+
+    // 별도로 이미지 올리기( HttpURLConnection )
     private void saveMyImage(Bitmap bitmap, String imagePath){
         new AsyncTask<String, Void, Integer>(){
             String boundary="----------";
             String lineEnd = "\r\n";
             String twoHyphens = "--";
-
-            int responseCode = 0;
-
             @Override
             protected Integer doInBackground(String... params) {
                 int responeCode = 0;
-
                 try {
                     URL connectUrl = new URL(Networking.getBASE_URL() + "/member/myinfo/");
                     HttpURLConnection conn = (HttpURLConnection) connectUrl.openConnection();
@@ -231,27 +211,21 @@ public class InfoPresenterImpl implements InfoPresenter {
                     conn.setRequestProperty("Authorization", "Token " + Networking.getToken());
                     conn.setRequestProperty("cache-control", "no-cache");
                     conn.connect();
-
                     DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
-
                     ByteArrayOutputStream stream = new ByteArrayOutputStream() ;
                     bitmap.compress( Bitmap.CompressFormat.JPEG, 100, stream) ;
                     byte[] byteArray = stream.toByteArray();
                     ByteArrayInputStream inputStream = new ByteArrayInputStream(byteArray);
-
                     dos.writeBytes("\r\n--" + boundary + "\r\n");
                     dos.writeBytes("Content-Disposition: form-data; name=\"image\";filename=\"" + imagePath + "\"" + lineEnd);
                     dos.writeBytes("Content-Type: application/octet-stream" + lineEnd);
                     dos.writeBytes(lineEnd);
-
                     int bytesAvailable = inputStream.available();
                     int maxBufferSize = 1024;
                     int bufferSize = Math.min(bytesAvailable, maxBufferSize);
                     byte[] buffer = new byte[bufferSize];
                     int bytesRead = inputStream.read(buffer, 0, bufferSize);
-
                     Log.d("Test", "image byte is " + bytesRead);
-
                     // read image
                     while (bytesRead > 0) {
                         dos.write(buffer, 0, bufferSize);

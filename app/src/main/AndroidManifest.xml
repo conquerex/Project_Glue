@@ -44,7 +44,6 @@
             android:value="@string/facebook_app_id" />
 
         <activity android:name=".util.write.photo.GalleryListMain" />
-        <activity android:name=".main.list.DetailActivity" />
         <activity
             android:name=".util.write.WriteActivity"
             android:screenOrientation="portrait"

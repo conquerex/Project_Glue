@@ -1,6 +1,6 @@
 package com.hm.project_glue.main.list;
 
-import com.hm.project_glue.main.timeline.data.PostData;
+import com.hm.project_glue.main.list.data.PostData;
 
 /**
  * Created by HM on 2016-11-29.
