@@ -59,6 +59,13 @@ public class AddGroupActivity extends AppCompatActivity implements AddGroupPrese
         });
     }
 
+    public void setAddGroupBitmap(String imagePath){
+        imgUrl = imagePath;
+        Log.i(TAG, "imagePath:"+imagePath );
+//        bitmap = infoPresenter.imgReSizing(imagePath);
+//        ivAddGroupGallery.setImageBitmap(bitmap);
+    }
+
     @Override
     public void progressAddGroupShow(boolean status) {
         if(status){
