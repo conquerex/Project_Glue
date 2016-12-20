@@ -20,7 +20,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/homeFrameLayout" />
+            android:id="@+id/time_homeFrameLayout" />
         <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
             android:id="@+id/floatingActionButton"
             android:src="@mipmap/ic_group_add_white_36dp"
             android:layout_margin="20dp"
-            app:layout_anchor="@id/homeFrameLayout"
+            app:layout_anchor="@id/time_homeFrameLayout"
             app:layout_anchorGravity="right|end|bottom"/>
 
     </android.support.design.widget.CoordinatorLayout>

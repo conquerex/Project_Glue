@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.hm.project_glue.R;
 import com.hm.project_glue.main.MainActivity;
-import com.hm.project_glue.main.info.Data.InfoData;
+import com.hm.project_glue.main.info.data.InfoData;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
@@ -78,7 +78,9 @@ public class InfoFragment extends Fragment implements InfoPresenter.View {
         etInfoEmail         = (EditText) view.findViewById(R.id.etInfoEmail);
         imgInfoMyImg        = (ImageView) view.findViewById(R.id.imgInfoMyImg);
         img_InfoPhotoDetail = (ImageView) view.findViewById(R.id.img_InfoPhotoDetail);
-        btnPhotoDetailSave.setOnClickListener(v-> { // Photo save
+
+        // Photo save
+        btnPhotoDetailSave.setOnClickListener(v-> {
             Glide.with(getContext()).load(imgUrl).bitmapTransform(new CropCircleTransformation(getContext()))
                     .into(imgInfoMyImg);
             infoPresenter.photoUpdate(bitmap);
@@ -97,10 +99,10 @@ public class InfoFragment extends Fragment implements InfoPresenter.View {
             InputMethodManager mgr = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
             mgr.hideSoftInputFromWindow(v.getWindowToken(), 0);
         });
+        // 이미지 클릭
         imgInfoMyImg.setOnClickListener(v ->{
             setPhotoLayout(2);
         } );
-
 
         if( imgUrl.equals("") ){
             Glide.with(getContext()).load(R.drawable.com_facebook_profile_picture_blank_portrait).
@@ -124,6 +126,7 @@ public class InfoFragment extends Fragment implements InfoPresenter.View {
                 PotoDetail.setVisibility(View.GONE);
                 break;
             case 2 : // photo layout
+
                 infoLayout.setVisibility(View.GONE);
                 PotoDetail.setVisibility(View.VISIBLE);
         }
@@ -141,8 +144,7 @@ public class InfoFragment extends Fragment implements InfoPresenter.View {
         String password1    = etInfoPassword1.getText().toString();
         String password2   = etInfoPassword2.getText().toString();
         String email        = etInfoEmail.getText().toString();
-       infoPresenter.infoFormCheck(phone, name, password1, password2, email, imgUrl);
-
+       infoPresenter.infoFormCheck(phone, name, password1, password2, email);
     }
     @Override
     public void setInfo(InfoData infoData){
@@ -162,12 +164,9 @@ public class InfoFragment extends Fragment implements InfoPresenter.View {
             Glide.with(getContext()).load(R.drawable.com_facebook_profile_picture_blank_portrait).bitmapTransform(new CropCircleTransformation(getContext()))
                     .into(imgInfoMyImg);
         }else{
-
             Glide.with(getContext()).load(imgUrl).bitmapTransform(new CropCircleTransformation(getContext()))
                     .into(imgInfoMyImg);
-
         }
-
     }
 
     @Override

@@ -1,25 +1,21 @@
 package com.hm.project_glue.main.timeline.data;
 
 /**
- * Created by HM on 2016-12-06.
+ * Created by HM on 2016-12-18.
  */
-
 
 public class Photos
 {
+    private Photo photo;
 
-    Photo photo;
-    String pk ="";
+    private String pk;
 
-    public Photos(){
-
-    }
     public Photo getPhoto ()
     {
         return photo;
     }
 
-    public void setPhotos (Photo photo)
+    public void setPhoto (Photo photo)
     {
         this.photo = photo;
     }
@@ -34,5 +30,9 @@ public class Photos
         this.pk = pk;
     }
 
-
+    @Override
+    public String toString()
+    {
+        return "ClassPojo [photo = "+photo+", pk = "+pk+"]";
+    }
 }

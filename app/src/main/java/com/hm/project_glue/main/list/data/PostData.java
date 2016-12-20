@@ -1,4 +1,4 @@
-package com.hm.project_glue.main.timeline.data;
+package com.hm.project_glue.main.list.data;
 
 import java.util.ArrayList;
 
@@ -14,12 +14,7 @@ public class PostData
 
     public PostData(){
     }
-    public static PostData newPostInstance(){
-        return new PostData();
-    }
-    public static ArrayList<Results> newArrayListInstance(){
-        return new ArrayList<Results>();
-    }
+
     public ArrayList<Results> getResults ()
     {
         return results;

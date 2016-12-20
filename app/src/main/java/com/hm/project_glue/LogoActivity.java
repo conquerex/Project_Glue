@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import com.hm.project_glue.main.MainActivity;
-import com.hm.project_glue.service.notification.MyFirebaseInstanceIDService;
 import com.hm.project_glue.sign.SignActivity;
 
 public class LogoActivity extends AppCompatActivity {
@@ -22,8 +21,12 @@ public class LogoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logo);
 
-        mHandler = new Handler();
 
+
+
+
+
+        mHandler = new Handler();
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {

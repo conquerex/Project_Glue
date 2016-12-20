@@ -27,6 +27,7 @@ import com.hm.project_glue.main.home.HomeFragment;
 import com.hm.project_glue.main.info.InfoFragment;
 import com.hm.project_glue.main.list.ListFragment;
 import com.hm.project_glue.main.msg.MsgFragment;
+import com.hm.project_glue.main.timeline.TimelineFragment;
 import com.hm.project_glue.sign.SignActivity;
 import com.hm.project_glue.util.Networking;
 import com.hm.project_glue.util.write.WriteActivity;
@@ -35,9 +36,10 @@ public class MainActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
     public static DisplayMetrics metrics;
     private HomeFragment home;
-    private  MsgFragment msg;
+    private MsgFragment msg;
     private InfoFragment info;
     private ListFragment list;
+    private TimelineFragment time;
     private Networking networking;
     private TabLayout tab;
 
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         msg  =  MsgFragment.newInstance();
         info =  InfoFragment.newInstance();
         list =  ListFragment.newInstance();
+        time =  TimelineFragment.newInstance();
 
         tab = (TabLayout) findViewById(R.id.tabLayout);
         pager = (ViewPager) findViewById(R.id.pager);
@@ -115,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
             Fragment fragment = null;
             switch(position){
                 case 0 : fragment = home; break;
-                case 1 : fragment = list; break;
+                case 1 : fragment = time; break;
                 case 2 : fragment = msg; break;
                 case 3 : fragment = info; break;
             }

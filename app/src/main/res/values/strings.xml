@@ -26,5 +26,11 @@
     <string name="title_activity_write">WriteActivity</string>
     <string name="listDetailClick">더 보기...</string>
     <string name="listEndPosition">마지막 글 입니다.</string>
-
+    <string name="timeAgoSec">초 전</string>
+    <string name="timeAgoMin">분 전</string>
+    <string name="timeAgoHour">시간 전</string>
+    <string name="timeAgoDay">일 전</string>
+    <string name="timeAgoWeek">주 전</string>
+    <string name="timeAgoMonth">달 전</string>
+    <string name="timeAgoYear">년 전</string>
 </resources>

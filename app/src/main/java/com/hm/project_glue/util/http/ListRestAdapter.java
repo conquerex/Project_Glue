@@ -26,9 +26,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ListRestAdapter {
 
-    public static final int CONNECT_TIMEOUT = 3;
-    public static final int WRITE_TIMEOUT = 10;
-    public static final int READ_TIMEOUT = 5;
+    public static final int CONNECT_TIMEOUT = 10;
+    public static final int WRITE_TIMEOUT = 30;
+    public static final int READ_TIMEOUT = 10;
     private static String TAG = "TEST";
     private static OkHttpClient client;
     private static IServerData service;

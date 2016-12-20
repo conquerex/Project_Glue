@@ -3,7 +3,7 @@ package com.hm.project_glue.main.list;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.hm.project_glue.main.timeline.data.PostData;
+import com.hm.project_glue.main.list.data.PostData;
 import com.hm.project_glue.util.Networking;
 import com.hm.project_glue.util.http.ListRestAdapter;
 
@@ -66,7 +66,5 @@ public class ListPresenterImpl implements ListPresenter {
                 if (postData != null) view.dataChanged(postData);
             }
         }.execute();
-
-
     }
 }

@@ -7,11 +7,27 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <Button
-        android:text="MSG Fragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button3"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/msg_linear1"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <TextView
+            android:text="No Message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView4"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/com_facebook_button_background_color_focused_disabled" />
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/msg_listView"
+        android:visibility="visible" />
 </RelativeLayout>
