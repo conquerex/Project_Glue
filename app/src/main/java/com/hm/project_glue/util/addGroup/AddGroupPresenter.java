@@ -18,5 +18,6 @@ public interface AddGroupPresenter {
     public interface View {
         void progressAddGroupShow(boolean status);
         void addGroupResult(int code);
+        void addGroupFinish();
     }
 }

@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 3 :
                 i = new Intent(MainActivity.this, AddGroupActivity.class);
+                startActivityForResult(i, 3);
                 break;
         }
         startActivity(i);
@@ -189,21 +190,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case addGroupCode :
                 Log.i(TAG, "galleyResultCode");
-                if(data != null){
-                    Uri imageUri = data.getData();    // Intent에서 받아온 갤러리 URI
-                    String selections[] = { MediaStore.Images.Media.DATA}; // 실제 이미지 패스 데이터
-                    if( Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
-                    }
-                    else {
-//                        checkPermissions();
-                    }
-                    Cursor cursor = getContentResolver().query(imageUri, selections, null,null,null);
-                    if(cursor.moveToNext()){
-                        String imagePath = cursor.getString(0);                        // 사이즈 지정 옵션
-                        info.setBitmap(imagePath);
-                        Log.i(TAG, "info.setBitmap(imagePath)");
-                    }
-                }
                 break;
         }
     }

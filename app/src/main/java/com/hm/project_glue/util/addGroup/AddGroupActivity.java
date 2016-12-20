@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import com.hm.project_glue.R;
 import com.hm.project_glue.main.MainActivity;
+import com.hm.project_glue.main.home.HomeFragment;
 
 public class AddGroupActivity extends AppCompatActivity implements AddGroupPresenter.View {
     private static final String TAG = "AddGroupActivity";
@@ -39,7 +40,6 @@ public class AddGroupActivity extends AppCompatActivity implements AddGroupPrese
         addGroupPresenter = new AddGroupPresenterImpl(this);
         addGroupPresenter.setView(this);
         this.context = this;
-
 
         ivAddGroupGallery = (ImageView)findViewById(R.id.ivAddGroupGallery);
         etAddGroupName    = (EditText)findViewById(R.id.etAddGroupName);
@@ -68,12 +68,15 @@ public class AddGroupActivity extends AppCompatActivity implements AddGroupPrese
             public void onClick(View v) {
                 String groupName = etAddGroupName.getText().toString();
                 if(groupName.equals("")){
-                    Toast.makeText(context,"input content or Select Group",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,"그룹명을 입력해주세요.",Toast.LENGTH_SHORT).show();
                 }else {
                     addGroupPresenter.addGroupSave(bitmap, groupName);
-                    Intent intent = new Intent(AddGroupActivity.this, MainActivity.class);
-                    mainActivity.finish();
-                    startActivity(intent);
+                    Log.i(TAG, "----- after addGroupSave");
+//                    finish();
+
+//                    Intent intent = getIntent();
+//                    setResult(RESULT_OK, intent);
+//                    finish();
                 }
 //                Glide.with(context).load(imgUrl).bitmapTransform(new CropCircleTransformation(context))
 //                        .into(ivAddGroupGallery);
@@ -87,6 +90,7 @@ public class AddGroupActivity extends AppCompatActivity implements AddGroupPrese
         bitmap = addGroupPresenter.imgAddGroupReSizing(imagePath);
         ivAddGroupGallery.setImageBitmap(bitmap);
     }
+
 
     @Override
     public void progressAddGroupShow(boolean status) {
@@ -151,5 +155,14 @@ public class AddGroupActivity extends AppCompatActivity implements AddGroupPrese
             default: Toast.makeText(context,"Add Group Fail",Toast.LENGTH_LONG).show();
                 break;
         }
+    }
+
+    @Override
+    public void addGroupFinish() {
+//        startActivity(new Intent(this, MainActivity.class));
+//        finish();
+        Intent intent = new Intent(AddGroupActivity.this, MainActivity.class);
+        mainActivity.finish();
+        startActivity(intent);
     }
 }

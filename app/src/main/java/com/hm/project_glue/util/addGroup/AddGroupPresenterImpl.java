@@ -23,8 +23,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.content.ContentValues.TAG;
-
 /**
  * Created by jongkook on 2016. 12. 19..
  */
@@ -110,18 +108,26 @@ public class AddGroupPresenterImpl implements AddGroupPresenter {
 
     @Override
     public void addGroupSave(Bitmap bitmap, String groupName) {
-        view.progressAddGroupShow(true);
+        progress = new ProgressDialog(context);
+        progress.setMessage("Upload....");
+        progress.setProgressStyle((ProgressDialog.STYLE_SPINNER));
+        progress.setCancelable(false);
+        progress.show();
+
         String authorization = "Token "+ Networking.getToken();
+        String fileName="photo_"+groupName+".jpg";
         Log.i(TAG, "-------- addGroupSave : "+authorization);
         Map<String, RequestBody> imgMap = new HashMap<>();
 
+        // 그룹 이미지 세팅
         if(bitmap!=null){
             Log.i(TAG, "-------- bitmap ");
             ByteArrayOutputStream stream = new ByteArrayOutputStream() ;
             bitmap.compress( Bitmap.CompressFormat.JPEG, 100, stream) ;
             byte[] byteArray = stream.toByteArray();
             RequestBody body  = RequestBody.create(MediaType.parse("image/*"), byteArray, 0, byteArray.length);
-            imgMap.put("image\"; filename=\"profile.jpg", body);
+//            imgMap.put("image\"; filename=\"profile.jpg", body);
+            imgMap.put("group_image\"; filename=\""+fileName+"\"", body);
         }
 
         imgMap.put("group_name",RequestBody.create(MediaType.parse("multipart/form-data"), groupName));
@@ -130,15 +136,22 @@ public class AddGroupPresenterImpl implements AddGroupPresenter {
         response.enqueue(new Callback<HomeData>() {
             @Override
             public void onResponse(Call<HomeData> call, Response<HomeData> response) {
+                view.addGroupResult(response.code());
                 Log.i(TAG, "-------- onResponse : "+groupName);
                 if(response.isSuccessful()){
-                    Toast.makeText(context, "Update Successful", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Add Group : Successful", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Add Group : Fail", Toast.LENGTH_SHORT).show();
                 }
                 Log.i(TAG, "-------- photoAddGroupUpdate : "+response.code());
+                view.addGroupFinish();
+                progress.dismiss();
             }
             @Override
             public void onFailure(Call<HomeData> call, Throwable t) {
-                Log.e(TAG, t.getMessage());
+                Log.e(TAG, "------ " + t.getMessage());
+                view.addGroupFinish();
+                progress.dismiss();
             }
         });
     }
