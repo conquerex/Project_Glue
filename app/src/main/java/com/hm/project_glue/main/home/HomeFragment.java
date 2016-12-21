@@ -77,11 +77,8 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 스낵바(화면 아래에 나타나는 상태줄) 출력 - Toast같이 테스트 용도
-                // Snackbar.make(v, "Hello World", Snackbar.LENGTH_LONG).show();
-
-                // 2016.12.13 임시로 WriteActivity.class로 이동하도록 설정
-                ((MainActivity)getActivity()).moveActivity(2);
+                // 2016.12.18 AddGroupActivity.class로 이동하도록 설정
+                ((MainActivity)getActivity()).moveActivity(3);
             }
         });
 

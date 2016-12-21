@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_add_group"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerVertical="true"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:background="@null"
+    tools:context="com.hm.project_glue.util.addGroup.AddGroupActivity">
+
+    <!-- 액션바 -->
+
+    <RelativeLayout
+        android:id="@+id/layoutAddGroupActionBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <Button
+            android:id="@+id/btnAddGroupBack"
+            android:background="@mipmap/ic_navigate_before_white_36dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:text="그룹 만들기"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvAddGroupBarText"
+            android:textColor="@android:color/white"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/activity_vertical_margin"
+            tools:textStyle="bold" />
+
+        <Button
+            android:text="저장"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnAddGroupSave"
+            android:background="@null"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_alignBaseline="@+id/tvAddGroupBarText"
+            android:layout_alignBottom="@+id/tvAddGroupBarText"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+    <!-- Main layer -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scAddGroupScrollView"
+        android:padding="5dp"
+        android:layout_below="@+id/layoutAddGroupActionBar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:paddingTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:id="@+id/ivAddGroupGallery"
+                android:background="@android:drawable/ic_menu_gallery"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@mipmap/noimage" />
+
+            <EditText
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                android:id="@+id/etAddGroupName"
+                android:hint="그룹 이름을 입력하세요."
+                style="@style/SignUpEditTextTheme"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="* * * * *\n그룹원 추가는 그룹 수정에서 가능합니다."
+                android:layout_gravity="center"
+                android:paddingTop="40dp"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

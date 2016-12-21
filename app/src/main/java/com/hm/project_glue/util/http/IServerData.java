@@ -79,7 +79,7 @@ public interface IServerData {
     @Multipart
     @POST("/group/group_list/")
     Call<HomeData> createGroupData(@Header("Authorization") String authorization,
-                                                      @Field("name") String name, //20자
+//                                                      @Field("group_name") String group_name, //20자
                                                       @PartMap Map<String, RequestBody> group_image);
     //구룹 탈퇴
     @POST("/group/group_leave/{group_id}/")

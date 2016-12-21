@@ -30,11 +30,13 @@ import com.hm.project_glue.main.msg.MsgFragment;
 import com.hm.project_glue.main.timeline.TimelineFragment;
 import com.hm.project_glue.sign.SignActivity;
 import com.hm.project_glue.util.Networking;
+import com.hm.project_glue.util.addGroup.AddGroupActivity;
 import com.hm.project_glue.util.write.WriteActivity;
 
 public class MainActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
     public static DisplayMetrics metrics;
+    public static Context mainContext;
     private HomeFragment home;
     private MsgFragment msg;
     private InfoFragment info;
@@ -45,12 +47,15 @@ public class MainActivity extends AppCompatActivity {
 
     public  ViewPager pager;
     private final int facebookResultCode = -1,galleyResultCode = 2;
+    private final int addGroupCode = 3;
     public static String TAG = "TEST";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 2016.12.20 다른 액티비티에서 함수 호출을 위함
+        mainContext = this;
 
         if(savedInstanceState!=null) {
             finish();
@@ -131,21 +136,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void galleyActivity(){
+    // 2016.12.20 galleyActivity 재사용을 위해 int로 구분
+    public void galleyActivity(int code){
         Intent intent = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, 2);
+        startActivityForResult(intent, code);
     }
     public void moveActivity(int activityCode){
         Intent i = null;
         switch (activityCode){
             case 1 :
                 i = new Intent(MainActivity.this, SignActivity.class);
-
                 break;
             case 2 :
                 i = new Intent(MainActivity.this, WriteActivity.class);
-
+                break;
+            case 3 :
+                i = new Intent(MainActivity.this, AddGroupActivity.class);
+                startActivityForResult(i, 3);
                 break;
         }
         startActivity(i);
@@ -180,6 +188,9 @@ public class MainActivity extends AppCompatActivity {
             case facebookResultCode :
                 callbackManager.onActivityResult(requestCode, resultCode, data);
                 break;
+            case addGroupCode :
+                Log.i(TAG, "galleyResultCode");
+                break;
         }
     }
 
@@ -200,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 2 :
                 Log.i(TAG, "tab 2");
-               tab.setVisibility(View.GONE);
+                tab.setVisibility(View.GONE);
                 break;
         }
     }
