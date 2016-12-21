@@ -41,6 +41,7 @@ public class TimelinePresentImpl implements TimelinePresenter{
 
     @Override
     public void callHttp(String page , boolean refresh) {
+        TimelineFragment.loadingFlag=true;
         String authorization = "Token " + Networking.getToken();
         Map<String, String> queryMap = new HashMap<>();
         queryMap.put("page", page);

@@ -47,6 +47,8 @@ public class SignInPresenterImpl implements SignInPresenter {
     public void signIn(){
         MyFirebaseInstanceIDService service  = new MyFirebaseInstanceIDService();
         String device_token = "";
+
+        Log.e(TAG, device_token);
         try {
             device_token = service.getToken();
         }catch (Exception e){
@@ -58,7 +60,7 @@ public class SignInPresenterImpl implements SignInPresenter {
         String pw = view.getPwText();
         userInfoMap.put("phone_number", id);
         userInfoMap.put("password", pw);
-        userInfoMap.put("device_token", device_token);
+        userInfoMap.put("device_key", device_token);
         userInfoMap.put("device_type", "android");
 
         new AsyncTask<Map, Void, String>(){

@@ -42,7 +42,7 @@ public class TimelineFragment extends Fragment implements TimelinePresenter.View
     private LinearLayout listLinearProgressTop, listLinearProgressBottom, linearListNew;
     private View view;
     private TimelineData post;
-    private boolean loadingFlag = true;
+    public static boolean loadingFlag= true;
     private int indexOf = 1;
     private String selectGroup="1", nextPage ="";
     private static final String TAG = "TEST";
@@ -160,6 +160,7 @@ public class TimelineFragment extends Fragment implements TimelinePresenter.View
     }
 
     public static void likeChanged(TextView tvLike,TextView tvDislike, String resLike, String resDislike){
+        loadingFlag=false;
         tvLike.setText(resLike);
         tvDislike.setText(resDislike);
     }
@@ -191,14 +192,20 @@ public class TimelineFragment extends Fragment implements TimelinePresenter.View
             });
             //좋아요버튼
             holder.like.setOnClickListener(v->{
-                callHttpLike(data.getPk(),true,holder.tvListCardLike, holder.tvListCardDislike );
-                holder.like.setBackgroundResource(R.drawable.likeup);
-                holder.dislike.setBackgroundResource(R.drawable.dislike);
+
+                if(!loadingFlag){
+                    callHttpLike(data.getPk(),true,holder.tvListCardLike, holder.tvListCardDislike );
+                    holder.like.setBackgroundResource(R.drawable.likeup);
+                    holder.dislike.setBackgroundResource(R.drawable.dislike);
+                }
+
             });
             holder.dislike.setOnClickListener(v->{
-                callHttpLike(data.getPk(),false, holder.tvListCardLike, holder.tvListCardDislike );
-                holder.like.setBackgroundResource(R.drawable.like);
-                holder.dislike.setBackgroundResource(R.drawable.dislikeup);
+                if(!loadingFlag) {
+                    callHttpLike(data.getPk(), false, holder.tvListCardLike, holder.tvListCardDislike);
+                    holder.like.setBackgroundResource(R.drawable.like);
+                    holder.dislike.setBackgroundResource(R.drawable.dislikeup);
+                }
             });
             // 이미지 처리
             String url="";
@@ -243,7 +250,7 @@ public class TimelineFragment extends Fragment implements TimelinePresenter.View
                     holder.tvListCardContents.setText(str);
                 }else{   holder.tvListCardContents.setText(data.getContent());  }
             }
-            Log.e(TAG, "ssssssssssssssssssssssssssss"+in1);
+
 
 
             // 이름
