@@ -2,8 +2,6 @@ package com.hm.project_glue.util.http;
 
 import com.hm.project_glue.util.Networking;
 
-import java.net.CookieManager;
-import java.net.CookiePolicy;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 import java.util.concurrent.TimeUnit;
@@ -14,7 +12,6 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -26,9 +23,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ListRestAdapter {
 
-    public static final int CONNECT_TIMEOUT = 10;
-    public static final int WRITE_TIMEOUT = 30;
-    public static final int READ_TIMEOUT = 10;
+    public static final int CONNECT_TIMEOUT = 15;
+    public static final int WRITE_TIMEOUT = 15;
+    public static final int READ_TIMEOUT = 15;
     private static String TAG = "TEST";
     private static OkHttpClient client;
     private static IServerData service;
@@ -40,8 +37,8 @@ public class ListRestAdapter {
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
             // 쿠키 매니저 설정
-            CookieManager manager = new CookieManager();
-            manager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
+//            CookieManager manager = new CookieManager();
+//            manager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
 
             //OK HTTP 설정
             //SSL 통한 서버연결인 경우 인증서가 없으면 통신자체가 안된다.
@@ -51,7 +48,7 @@ public class ListRestAdapter {
                     .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
                     .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
 
-                    .cookieJar(new JavaNetCookieJar(manager)) //쿠키 저장
+//                    .cookieJar(new JavaNetCookieJar(manager)) //쿠키 저장
                     .addInterceptor(interceptor) // 로그를 출력(디버깅용)
                     .build();
 

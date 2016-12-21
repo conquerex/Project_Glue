@@ -251,6 +251,8 @@ public class WritePresenterImpl implements WritePresenter {
         String authorization = "Token "+ Networking.getToken();
         String fileName="";
         Map<String, RequestBody> bodyMap = new HashMap<>();
+
+        //캐시파일 생성
         for(int i =0; i < photosPath.size(); i++ ){
             fileName = "photo" + i +".jpg";
             try {
@@ -260,12 +262,12 @@ public class WritePresenterImpl implements WritePresenter {
             }
             File file = new File(Environment.getExternalStorageDirectory()+"/mycachefolder/",fileName);
             if(file.exists()){
-                RequestBody body  = RequestBody.create(MediaType.parse("image/*"),file);
+                RequestBody body  = RequestBody.create(MediaType.parse("image/*"), file);
                 bodyMap.put("photos\"; filename=\""+fileName, body);
             }
         }
-        bodyMap.put("groupId",RequestBody.create(MediaType.parse("multipart/form-data"), groupId));
-        bodyMap.put("content",RequestBody.create(MediaType.parse("multipart/form-data"), content));
+        bodyMap.put("group",RequestBody.create(MediaType.parse("form-data"), groupId));
+        bodyMap.put("content",RequestBody.create(MediaType.parse("form-data"), content));
 
         final Call<Posts> response = ListRestAdapter.getInstance().postingData(authorization, groupId, bodyMap);
         response.enqueue(new Callback<Posts>() {
@@ -278,11 +280,19 @@ public class WritePresenterImpl implements WritePresenter {
                     Log.e(TAG,response.message());
                 }
                 view.progressShow(false);
+                //캐시파일 삭제
+                for(int i =0; i < photosPath.size(); i++ ){
+                    try {
+                        File file = new File(Environment.getExternalStorageDirectory() + "/mycachefolder/", "photo" + i + ".jpg");
+                        file.delete();
+                    }catch (Exception e){
+                        Log.e(TAG,e.getMessage());
+                    }
+                }
             }
             @Override
             public void onFailure(Call<Posts> call, Throwable t) {
                 view.progressShow(false);
-
                 Log.i(TAG, "onFailure:"+ t.getMessage());
             }
         });

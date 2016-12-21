@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.hm.project_glue.R;
 import com.hm.project_glue.service.notification.MyFirebaseInstanceIDService;
 import com.hm.project_glue.util.Networking;
 import com.jakewharton.rxbinding.widget.RxTextView;
@@ -80,7 +81,7 @@ public class SignInPresenterImpl implements SignInPresenter {
             protected void onPreExecute() {
                 super.onPreExecute();
                 progress = new ProgressDialog(context);
-                progress.setMessage("Loging....");
+                progress.setMessage(context.getResources().getString(R.string.signInLogInMsg));
                 progress.setProgressStyle((ProgressDialog.STYLE_SPINNER));
                 progress.setCancelable(false);
                 progress.show();

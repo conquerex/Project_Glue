@@ -18,7 +18,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.GridView;
 import android.widget.ImageView;
+
 import com.hm.project_glue.R;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,8 +72,6 @@ public class GalleryListMain extends Activity {
             // 컬럼 인덱스
             int imageIDCol = imageCursor.getColumnIndex(MediaStore.Images.Media._ID);
             int imageDataCol = imageCursor.getColumnIndex(MediaStore.Images.Media.DATA);
-
-
             while (imageCursor.moveToNext()) {
                 GalleryItem thumbInfo = new GalleryItem();
 
@@ -179,7 +179,7 @@ public class GalleryListMain extends Activity {
     private class DoFindImageList extends AsyncTask<String, Integer, Long> {
         @Override
         protected void onPreExecute() {
-            mLoagindDialog = ProgressDialog.show(GalleryListMain.this, null, "Loding...", true, true);
+            mLoagindDialog = ProgressDialog.show(GalleryListMain.this, null, "Loading...", true, true);
             super.onPreExecute();
         }
 

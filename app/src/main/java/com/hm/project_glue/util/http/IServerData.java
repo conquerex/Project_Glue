@@ -4,6 +4,7 @@ import com.hm.project_glue.main.home.data.HomeData;
 import com.hm.project_glue.main.info.data.InfoData;
 import com.hm.project_glue.main.list.data.Dislike;
 import com.hm.project_glue.main.list.data.Like;
+import com.hm.project_glue.main.list.data.NotiJson;
 import com.hm.project_glue.main.list.data.PostData;
 import com.hm.project_glue.main.timeline.data.Posts;
 import com.hm.project_glue.main.timeline.data.TimelineData;
@@ -12,6 +13,7 @@ import java.util.Map;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.GET;
@@ -61,6 +63,12 @@ public interface IServerData {
     @PATCH("/member/myinfo/")
     Call<InfoData> myPhotoUpdateData(@Header("Authorization") String authorization,
                                     @PartMap Map<String, RequestBody> imgMap);
+
+    // 노티 알림 수정
+    @PATCH("/member/myinfo/")
+    Call<InfoData> myNotiUpdateData(@Header("Authorization") String authorization,
+                                    @Body NotiJson notiJson);
+
     // 내정보 삭제
     @DELETE("/member/myinfo/{userId}/")
     Call<String> myInfoDeleteData(@Header("Authorization") String authorization,

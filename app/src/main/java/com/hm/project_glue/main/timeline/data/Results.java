@@ -1,28 +1,38 @@
 package com.hm.project_glue.main.timeline.data;
 
-import java.util.ArrayList;
-
 /**
  * Created by HM on 2016-12-18.
  */
 
 public class Results
 {
-    private ArrayList<PostList> PostList;
+    private String created_date;
 
-    public ArrayList<PostList> getPostList ()
+    private Posts posts;
+
+    public String getCreated_date ()
     {
-        return PostList;
+        return created_date;
     }
 
-    public void setPostList (ArrayList<PostList> PostList)
+    public void setCreated_date (String created_date)
     {
-        this.PostList = PostList;
+        this.created_date = created_date;
+    }
+
+    public Posts getPosts ()
+    {
+        return posts;
+    }
+
+    public void setPosts (Posts posts)
+    {
+        this.posts = posts;
     }
 
     @Override
     public String toString()
     {
-        return "ClassPojo [PostList = "+PostList+"]";
+        return "ClassPojo [created_date = "+created_date+", posts = "+posts+"]";
     }
 }

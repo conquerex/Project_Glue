@@ -22,8 +22,8 @@ import com.bumptech.glide.Glide;
 import com.hm.project_glue.R;
 import com.hm.project_glue.main.MainActivity;
 import com.hm.project_glue.main.timeline.data.Photos;
-import com.hm.project_glue.main.timeline.data.PostList;
 import com.hm.project_glue.main.timeline.data.Posts;
+import com.hm.project_glue.main.timeline.data.Results;
 import com.hm.project_glue.main.timeline.data.TimelineData;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ import static com.hm.project_glue.util.http.CallRest.callHttpLike;
 
 public class TimelineFragment extends Fragment implements TimelinePresenter.View{
     private TimelinePresentImpl presenter;
-    private static ArrayList<PostList> datas = null;
+    private static ArrayList<Results> datas = null;
     private static RecyclerView listRecyclerView;
     private RecyclerCardAdapter adapter;
     private LinearLayout listLinearProgressTop, listLinearProgressBottom, linearListNew;
@@ -154,7 +154,7 @@ public class TimelineFragment extends Fragment implements TimelinePresenter.View
         }
         post.setPrevious(res.getPrevious());
         post.setNext(res.getNext());
-        datas.addAll(res.getResults().getPostList());
+        datas.addAll(res.getResults());
         Log.i(TAG, "datas.size : "+datas.size());
         adapter.notifyDataSetChanged();
     }
@@ -166,11 +166,11 @@ public class TimelineFragment extends Fragment implements TimelinePresenter.View
     }
     // TODO 리사이클러 뷰 어텝터
     public static class RecyclerCardAdapter extends RecyclerView.Adapter<RecyclerCardAdapter.ViewHolder>{
-        ArrayList<PostList> datas;
+        ArrayList<Results> datas;
         int itemLayout;
         Context context;
 
-        public RecyclerCardAdapter(ArrayList<PostList> datas, int itemLayout, Context context){
+        public RecyclerCardAdapter(ArrayList<Results> datas, int itemLayout, Context context){
             this.datas = datas;
             this.itemLayout = itemLayout;
             this.context = context;
@@ -256,7 +256,7 @@ public class TimelineFragment extends Fragment implements TimelinePresenter.View
             // 이름
             holder.tvListCardTitle.setText(data.getUser().getName());
             // 구룹이름
-            holder.tvListCardGroupName.setText(data.getGroup());
+            holder.tvListCardGroupName.setText(data.getGroup().getGroup_name());
             // 시간
             String getCreated_date = timeChange(context, datas.get(position).getCreated_date());
             holder.tvListCardTime.setText(getCreated_date);
@@ -265,6 +265,8 @@ public class TimelineFragment extends Fragment implements TimelinePresenter.View
             holder.tvListCardDislike.setText(data.getDislikes_count());
 
             //댓글 수
+            holder.linearCon1.setVisibility(View.GONE);
+            holder.linearCon2.setVisibility(View.GONE);
             holder.time_tvCommentCount.setText(""+data.getComments().size());
             //댓글 수에 따른 댓글 2개 표시
             if( data.getComments().size() > 0 ){

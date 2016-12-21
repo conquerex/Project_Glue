@@ -33,4 +33,5 @@
     <string name="timeAgoWeek">주 전</string>
     <string name="timeAgoMonth">달 전</string>
     <string name="timeAgoYear">년 전</string>
+    <string name="signInLogInMsg">로그인중 입니다.</string>
 </resources>

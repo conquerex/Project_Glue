@@ -1,6 +1,7 @@
 package com.hm.project_glue.main.timeline.data;
 
 
+import java.util.ArrayList;
 
 /**
  * Created by HM on 2016-12-18.
@@ -8,7 +9,7 @@ package com.hm.project_glue.main.timeline.data;
 
 public class TimelineData
 {
-    private Results results;
+    private ArrayList<Results> results;
 
     private String previous;
 
@@ -16,12 +17,12 @@ public class TimelineData
 
     private String next;
 
-    public Results getResults ()
+    public ArrayList<Results> getResults ()
     {
         return results;
     }
 
-    public void setResults (Results results)
+    public void setResults (ArrayList<Results> results)
     {
         this.results = results;
     }

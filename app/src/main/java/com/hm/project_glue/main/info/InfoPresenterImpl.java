@@ -3,13 +3,19 @@ package com.hm.project_glue.main.info;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.AsyncTask;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
+import com.bumptech.glide.request.target.SquaringDrawable;
 import com.facebook.login.widget.ProfilePictureView;
 import com.hm.project_glue.main.info.data.InfoData;
+import com.hm.project_glue.main.list.data.NotiJson;
 import com.hm.project_glue.util.Networking;
 import com.hm.project_glue.util.http.ListRestAdapter;
 
@@ -105,15 +111,43 @@ public class InfoPresenterImpl implements InfoPresenter {
             e.printStackTrace();
         }
     }
-    public void photoUpdate(Bitmap bitmap){
-        if(bitmap!=null){
-            ByteArrayOutputStream stream = new ByteArrayOutputStream() ;
-            bitmap.compress( Bitmap.CompressFormat.JPEG, 100, stream) ;
-            byte[] byteArray = stream.toByteArray();
-            String authorization = "Token "+ Networking.getToken();
+    public Bitmap getBitmap(ImageView imgView){
+        Bitmap bitmap = null;
+        Drawable drawable = imgView.getDrawable();
+        if (drawable instanceof GlideBitmapDrawable) {
+            bitmap = ((GlideBitmapDrawable) drawable).getBitmap();
+        } else if (drawable instanceof TransitionDrawable) {
+            TransitionDrawable transitionDrawable = (TransitionDrawable) drawable;
+            int length = transitionDrawable.getNumberOfLayers();
+            for (int i = 0; i < length; ++i) {
+                Drawable child = transitionDrawable.getDrawable(i);
+                if (child instanceof GlideBitmapDrawable) {
+                    bitmap = ((GlideBitmapDrawable) child).getBitmap();
+                    break;
+                } else if (child instanceof SquaringDrawable
+                        && child.getCurrent() instanceof GlideBitmapDrawable) {
+                    bitmap = ((GlideBitmapDrawable) child.getCurrent()).getBitmap();
+                    break;
+                }
+            }
+        } else if (drawable instanceof SquaringDrawable) {
+            bitmap = ((GlideBitmapDrawable) drawable.getCurrent()).getBitmap();
+        }
+        return bitmap;
+    }
+    public void photoUpdate(Bitmap bitmap, String fileName){
+
+        if( bitmap !=null){
             Map<String, RequestBody> imgMap = new HashMap<>();
-            RequestBody body  = RequestBody.create(MediaType.parse("image/*"), byteArray, 0, byteArray.length);
-            imgMap.put("image\"; filename=\"profile.jpg", body);
+            String authorization = "Token "+ Networking.getToken();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+
+            RequestBody body = RequestBody.create(MediaType.parse("image/*"), byteArray, 0, byteArray.length);
+            imgMap.put("image\"; filename=\""+fileName, body);
+
+
             final Call<InfoData> response = ListRestAdapter.getInstance().myPhotoUpdateData(authorization, imgMap);
             response.enqueue(new Callback<InfoData>() {
                 @Override
@@ -128,9 +162,38 @@ public class InfoPresenterImpl implements InfoPresenter {
                     Log.e(TAG, t.getMessage());
                 }
             });
+        }else{
+            view.toast("Bitmap is null");
         }
 
     }
+    @Override
+    public void callHttpNoti(NotiJson notiJson){
+        try {
+            String authorization = "Token "+ Networking.getToken();
+            final Call<InfoData> response = ListRestAdapter.getInstance().myNotiUpdateData(authorization, notiJson);
+            response.enqueue(new Callback<InfoData>() {
+                @Override
+                public void onResponse(Call<InfoData> call, Response<InfoData> response) {
+                    if(response.isSuccessful()){
+                        InfoData infoData = response.body();
+                        view.setInfo(infoData);
+                        view.toast("Update Successful");
+                    }
+                    Log.i(TAG, "myInfoData response Code : "+response.code());
+                }
+                @Override
+                public void onFailure(Call<InfoData> call, Throwable t) {
+                    Log.e(TAG, t.getMessage());
+                    view.toast("Update fail");
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     private void setUserInfoUpdate(String phone_number, String name, String password,  String email){
         try {
             String authorization = "Token "+ Networking.getToken();

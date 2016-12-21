@@ -22,6 +22,36 @@ public class InfoData
 
     private String password;
 
+    private boolean comment_noti;
+
+    private boolean post_noti;
+
+    private boolean like_noti;
+
+    public boolean getComment_noti() {
+        return comment_noti;
+    }
+
+    public void setComment_noti(boolean comment_noti) {
+        this.comment_noti = comment_noti;
+    }
+
+    public boolean getPost_noti() {
+        return post_noti;
+    }
+
+    public void setPost_noti(boolean post_noti) {
+        this.post_noti = post_noti;
+    }
+
+    public boolean getLike_noti() {
+        return like_noti;
+    }
+
+    public void setLike_noti(boolean like_noti) {
+        this.like_noti = like_noti;
+    }
+
     public InfoData(){
 
     }

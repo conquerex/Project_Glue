@@ -19,7 +19,7 @@ import retrofit2.Call;
 //conn.setRequestProperty("Value", "test");
 public class ListPresenterImpl implements ListPresenter {
     private ListFragment fragment;
-    private ListModel listInModel;
+
     private ListPresenter.View view;
     private static final String TAG = "TEST";
     Context context;
@@ -27,9 +27,7 @@ public class ListPresenterImpl implements ListPresenter {
 
     public ListPresenterImpl(ListFragment fragment) {
         this.fragment=fragment;
-        listInModel = new ListModel(fragment.getContext());
         context = fragment.getActivity();
-
     }
 
     @Override

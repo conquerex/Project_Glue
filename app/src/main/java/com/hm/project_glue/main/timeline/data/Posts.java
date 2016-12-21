@@ -18,7 +18,7 @@ public class Posts
 
     private ArrayList<Like> like;
 
-    private String group;
+    private Group group;
 
     private User user;
 
@@ -73,17 +73,17 @@ public class Posts
         return like;
     }
 
-    public void setLike (ArrayList<Like> like)
+    public void setLike (ArrayList<Like>  like)
     {
         this.like = like;
     }
 
-    public String getGroup ()
+    public Group getGroup ()
     {
         return group;
     }
 
-    public void setGroup (String group)
+    public void setGroup (Group group)
     {
         this.group = group;
     }
@@ -98,7 +98,7 @@ public class Posts
         this.user = user;
     }
 
-    public ArrayList<Comments> getComments ()
+    public ArrayList<Comments>  getComments ()
     {
         return comments;
     }

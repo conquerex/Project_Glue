@@ -90,7 +90,7 @@ public class TimelinePresentImpl implements TimelinePresenter{
             long min = gap/60;
             long sec = gap%60;
 
-            if(hour > 24){
+            if(hour >= 24){
                 Log.i(TAG,"hour:"+hour);
                 int gapDay = (int) (hour/24);
                 if(gapDay >= 7){
@@ -109,14 +109,14 @@ public class TimelinePresentImpl implements TimelinePresenter{
                 }
 //                ret = new SimpleDateFormat("HH:mm").format(date);
             }
-            else if(hour > 0){
+            else if(hour >= 1){
                 ret = hour+context.getResources().getString(R.string.timeAgoHour);
 
             }
-            else if(min > 0){
+            else if(min >= 1){
                 ret = min+context.getResources().getString(R.string.timeAgoMin);
             }
-            else if(sec > 0){
+            else if(sec >= 1){
                 ret = sec+context.getResources().getString(R.string.timeAgoSec);
             }
         }catch (Exception e){

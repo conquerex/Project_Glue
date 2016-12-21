@@ -4,11 +4,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,7 +24,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.hm.project_glue.R;
 import com.hm.project_glue.main.MainActivity;
-import com.hm.project_glue.main.home.data.HomeResponse;
+import com.hm.project_glue.main.OnFragmentInteractionListener;
 import com.hm.project_glue.main.list.data.Photos;
 import com.hm.project_glue.main.list.data.PostData;
 import com.hm.project_glue.main.list.data.Results;
@@ -31,11 +34,13 @@ import java.util.ArrayList;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_SETTLING;
-import static com.hm.project_glue.main.home.HomeFragment.homeResponses;
+import static com.hm.project_glue.main.timeline.TimelinePresentImpl.timeChange;
 import static com.hm.project_glue.util.http.CallRest.callHttpLike;
 
 public class ListFragment extends Fragment implements ListPresenter.View {
-
+    private OnFragmentInteractionListener mListener;
+    private static final String ARG_PARAM1 = "param1";
+    private String mParam1="";
     private ListPresenter listPresenter;
     private static ArrayList<Results> datas = null;
     private static RecyclerView listRecyclerView;
@@ -43,7 +48,8 @@ public class ListFragment extends Fragment implements ListPresenter.View {
     private LinearLayout listLinearProgressTop, listLinearProgressBottom, linearListNew;
     private PostData post;
     private View view;
-    private boolean loadingFlag = true;
+    Toolbar toolbar;
+    private static boolean loadingFlag = true;
     private int indexOf = 1;
     private String selectGroup="1", nextPage ="";
     private static final String TAG = "TEST";
@@ -51,14 +57,24 @@ public class ListFragment extends Fragment implements ListPresenter.View {
     public ListFragment() {
     }
 
-    public static ListFragment newInstance() {
+    public static ListFragment newInstance(String param1) {
         ListFragment fragment = new ListFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+        }else{
+            return;
+        }
         if(savedInstanceState!=null){
             return;
         }
@@ -72,15 +88,43 @@ public class ListFragment extends Fragment implements ListPresenter.View {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case android.R.id.home:
+                getActivity().onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_list, container, false);
+
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+
+        // toolbar
+        toolbar = (Toolbar) view.findViewById(R.id.listToolbar);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+        activity.setSupportActionBar(toolbar);
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                return false;
+            }
+        });
+
+//        setHasOptionsMenu(true);
+//        actionBar = getActivity().getActionBar();
+//        actionBar.setTitle("Post List");
+//        actionBar.setDisplayHomeAsUpEnabled(true);
         listLinearProgressTop = (LinearLayout) view.findViewById(R.id.listLinearProgressTop);
         listLinearProgressBottom = (LinearLayout) view.findViewById(R.id.listLinearProgressBottom);
         linearListNew = (LinearLayout) view.findViewById(R.id.linearListNew);
 
         if(savedInstanceState==null){
-            listPresenter.callHttp(selectGroup, "1",true);
+                      listPresenter.callHttp(mParam1, "1",true);
         }
         listRecyclerView = (RecyclerView) view.findViewById(R.id.recylerCardView);
 
@@ -93,6 +137,7 @@ public class ListFragment extends Fragment implements ListPresenter.View {
         });
         adapter  = new RecyclerCardAdapter(datas,R.layout.list_recycler_card_item,getContext());
         listRecyclerView.setAdapter(adapter);
+        // write 버튼
         FloatingActionButton floatingBtnWrite = (FloatingActionButton)view.findViewById(R.id.floatingBtnWrite);
         floatingBtnWrite.setOnClickListener(v -> {
             ((MainActivity)getActivity()).moveActivity(2);
@@ -108,7 +153,7 @@ public class ListFragment extends Fragment implements ListPresenter.View {
                     //최상단
                     if((recyclerView.computeVerticalScrollOffset() == 0) && !loadingFlag){
                         Log.i(TAG,"start:::");
-                        listPresenter.callHttp(selectGroup, "1", true);
+                        listPresenter.callHttp(mParam1, "1", true);
                     }
                     //최하단
                     if((recyclerView.computeVerticalScrollOffset()+recyclerView.getHeight()
@@ -137,7 +182,7 @@ public class ListFragment extends Fragment implements ListPresenter.View {
         indexOf = post.getNext().indexOf("=");
         nextPage = post.getNext().substring(indexOf+1);
         Log.i(TAG, "////nextPage: "+nextPage);
-        listPresenter.callHttp(selectGroup, nextPage ,false);
+        listPresenter.callHttp(mParam1, nextPage ,false);
 
     }
     public void setProgress(int code){
@@ -162,12 +207,20 @@ public class ListFragment extends Fragment implements ListPresenter.View {
         if(res.getPrevious()==null){
             datas.clear();
         }
+        if( res.getResults().size()>0){
+            toolbar.setTitle(res.getResults().get(0).getGroup().getGroup_name());
+        }
+
         post.setPrevious(res.getPrevious());
         post.setNext(res.getNext());
         datas.addAll(res.getResults());
         Log.i(TAG, "datas.size : "+datas.size());
         adapter.notifyDataSetChanged();
     }
+
+
+
+
     // TODO 리사이클러 뷰 어텝터
 
     public static class RecyclerCardAdapter extends RecyclerView.Adapter<RecyclerCardAdapter.ViewHolder>{
@@ -200,7 +253,23 @@ public class ListFragment extends Fragment implements ListPresenter.View {
 
                 }
             });
+            //좋아요버튼
+            holder.like.setOnClickListener(v->{
 
+                if(!loadingFlag){
+                    callHttpLike(data.getPk(),true,holder.tvListCardLike, holder.tvListCardDislike );
+                    holder.like.setBackgroundResource(R.drawable.likeup);
+                    holder.dislike.setBackgroundResource(R.drawable.dislike);
+                }
+
+            });
+            holder.dislike.setOnClickListener(v->{
+                if(!loadingFlag) {
+                    callHttpLike(data.getPk(), false, holder.tvListCardLike, holder.tvListCardDislike);
+                    holder.like.setBackgroundResource(R.drawable.like);
+                    holder.dislike.setBackgroundResource(R.drawable.dislikeup);
+                }
+            });
             // 이미지 처리
             String url="";
             Log.i(TAG,"photo size :"+ data.getPhotos().size());
@@ -217,48 +286,81 @@ public class ListFragment extends Fragment implements ListPresenter.View {
                     photosurl.add(s.getPhoto().getFull_size());
                 }
                 holder.gridView.setVisibility(View.VISIBLE);
-                ListPhotoListAdapter listPhotoListAdapter = new ListPhotoListAdapter(context,photosurl, R.layout.list_photo_list_item);
-                holder.gridView.setAdapter(listPhotoListAdapter);
+               ListPhotoAdapter timePhotoListAdapter = new ListPhotoAdapter(context,photosurl, R.layout.list_photo_list_item);
+                holder.gridView.setAdapter(timePhotoListAdapter);
             }
             // 작성자 이미지
             if(data.getUser().getImage()!=null){
                 Glide.with(context).load(data.getUser().getImage()).override(70,70)
                         .bitmapTransform(new CropCircleTransformation(context)).into(holder.imgListCardGroupImg);
+            }else{
+                Glide.with(context).load(R.drawable.noprofile).override(70,70)
+                        .bitmapTransform(new CropCircleTransformation(context)).into(holder.imgListCardGroupImg);
             }
             //내용
-            if(data.getContent().length() >= 40){
-                String str = data.getContent().substring(0,40)+"\n"+context.getResources().getString(R.string.listDetailClick);
-                holder.tvListCardContents.setText(str);
+            int in1 = data.getContent().indexOf(System.getProperty("line.separator"));
+            if(in1 !=(-1)){
+                if(in1 >= 40){
+                    String str = data.getContent().substring(0,40)+"\n"+context.getResources().getString(R.string.listDetailClick);
+                    holder.tvListCardContents.setText(str);
+                }else{
+                    String str = data.getContent().substring(0,in1)+"\n"+context.getResources().getString(R.string.listDetailClick);
+                    holder.tvListCardContents.setText(str);
+                }
+            }else{
+                if(data.getContent().length() >= 40){
+                    String str = data.getContent().substring(0,40)+"\n"+context.getResources().getString(R.string.listDetailClick);
+                    holder.tvListCardContents.setText(str);
+                }else{   holder.tvListCardContents.setText(data.getContent());  }
             }
-            else{
-                holder.tvListCardContents.setText(data.getContent());
-            }
+
+
+
             // 이름
             holder.tvListCardTitle.setText(data.getUser().getName());
             // 구룹이름
-            for(HomeResponse s : homeResponses){
-                if(data.getUploaded_user().equals(s.getId())){
-                    holder.tvListCardGroupName.setText(s.getGroup_name());
-                    break;
-                }
-            }
-            //날짜
-            holder.tvListCardTime.setText("2016/12/06");
+            holder.tvListCardGroupName.setText(data.getGroup().getGroup_name());
+            // 시간
+//            String getCreated_date = timeChange(context, datas.get(position).getContent().);
+//            holder.tvListCardTime.setText(getCreated_date);
             // like
             holder.tvListCardLike.setText(data.getLikes_count());
             holder.tvListCardDislike.setText(data.getDislikes_count());
 
-            holder.like.setOnClickListener(v->{
-                holder.like.setBackgroundResource(R.drawable.likeup);
-                holder.dislike.setBackgroundResource(R.drawable.dislike);
-                callHttpLike(data.getPk(), true, holder.tvListCardLike, holder.tvListCardDislike);
+            //댓글 수
+            holder.linearCon1.setVisibility(View.GONE);
+            holder.linearCon2.setVisibility(View.GONE);
+            holder.list_tvCommentCount.setText(""+data.getComments().size());
+            //댓글 수에 따른 댓글 2개 표시
+            if( data.getComments().size() > 0 ){
+                if(data.getComments().get(0).getUser().getImage()!=null) {
+                    Glide.with(context).load(data.getComments().get(0).getUser().getImage()).override(70, 70)
+                            .bitmapTransform(new CropCircleTransformation(context)).into(holder.list_imgComment1);
+                }else{
+                    Glide.with(context).load(R.drawable.noprofile).override(70, 70)
+                            .bitmapTransform(new CropCircleTransformation(context)).into(holder.list_imgComment1);
+                }
+                holder.list_tvCommentName1.setText(data.getComments().get(0).getUser().getName());
+                String commentCreated_date1 = timeChange(context, data.getComments().get(0).getCreated_date());
+                holder.list_tvCommenttime1.setText(commentCreated_date1);
+                holder.list_tvCommentCon1.setText(data.getComments().get(0).getContent());
+                holder.linearCon1.setVisibility(View.VISIBLE);
 
-            });
-            holder.dislike.setOnClickListener(v->{
-                holder.like.setBackgroundResource(R.drawable.like);
-                holder.dislike.setBackgroundResource(R.drawable.dislikeup);
-                callHttpLike(data.getPk(), false, holder.tvListCardLike, holder.tvListCardDislike);
-            });
+                if(data.getComments().size() > 1){
+                    if(data.getComments().get(1).getUser().getImage()!=null) {
+                        Glide.with(context).load(data.getUser().getImage()).override(70, 70)
+                                .bitmapTransform(new CropCircleTransformation(context)).into(holder.list_imgComment2);
+                    }else{
+                        Glide.with(context).load(R.drawable.noprofile).override(70, 70)
+                                .bitmapTransform(new CropCircleTransformation(context)).into(holder.list_imgComment2);
+                    }
+                    holder.list_tvCommentName2.setText(data.getComments().get(0).getUser().getName());
+                    String commentCreated_date2 = timeChange(context, data.getComments().get(1).getCreated_date());
+                    holder.list_tvCommenttime2.setText(commentCreated_date2);
+                    holder.list_tvCommentCon2.setText(data.getComments().get(1).getContent());
+                    holder.linearCon2.setVisibility(View.VISIBLE);
+                }
+            }
 
 
             holder.itemView.setTag(data);
@@ -270,8 +372,11 @@ public class ListFragment extends Fragment implements ListPresenter.View {
         }
 
         public static class ViewHolder extends RecyclerView.ViewHolder {
-            ImageView imgListCardGroupImg;
-            TextView tvListCardContents, tvListCardGroupName, tvListCardTime,tvListCardTitle, tvListCardLike, tvListCardDislike;
+            ImageView imgListCardGroupImg,list_imgComment1,list_imgComment2;
+            TextView tvListCardContents, tvListCardGroupName, tvListCardTime,tvListCardTitle, tvListCardLike, tvListCardDislike,
+                    list_tvCommentCount,list_tvCommentName1,list_tvCommentName2,list_tvCommentCon1,list_tvCommentCon2,
+                    list_tvCommenttime1,list_tvCommenttime2;
+            LinearLayout linearCon1, linearCon2;
             CardView listCardItem;
             Button like, dislike;
             GridView gridView;
@@ -285,6 +390,22 @@ public class ListFragment extends Fragment implements ListPresenter.View {
                 tvListCardTime      = (TextView) itemView.findViewById(R.id.tvListCardTime);
                 tvListCardLike      = (TextView) itemView.findViewById(R.id.tvListCardLike);
                 tvListCardDislike   = (TextView) itemView.findViewById(R.id.tvListCardDislike);
+
+                //Coment 부분
+                list_tvCommentCount = (TextView) itemView.findViewById(R.id.list_tvCommentCount);
+                list_imgComment1    = (ImageView) itemView.findViewById(R.id.list_imgComment1);
+                list_imgComment2    = (ImageView) itemView.findViewById(R.id.list_imgComment2);
+                list_tvCommentName1 = (TextView) itemView.findViewById(R.id.list_tvCommentName1);
+                list_tvCommentName2 = (TextView) itemView.findViewById(R.id.list_tvCommentName2);
+                list_tvCommentCon1  = (TextView) itemView.findViewById(R.id.list_tvCommentCon1);
+                list_tvCommentCon2  = (TextView) itemView.findViewById(R.id.list_tvCommentCon2);
+                list_tvCommenttime1  = (TextView) itemView.findViewById(R.id.list_tvCommenttime1);
+                list_tvCommenttime2  = (TextView) itemView.findViewById(R.id.list_tvCommenttime2);
+                linearCon1          =(LinearLayout) itemView.findViewById(R.id.list_linearCon1);
+                linearCon2          =(LinearLayout) itemView.findViewById(R.id.list_linearCon2);
+
+
+
                 gridView            = (GridView) itemView.findViewById(R.id.gridView);
                 listCardItem        = (CardView) itemView.findViewById(R.id.listCardItem);
                 like                = (Button) itemView.findViewById(R.id.list_btnLike);
@@ -293,8 +414,20 @@ public class ListFragment extends Fragment implements ListPresenter.View {
             }
         }
     }
-    private static void test(){
-
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
 
