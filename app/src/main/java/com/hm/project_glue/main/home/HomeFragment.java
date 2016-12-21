@@ -16,7 +16,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.hm.project_glue.R;
@@ -132,7 +131,7 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
                 @Override
                 public void onClick(View v) {
                     mListener.goToListFragment(response.getId());
-                    Toast.makeText(context,"이미지가 클릭됨!!",Toast.LENGTH_SHORT).show();
+                    
                 }
             });
 
