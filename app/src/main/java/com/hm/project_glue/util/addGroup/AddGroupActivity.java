@@ -1,6 +1,5 @@
 package com.hm.project_glue.util.addGroup;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,15 +16,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import com.hm.project_glue.R;
 import com.hm.project_glue.main.MainActivity;
-import com.hm.project_glue.main.home.HomeFragment;
 
 public class AddGroupActivity extends AppCompatActivity implements AddGroupPresenter.View {
     private static final String TAG = "AddGroupActivity";
-    MainActivity mainActivity = (MainActivity)MainActivity.mainContext;
     private Bitmap bitmap;
-    private String imgUrl;
     private AddGroupPresenterImpl addGroupPresenter;
-    ProgressDialog progress;
     Context context;
 
     Button btnAddGroupBack;
@@ -58,9 +53,7 @@ public class AddGroupActivity extends AppCompatActivity implements AddGroupPrese
         });
 
         // 뒤로가기 버튼 클릭시
-        btnAddGroupBack.setOnClickListener(v ->
-                this.finish()
-        );
+        btnAddGroupBack.setOnClickListener(v -> finish());
 
         // 저장 버튼 클릭시
         btnAddGroupSave.setOnClickListener(new View.OnClickListener() {
@@ -72,50 +65,21 @@ public class AddGroupActivity extends AppCompatActivity implements AddGroupPrese
                 }else {
                     addGroupPresenter.addGroupSave(bitmap, groupName);
                     Log.i(TAG, "----- after addGroupSave");
-//                    finish();
-
-//                    Intent intent = getIntent();
-//                    setResult(RESULT_OK, intent);
-//                    finish();
                 }
-//                Glide.with(context).load(imgUrl).bitmapTransform(new CropCircleTransformation(context))
-//                        .into(ivAddGroupGallery);
             }
         });
     }
 
     public void setAddGroupBitmap(String imagePath){
-        imgUrl = imagePath;
         Log.i(TAG, "----- imagePath:" + imagePath );
         bitmap = addGroupPresenter.imgAddGroupReSizing(imagePath);
         ivAddGroupGallery.setImageBitmap(bitmap);
-    }
-
-
-    @Override
-    public void progressAddGroupShow(boolean status) {
-        if(status){
-            progress = new ProgressDialog(context);
-            progress.setMessage("Upload....");
-            progress.setProgressStyle((ProgressDialog.STYLE_SPINNER));
-            progress.setCancelable(false);
-            progress.show();
-        }else{
-            if(progress != null) {
-                progress.dismiss();
-            }
-        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
          super.onActivityResult(requestCode, resultCode, data);
         Log.i(TAG, "------ onActivityResult");
-//        Bundle extras = data.getExtras();
-//        if (extras != null) {
-//            Bitmap photo = extras.getParcelable("data");
-//            ivAddGroupGallery.setImageBitmap(photo);
-//        }
         if(data != null){
             Uri imageUri = data.getData();    // Intent에서 받아온 갤러리 URI
             String selections[] = { MediaStore.Images.Media.DATA}; // 실제 이미지 패스 데이터
@@ -159,10 +123,7 @@ public class AddGroupActivity extends AppCompatActivity implements AddGroupPrese
 
     @Override
     public void addGroupFinish() {
-//        startActivity(new Intent(this, MainActivity.class));
-//        finish();
         Intent intent = new Intent(AddGroupActivity.this, MainActivity.class);
-        mainActivity.finish();
         startActivity(intent);
     }
 }

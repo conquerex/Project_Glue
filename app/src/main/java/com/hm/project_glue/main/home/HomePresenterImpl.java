@@ -55,7 +55,6 @@ public class HomePresenterImpl implements HomePresenter {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
                 return homeData;
             }
 
@@ -77,9 +76,7 @@ public class HomePresenterImpl implements HomePresenter {
                     view.dataChanged(res);
                 }
                 progress.dismiss();
-
             }
-
         }.execute();
     }
 }

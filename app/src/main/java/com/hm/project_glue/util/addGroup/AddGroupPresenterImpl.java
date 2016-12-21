@@ -40,36 +40,6 @@ public class AddGroupPresenterImpl implements AddGroupPresenter {
     @Override
     public void setView(View view) {
         this.view = view;
-//        new AsyncTask<String, Void, Integer>(){
-//            ProgressDialog progress;
-//            @Override
-//            protected Integer doInBackground(String... params) {
-//                String result = "";
-//                Log.i(TAG, "----------- doInBackground ");
-//                try {
-//                    // SERVER_URL에서 보낸 값을 받음
-//
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//
-//                return null;
-//            }
-//
-//            @Override
-//            protected void onPostExecute(Integer code) {
-//                super.onPostExecute(code);
-//                view.progressAddGroupShow(false);
-//                Log.i(TAG,"---- onPostExecute");
-//                view.addGroupResult(code);
-//            }
-//            @Override
-//            protected void onPreExecute() {
-//                super.onPreExecute();
-//                view.progressAddGroupShow(false);
-//                Log.i(TAG,"---- onPreExecute");
-//            }
-//        }.execute();
     }
 
     @Override
@@ -102,11 +72,6 @@ public class AddGroupPresenterImpl implements AddGroupPresenter {
     }
 
     @Override
-    public void addHttp() {
-
-    }
-
-    @Override
     public void addGroupSave(Bitmap bitmap, String groupName) {
         progress = new ProgressDialog(context);
         progress.setMessage("Upload....");
@@ -126,7 +91,7 @@ public class AddGroupPresenterImpl implements AddGroupPresenter {
             bitmap.compress( Bitmap.CompressFormat.JPEG, 100, stream) ;
             byte[] byteArray = stream.toByteArray();
             RequestBody body  = RequestBody.create(MediaType.parse("image/*"), byteArray, 0, byteArray.length);
-//            imgMap.put("image\"; filename=\"profile.jpg", body);
+            // key값 : group_image
             imgMap.put("group_image\"; filename=\""+fileName+"\"", body);
         }
 
