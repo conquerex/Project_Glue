@@ -5,7 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
+import com.hm.project_glue.R;
 import com.hm.project_glue.main.msg.data.NotiData;
 
 import java.util.ArrayList;
@@ -46,7 +48,13 @@ public class ListAdapter extends BaseAdapter {
         if(convertView == null){
             convertView = inflater.inflate(layoutItem, null);
         }
+        NotiData noti = datas.get(position);
 
+        TextView title =(TextView) convertView.findViewById(R.id.msg_Title);
+        TextView contents =(TextView) convertView.findViewById(R.id.msg_Contents);
+
+        title.setText(noti.getTitle());
+        contents.setText(noti.getContents());
 
         return convertView;
     }

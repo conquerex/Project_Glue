@@ -61,6 +61,14 @@ public interface IServerData {
     @PATCH("/member/myinfo/")
     Call<InfoData> myPhotoUpdateData(@Header("Authorization") String authorization,
                                     @PartMap Map<String, RequestBody> imgMap);
+
+    // 노티 알림 수정
+    @Multipart
+    @PATCH("/member/myinfo/")
+    Call<InfoData> myNotiUpdateData(@Header("Authorization") String authorization,
+                                    @Field("post_noti") Boolean post,
+                                    @Field("comment_noti") Boolean comment,
+                                    @Field("like_noti") Boolean like);
     // 내정보 삭제
     @DELETE("/member/myinfo/{userId}/")
     Call<String> myInfoDeleteData(@Header("Authorization") String authorization,

@@ -6,61 +6,90 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context="com.hm.project_glue.main.info.PhotoDetailActivity"
+    tools:context="com.hm.project_glue.main.info.InfoFragment"
     android:background="@android:color/black">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:id="@+id/info_linearPhotoDetail1">
+
+        <Button
+            android:id="@+id/btnPhotoDetailClose"
+            android:background="@null"
+            android:layout_height="36dp"
+            android:text="CLOSE"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:text="Default"
+            android:layout_height="36dp"
+            android:id="@+id/info_btnDefaultimg"
+            android:elevation="0dp"
+            android:background="@null"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/btnPhotoDetailLord"
+            android:layout_centerHorizontal="true" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:id="@+id/info_linearLoadimg">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@android:drawable/ic_menu_gallery"
+                android:id="@+id/imageView2" />
+
+            <Button
+                android:id="@+id/btnPhotoDetailLord"
+                android:layout_width="50dp"
+                android:layout_height="36dp"
+                android:text="LOAD"
+                android:background="@null"
+                android:textColor="@android:color/white"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnPhotoDetailSave"
+            android:background="@null"
+            android:layout_height="36dp"
+            android:text="Save"
+            android:textColor="@android:color/white"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="80dp" />
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:id="@+id/info_linearPhotoDetail"
+        android:visibility="visible"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:gravity="center"
-        android:layout_below="@+id/btnPhotoDetailClose">
+        android:layout_below="@+id/info_linearPhotoDetail1">
 
-        <ImageView
+        <include
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/com_facebook_profile_picture_blank_portrait"
-            android:id="@+id/img_InfoPhotoDetail"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            layout="@layout/info_imageview" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/btnPhotoDetailClose"
-        android:background="@null"
-        android:layout_height="36dp"
-        android:text="CLOSE"
-        android:textColor="@android:color/white"
-        android:layout_width="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_margin="10dp" />
-
-    <Button
-        android:id="@+id/btnPhotoDetailLord"
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:text="load IMage"
-        android:background="@null"
-        android:textColor="@android:color/white"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="10dp" />
-
-    <Button
-        android:id="@+id/btnPhotoDetailSave"
-        android:background="@null"
-        android:layout_height="36dp"
-        android:layout_width="60dp"
-        android:text="Save"
-        android:textColor="@android:color/white"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="10dp" />
 
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.hm.project_glue.main.timeline;
+package com.hm.project_glue.main.list;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,20 +6,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+
 import com.bumptech.glide.Glide;
 import com.hm.project_glue.R;
+
 import java.util.ArrayList;
 
 /**
- * Created by HM on 2016-12-19.
+ * Created by HM on 2016-12-21.
  */
 
-public class TimePhotoAdapter extends BaseAdapter {
+public class ListPhotoAdapter extends BaseAdapter {
     Context context;
     ArrayList<String> datas;
     int layoutItem;
     LayoutInflater inflater;
-    public TimePhotoAdapter(Context context, ArrayList<String> datas, int layoutItem){
+    public ListPhotoAdapter(Context context, ArrayList<String> datas, int layoutItem){
         this.context = context;
         this.datas = datas;
         this.layoutItem = layoutItem;
@@ -44,7 +46,7 @@ public class TimePhotoAdapter extends BaseAdapter {
             convertView = inflater.inflate(layoutItem, null);
         }
 
-        ImageView itemImg = (ImageView) convertView.findViewById(R.id.time_img_list_item);
+        ImageView itemImg = (ImageView) convertView.findViewById(R.id.img_list_item);
 //        ProgressBar bar = (ProgressBar) convertView.findViewById(R.id.bar_list_item);
         if( datas.size() > 1){
             Glide.with(context).load(imageurl).override(350,200).centerCrop().into(itemImg);

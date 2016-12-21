@@ -1,23 +1,31 @@
 package com.hm.project_glue.main;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
@@ -32,7 +40,7 @@ import com.hm.project_glue.sign.SignActivity;
 import com.hm.project_glue.util.Networking;
 import com.hm.project_glue.util.write.WriteActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
     private CallbackManager callbackManager;
     public static DisplayMetrics metrics;
     private HomeFragment home;
@@ -42,28 +50,30 @@ public class MainActivity extends AppCompatActivity {
     private TimelineFragment time;
     private Networking networking;
     private TabLayout tab;
-
+    private int MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE =11;
+    public boolean myPermissions = false;
     public  ViewPager pager;
     private final int facebookResultCode = -1,galleyResultCode = 2;
     public static String TAG = "TEST";
-
+    public FrameLayout mainframe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.listToolbar);
+        setSupportActionBar(toolbar);
         if(savedInstanceState!=null) {
             finish();
             return;
         }
         setContentView(R.layout.activity_main);
+
         networking = new Networking(this);
         home =  HomeFragment.newInstance();
         msg  =  MsgFragment.newInstance();
         info =  InfoFragment.newInstance();
-        list =  ListFragment.newInstance();
         time =  TimelineFragment.newInstance();
-
+        mainframe = (FrameLayout) findViewById(R.id.mainframe);
         tab = (TabLayout) findViewById(R.id.tabLayout);
         pager = (ViewPager) findViewById(R.id.pager);
         tab.addTab(tab.newTab().setIcon(R.mipmap.ic_supervisor_account_white_36dp));
@@ -105,7 +115,21 @@ public class MainActivity extends AppCompatActivity {
         WindowManager windowManager = (WindowManager)getApplicationContext()
                 .getSystemService(Context.WINDOW_SERVICE);
         windowManager.getDefaultDisplay().getMetrics(metrics);
+
+
+
+
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
     class MainPagerAdapter extends FragmentStatePagerAdapter {
         static final int FRAGMENT_COUNT = 4;
@@ -119,7 +143,9 @@ public class MainActivity extends AppCompatActivity {
             switch(position){
                 case 0 : fragment = home; break;
                 case 1 : fragment = time; break;
-                case 2 : fragment = msg; break;
+                case 2 : fragment = msg;
+                    msg.notifyDataSetChanged();
+                    break;
                 case 3 : fragment = info; break;
             }
             return fragment;
@@ -131,10 +157,44 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    public void goToListFragment(String groupId){
+             list =  ListFragment.newInstance(groupId);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager
+                    .beginTransaction();
+            fragmentTransaction.add(R.id.mainframe,list);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+
+//        DisplayMetrics metrics = new DisplayMetrics();
+//        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+//        DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) mainframe.getLayoutParams();
+//        params.width = metrics.widthPixels;
+//        mainframe.setLayoutParams(params);
+
+//        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//        ft.setCustomAnimations(R.anim.gla_there_come,R.anim.gla_there_gone);
+//        ft.add(R.id.mainfragment, list);
+//        ft.addToBackStack(null);
+//        ft.commit();
+    }
+    public void goBackListFragment(){
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.setCustomAnimations(R.anim.gla_there_gone,R.anim.gla_there_come);
+        ft.replace(R.id.fragment, list);
+        ft.addToBackStack(null);
+        ft.commit();
+//        mainframe.setVisibility(View.GONE);
+    }
+
     public void galleyActivity(){
-        Intent intent = new Intent(Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, 2);
+        if(myPermissions){
+            Intent intent = new Intent(Intent.ACTION_PICK,
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, 2);
+        }
     }
     public void moveActivity(int activityCode){
         Intent i = null;
@@ -150,8 +210,6 @@ public class MainActivity extends AppCompatActivity {
         }
         startActivity(i);
         overridePendingTransition(R.anim.ani_there_up_come, R.anim.gla_there_come);
-
-
     }
     @Override   //facebook(-1) , PhotoDetail ( 2 )
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -205,4 +263,39 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void permissions(){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                PackageManager.PERMISSION_GRANTED) {
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            } else {
+                // 동의 메세지
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
+                        MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE);
+            }
+        }else{
+            myPermissions = true;
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 11 :
+                // 수락
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    myPermissions = true;
+                    galleyActivity();
+                } else { //거절
+                    myPermissions = false;
+                }
+                return;
+        }
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.listToolbar);
+        setSupportActionBar(toolbar);
+    }
 }

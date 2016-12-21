@@ -39,7 +39,7 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
     private HomeData homeData;
     HomeRecyclerAdapter adapter;
 
-    private OnFragmentInteractionListener mListener;
+    private static OnFragmentInteractionListener mListener;
     public HomeFragment() {
 
     }
@@ -131,6 +131,7 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
             holder.ivHomeCard.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
+                    mListener.goToListFragment(response.getId());
                     Toast.makeText(context,"이미지가 클릭됨!!",Toast.LENGTH_SHORT).show();
                 }
             });
@@ -200,5 +201,16 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
             }
         }
 
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
     }
 }

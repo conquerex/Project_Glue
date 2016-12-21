@@ -13,6 +13,8 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.hm.project_glue.R;
 import com.hm.project_glue.main.MainActivity;
+import com.hm.project_glue.main.msg.DBinit;
+import com.hm.project_glue.main.msg.data.NotiData;
 
 import static com.hm.project_glue.main.MainActivity.TAG;
 
@@ -49,11 +51,18 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
         }
+        NotiData  data = new NotiData();
+        data.setTitle(remoteMessage.getNotification().getTitle());
+        data.setContents(remoteMessage.getNotification().getBody());
+        DBinit.dbInsert(data);
 
         // Check if message contains a notification payload.
         // 앱이 켜져있을 때
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+
+//            sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
+        }else{
             sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
         }
 

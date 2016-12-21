@@ -256,7 +256,7 @@ public class TimelineFragment extends Fragment implements TimelinePresenter.View
             // 이름
             holder.tvListCardTitle.setText(data.getUser().getName());
             // 구룹이름
-            holder.tvListCardGroupName.setText(data.getGroup());
+            holder.tvListCardGroupName.setText(data.getGroup().getGroup_name());
             // 시간
             String getCreated_date = timeChange(context, datas.get(position).getCreated_date());
             holder.tvListCardTime.setText(getCreated_date);

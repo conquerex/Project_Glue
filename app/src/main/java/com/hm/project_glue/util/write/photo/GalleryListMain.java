@@ -179,7 +179,7 @@ public class GalleryListMain extends Activity {
     private class DoFindImageList extends AsyncTask<String, Integer, Long> {
         @Override
         protected void onPreExecute() {
-            mLoagindDialog = ProgressDialog.show(GalleryListMain.this, null, "Loding...", true, true);
+            mLoagindDialog = ProgressDialog.show(GalleryListMain.this, null, "Loading...", true, true);
             super.onPreExecute();
         }
 
