@@ -1,0 +1,235 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.hm.project_glue.main.post.PostDetailFragment"
+    android:background="@color/windowBackground">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/post_proBar" />
+    </LinearLayout>
+
+    <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1"
+        android:visibility="visible"
+        android:id="@+id/post_viewLinear"
+        android:scrollbars="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:id="@+id/post_groupName"
+                    android:textColor="@color/com_facebook_button_background_color_focused_disabled"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:hint="groupName" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dip"
+                    android:background="@color/windowBackground"
+
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_margin="10dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        app:srcCompat="@drawable/noprofile"
+                        android:id="@+id/post_userImg"
+                         />
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:gravity="center_vertical"
+                        android:layout_weight="0.7">
+
+                        <TextView
+                            android:text="TextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/post_tvUserName"
+                            android:textSize="@dimen/activity_vertical_margin"
+                            android:textStyle="normal|bold" />
+
+                        <TextView
+                            android:text="TextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/post_tvTime"
+                            android:textSize="12sp"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/post_btnLike"
+                        android:background="@drawable/like"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/post_tvLIkecCount"
+                        android:hint="0" />
+
+                    <Button
+                        android:layout_height="30dp"
+                        android:id="@+id/post_btnDislike"
+                        android:background="@drawable/dislike"
+                        android:layout_width="30dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/post_tvDislikeCount"
+                        android:hint="0" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/post_tvContents"
+                    android:textSize="14dp"
+                    android:layout_weight="0.11"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/post_linearGrid"
+                    android:layout_weight="2">
+
+                    <GridView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/post_gridView"
+                        android:numColumns="2"
+                        android:scrollbars="none"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:padding="2dp" />
+                </LinearLayout>
+
+        <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:background="@color/windowBackground"
+                    android:layout_height="40dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@mipmap/ic_comment_gray_24dp"
+                        android:id="@+id/imageView8"
+                        android:layout_marginLeft="20dp"
+                         />
+
+                    <Button
+                        android:text="댓글 달기"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/post_btnComment"
+                        android:layout_weight="0.8"
+                        android:background="@null"
+                        android:gravity="left|center_vertical|center_horizontal"
+                        android:layout_marginLeft="10dp" />
+
+                    <TextView
+                        android:text="댓글 "
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView3"
+                        android:layout_marginRight="5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/post_tvCommentCount"
+                android:hint="0"
+                android:layout_marginRight="5dp" />
+
+            <TextView
+                        android:text="개"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView5"
+                        android:layout_marginRight="20dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/post_editCommet"
+            android:background="@color/com_facebook_button_border_color_focused"
+            android:visibility="gone">
+
+            <TextView
+                android:text="Comment : "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView6"
+                android:layout_marginLeft="5dp"
+                android:textSize="16sp" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:id="@+id/post_etComment"
+                android:hint="Input Text"
+                android:textSize="16sp"
+                android:elevation="1dp"
+                android:layout_weight="1"
+                android:background="@null" />
+
+            <Button
+                android:text="저장"
+                android:layout_height="wrap_content"
+                android:id="@+id/post_btnSave"
+                android:layout_width="60dp" />
+        </LinearLayout>
+
+        <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/post_commentListView" />
+
+            </LinearLayout>
+
+
+</FrameLayout>

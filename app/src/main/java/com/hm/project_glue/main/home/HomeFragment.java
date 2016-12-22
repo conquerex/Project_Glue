@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -37,6 +38,7 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
     public static ArrayList<HomeResponse> homeResponses = null;
     private HomeData homeData;
     HomeRecyclerAdapter adapter;
+    LinearLayout linearNoGroup;
 
     private static OnFragmentInteractionListener mListener;
     public HomeFragment() {
@@ -80,7 +82,7 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
                 ((MainActivity)getActivity()).moveActivity(3);
             }
         });
-
+        linearNoGroup = (LinearLayout) view.findViewById(R.id.gr_linearNoGroup);
         linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView = (RecyclerView)view.findViewById(R.id.homeRecyclerView);
         recyclerView.hasFixedSize();
@@ -97,6 +99,11 @@ public class HomeFragment extends Fragment implements HomePresenter.View{
 
     @Override
     public void dataChanged(HomeData res) {
+        if(res.getHomeResponses().size() == 0){
+            linearNoGroup.setVisibility(View.VISIBLE);
+        }else{
+            linearNoGroup.setVisibility(View.GONE);
+        }
         Log.i(TAG, "----------- dataChanged --- " + res.getHomeResponses());
         homeResponses.addAll(res.getHomeResponses());
         adapter.notifyDataSetChanged();

@@ -43,6 +43,8 @@ public class CallRest {
     }
 
 
+
+
     public static void callHttpLike(String postId, boolean likeType, TextView tvLike, TextView tvDislike){
         TimelineFragment.loadingFlag=true;
         String authorization = "Token " + Networking.getToken();

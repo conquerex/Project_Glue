@@ -21,7 +21,7 @@
             android:background="@null"
             android:layout_height="36dp"
             android:text="CLOSE"
-            android:textColor="@android:color/white"
+            android:textColor="@color/button_photo_detail"
             android:layout_width="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
@@ -33,7 +33,7 @@
             android:id="@+id/info_btnDefaultimg"
             android:elevation="0dp"
             android:background="@null"
-            android:textColor="@android:color/white"
+            android:textColor="@color/button_photo_detail"
             android:layout_width="wrap_content"
             android:layout_below="@+id/btnPhotoDetailLord"
             android:layout_centerHorizontal="true" />
@@ -58,7 +58,7 @@
                 android:layout_height="36dp"
                 android:text="LOAD"
                 android:background="@null"
-                android:textColor="@android:color/white"
+                android:textColor="@color/button_photo_detail"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
         </LinearLayout>
@@ -68,7 +68,7 @@
             android:background="@null"
             android:layout_height="36dp"
             android:text="Save"
-            android:textColor="@android:color/white"
+            android:textColor="@color/button_photo_detail"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
@@ -86,10 +86,11 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/info_linearPhotoDetail1">
 
-        <include
-            android:layout_width="wrap_content"
+        <ImageView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            layout="@layout/info_imageview" />
+            app:srcCompat="@drawable/com_facebook_profile_picture_blank_portrait"
+            android:id="@+id/info_detailimg" />
     </LinearLayout>
 
 </RelativeLayout>

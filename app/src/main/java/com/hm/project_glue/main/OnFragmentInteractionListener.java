@@ -6,4 +6,5 @@ package com.hm.project_glue.main;
 
 public interface OnFragmentInteractionListener {
     void goToListFragment(String groupId);
+    void goToPostFragment(String postId);
 }

@@ -10,6 +10,8 @@ public class Comments
 
     private String created_date;
 
+    private String id;
+
     private User user;
 
     public String getContent ()
@@ -32,6 +34,16 @@ public class Comments
         this.created_date = created_date;
     }
 
+    public String getId ()
+    {
+        return id;
+    }
+
+    public void setId (String id)
+    {
+        this.id = id;
+    }
+
     public User getUser ()
     {
         return user;
@@ -45,6 +57,6 @@ public class Comments
     @Override
     public String toString()
     {
-        return "ClassPojo [content = "+content+", created_date = "+created_date+", user = "+user+"]";
+        return "ClassPojo [content = "+content+", created_date = "+created_date+", id = "+id+", user = "+user+"]";
     }
 }

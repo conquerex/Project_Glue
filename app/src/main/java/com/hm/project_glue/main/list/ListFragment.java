@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,17 +28,18 @@ import com.hm.project_glue.main.OnFragmentInteractionListener;
 import com.hm.project_glue.main.list.data.Photos;
 import com.hm.project_glue.main.list.data.PostData;
 import com.hm.project_glue.main.list.data.Results;
+import com.hm.project_glue.util.Util;
 
 import java.util.ArrayList;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_SETTLING;
-import static com.hm.project_glue.main.timeline.TimelinePresentImpl.timeChange;
+
 import static com.hm.project_glue.util.http.CallRest.callHttpLike;
 
 public class ListFragment extends Fragment implements ListPresenter.View {
-    private OnFragmentInteractionListener mListener;
+    private static OnFragmentInteractionListener mListener;
     private static final String ARG_PARAM1 = "param1";
     private String mParam1="";
     private ListPresenter listPresenter;
@@ -100,13 +101,17 @@ public class ListFragment extends Fragment implements ListPresenter.View {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_list, container, false);
 
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        MainActivity activity = (MainActivity) getActivity();
 
         // toolbar
         toolbar = (Toolbar) view.findViewById(R.id.listToolbar);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
-        activity.setSupportActionBar(toolbar);
+        ActionBar actionBar = activity.getSupportActionBar();
+        if (actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
+            activity.setSupportActionBar(toolbar);
+        }
+
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -250,6 +255,7 @@ public class ListFragment extends Fragment implements ListPresenter.View {
             holder.listCardItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) { //클릭시
+                    mListener.goToPostFragment(data.getPk());
 
                 }
             });
@@ -341,7 +347,7 @@ public class ListFragment extends Fragment implements ListPresenter.View {
                             .bitmapTransform(new CropCircleTransformation(context)).into(holder.list_imgComment1);
                 }
                 holder.list_tvCommentName1.setText(data.getComments().get(0).getUser().getName());
-                String commentCreated_date1 = timeChange(context, data.getComments().get(0).getCreated_date());
+                String commentCreated_date1 = Util.timeChange(context, data.getComments().get(0).getCreated_date());
                 holder.list_tvCommenttime1.setText(commentCreated_date1);
                 holder.list_tvCommentCon1.setText(data.getComments().get(0).getContent());
                 holder.linearCon1.setVisibility(View.VISIBLE);
@@ -355,7 +361,7 @@ public class ListFragment extends Fragment implements ListPresenter.View {
                                 .bitmapTransform(new CropCircleTransformation(context)).into(holder.list_imgComment2);
                     }
                     holder.list_tvCommentName2.setText(data.getComments().get(0).getUser().getName());
-                    String commentCreated_date2 = timeChange(context, data.getComments().get(1).getCreated_date());
+                    String commentCreated_date2 = Util.timeChange(context, data.getComments().get(1).getCreated_date());
                     holder.list_tvCommenttime2.setText(commentCreated_date2);
                     holder.list_tvCommentCon2.setText(data.getComments().get(1).getContent());
                     holder.linearCon2.setVisibility(View.VISIBLE);

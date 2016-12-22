@@ -34,10 +34,10 @@ public class InfoFragment extends Fragment implements InfoPresenter.View {
     private InfoPresenterImpl infoPresenter;
     private EditText etInfoPhone_number, etInfoName, etInfoPassword1, etInfoPassword2, etInfoEmail;
     private LinearLayout imgInfoMyImg,img_InfoPhotoDetail;
-    private ImageView info_img;
+    private ImageView info_img,info_detailimg;
     private RelativeLayout PotoDetail,infoLayout;
     private int MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE = 11;
-    private int REQ_CODE_IMAGE = 2;
+    private int REQ_CODE_IMAGE = 2, LAYOUTSETON = 1, LAYOUTSETOFF = 2;
     private String imgUrl=null;
     private String imgName=null;
     public boolean myPermission=false;
@@ -92,6 +92,7 @@ public class InfoFragment extends Fragment implements InfoPresenter.View {
         imgInfoMyImg        = (LinearLayout) view.findViewById(R.id.info_linearimg);
         img_InfoPhotoDetail = (LinearLayout) view.findViewById(R.id.info_linearPhotoDetail);
         info_img            = (ImageView) view.findViewById(R.id.info_img);
+        info_detailimg      = (ImageView) view.findViewById(R.id.info_detailimg);
         info_swNoti_Post    =   (Switch) view.findViewById(R.id.info_swNoti_Post);
         info_swNoti_Comment =   (Switch) view.findViewById(R.id.info_swNoti_Comment);
         info_swNoti_Like    =   (Switch) view.findViewById(R.id.info_swNoti_Like);
@@ -104,38 +105,40 @@ public class InfoFragment extends Fragment implements InfoPresenter.View {
 
         // Photo save
         btnPhotoDetailSave.setOnClickListener(v-> {
-            bitmap = infoPresenter.getBitmap(info_img);
+
+            bitmap = infoPresenter.getBitmap(info_detailimg);
             infoPresenter.photoUpdate(bitmap, imgName);
-            setPhotoLayout(1);
+            setPhotoLayout(LAYOUTSETON);
         });
         // Default
         info_btnDefaultimg.setOnClickListener(v->{
             imgUrl=null;
             Glide.with(getContext()).load(R.drawable.com_facebook_profile_picture_blank_portrait)
-            .into(info_img);
+            .into(info_detailimg);
         });
 
         //close
         btnPhotoDetailClose.setOnClickListener(v-> {
-            setPhotoLayout(1);
+            setPhotoLayout(LAYOUTSETON);
                 });
         //Load
         btnPhotoDetailLord.setOnClickListener(v-> {
             // 2016.12.20 galleyActivity 재사용을 위해 int로 구분
-            ((MainActivity)getActivity()).galleyActivity(2);
+            ((MainActivity)getActivity()).galleyActivity(REQ_CODE_IMAGE);
         });
 
 
         btnInfoLogOut.setOnClickListener(v -> ((MainActivity)getActivity()).logOut() );
         btnInfoUpdate.setOnClickListener(v -> infoFormCheck() );
 
+        //키보드 off
         infoRelativeLayout.setOnClickListener(v -> {
             InputMethodManager mgr = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
             mgr.hideSoftInputFromWindow(v.getWindowToken(), 0);
         });
         // 이미지 클릭
         imgInfoMyImg.setOnClickListener(v ->{
-            setPhotoLayout(2);
+            setPhotoLayout(LAYOUTSETOFF);
             Glide.with(getContext()).load(imgUrl).into(info_img);
         } );
 
@@ -151,9 +154,7 @@ public class InfoFragment extends Fragment implements InfoPresenter.View {
     }
 
     public void switchStateCheck(){
-
         NotiJson notiJson = new NotiJson(info_swNoti_Post.isChecked(),info_swNoti_Comment.isChecked(),info_swNoti_Like.isChecked());
-
         infoPresenter.callHttpNoti(notiJson);
     }
 
@@ -162,6 +163,7 @@ public class InfoFragment extends Fragment implements InfoPresenter.View {
         ((MainActivity)getActivity()).setTabBar(visibleCode);
         Animation animation = new AlphaAnimation(0, 1);
         animation.setDuration(1000);
+
         switch (visibleCode){
             case 1 : // info layout
                 if( imgUrl==null ){
@@ -181,11 +183,9 @@ public class InfoFragment extends Fragment implements InfoPresenter.View {
             case 2 : // photo layout
 
                 if( imgUrl==null ){
-                    Log.i(TAG," if( imgUrl==null " );
-                    Glide.with(getContext()).load(R.drawable.com_facebook_profile_picture_blank_portrait).into(info_img);
+                    Glide.with(getContext()).load(R.drawable.com_facebook_profile_picture_blank_portrait).into(info_detailimg);
                 }else{
-                    Log.i(TAG,"imgUrl: "+imgUrl );
-                    Glide.with(getContext()).load(imgUrl).into(info_img);
+                    Glide.with(getContext()).load(imgUrl).into(info_detailimg);
                 }
                 PotoDetail.setVisibility(View.VISIBLE);
                 PotoDetail.setAnimation(animation);
@@ -197,10 +197,7 @@ public class InfoFragment extends Fragment implements InfoPresenter.View {
 
     public void setBitmap(String imagePath){
         imgUrl = imagePath;
-        imgName= imagePath;
-        Log.i(TAG, "imagePath:"+imagePath );
-//        bitmap = infoPresenter.imgReSizing(imagePath);
-        Glide.with(getContext()).load(imagePath).into(info_img);
+        Glide.with(getContext()).load(imagePath).into(info_detailimg);
 
     }
     private void infoFormCheck(){

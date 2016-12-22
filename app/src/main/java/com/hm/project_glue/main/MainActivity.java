@@ -34,6 +34,7 @@ import com.hm.project_glue.R;
 import com.hm.project_glue.main.home.HomeFragment;
 import com.hm.project_glue.main.info.InfoFragment;
 import com.hm.project_glue.main.list.ListFragment;
+import com.hm.project_glue.main.post.PostDetailFragment;
 import com.hm.project_glue.main.msg.MsgFragment;
 import com.hm.project_glue.main.timeline.TimelineFragment;
 import com.hm.project_glue.sign.SignActivity;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     private MsgFragment msg;
     private InfoFragment info;
     private ListFragment list;
+    private PostDetailFragment post;
     private TimelineFragment time;
     private Networking networking;
     private TabLayout tab;
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         super.onCreate(savedInstanceState);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.listToolbar);
+
         setSupportActionBar(toolbar);
 
         if(savedInstanceState!=null) {
@@ -125,6 +128,9 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
 
     }
+
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -173,23 +179,24 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
     @Override
     public void goToListFragment(String groupId){
-             list =  ListFragment.newInstance(groupId);
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager
-                    .beginTransaction();
-            fragmentTransaction.add(R.id.mainframe,list);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-
-    }
-    public void goBackListFragment(){
+        list =  ListFragment.newInstance(groupId);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.setCustomAnimations(R.anim.gla_there_gone,R.anim.gla_there_come);
-        ft.replace(R.id.fragment, list);
+        ft.setCustomAnimations(R.anim.gla_there_come,R.anim.gla_there_gone);
+        ft.replace(R.id.mainframe, list);
         ft.addToBackStack(null);
         ft.commit();
-//        mainframe.setVisibility(View.GONE);
     }
+
+    @Override
+    public void goToPostFragment(String postId) {
+        post = PostDetailFragment.newInstance(postId);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.setCustomAnimations(R.anim.gla_there_gone,R.anim.gla_there_come);
+        ft.replace(R.id.mainframe, post);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
 
     public void moveActivity(int activityCode){
         Intent i = null;
@@ -236,6 +243,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                 callbackManager.onActivityResult(requestCode, resultCode, data);
                 break;
             case addGroupCode :
+
                 Log.i(TAG, "galleyResultCode");
                 break;
         }

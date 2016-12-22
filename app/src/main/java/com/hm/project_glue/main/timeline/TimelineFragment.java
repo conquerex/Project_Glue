@@ -21,20 +21,23 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.hm.project_glue.R;
 import com.hm.project_glue.main.MainActivity;
+import com.hm.project_glue.main.OnFragmentInteractionListener;
 import com.hm.project_glue.main.timeline.data.Photos;
 import com.hm.project_glue.main.timeline.data.Posts;
 import com.hm.project_glue.main.timeline.data.Results;
 import com.hm.project_glue.main.timeline.data.TimelineData;
+import com.hm.project_glue.util.Util;
 
 import java.util.ArrayList;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_SETTLING;
-import static com.hm.project_glue.main.timeline.TimelinePresentImpl.timeChange;
+import static com.hm.project_glue.util.Util.timeChange;
 import static com.hm.project_glue.util.http.CallRest.callHttpLike;
 
 public class TimelineFragment extends Fragment implements TimelinePresenter.View{
+    private static OnFragmentInteractionListener mListener;
     private TimelinePresentImpl presenter;
     private static ArrayList<Results> datas = null;
     private static RecyclerView listRecyclerView;
@@ -187,7 +190,7 @@ public class TimelineFragment extends Fragment implements TimelinePresenter.View
             holder.listCardItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) { //클릭시
-
+                    mListener.goToPostFragment(data.getPk());
                 }
             });
             //좋아요버튼
@@ -258,7 +261,7 @@ public class TimelineFragment extends Fragment implements TimelinePresenter.View
             // 구룹이름
             holder.tvListCardGroupName.setText(data.getGroup().getGroup_name());
             // 시간
-            String getCreated_date = timeChange(context, datas.get(position).getCreated_date());
+            String getCreated_date = Util.timeChange(context, datas.get(position).getCreated_date());
             holder.tvListCardTime.setText(getCreated_date);
             // like
             holder.tvListCardLike.setText(data.getLikes_count());
@@ -349,5 +352,21 @@ public class TimelineFragment extends Fragment implements TimelinePresenter.View
             }
         }
     }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
 
 }

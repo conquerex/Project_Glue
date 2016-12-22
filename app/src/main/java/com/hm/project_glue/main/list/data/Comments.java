@@ -10,7 +10,9 @@ public class Comments
 
     private String created_date;
 
-    private com.hm.project_glue.main.timeline.data.User user;
+    private String id;
+
+    private User user;
 
     public String getContent ()
     {
@@ -32,12 +34,22 @@ public class Comments
         this.created_date = created_date;
     }
 
-    public com.hm.project_glue.main.timeline.data.User getUser ()
+    public String getId ()
+    {
+        return id;
+    }
+
+    public void setId (String id)
+    {
+        this.id = id;
+    }
+
+    public User getUser ()
     {
         return user;
     }
 
-    public void setUser (com.hm.project_glue.main.timeline.data.User user)
+    public void setUser (User user)
     {
         this.user = user;
     }
@@ -45,6 +57,6 @@ public class Comments
     @Override
     public String toString()
     {
-        return "ClassPojo [content = "+content+", created_date = "+created_date+", user = "+user+"]";
+        return "ClassPojo [content = "+content+", created_date = "+created_date+", id = "+id+", user = "+user+"]";
     }
 }

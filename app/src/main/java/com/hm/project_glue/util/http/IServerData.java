@@ -2,11 +2,12 @@ package com.hm.project_glue.util.http;
 
 import com.hm.project_glue.main.home.data.HomeData;
 import com.hm.project_glue.main.info.data.InfoData;
+import com.hm.project_glue.main.list.data.Comments;
 import com.hm.project_glue.main.list.data.Dislike;
 import com.hm.project_glue.main.list.data.Like;
 import com.hm.project_glue.main.list.data.NotiJson;
 import com.hm.project_glue.main.list.data.PostData;
-import com.hm.project_glue.main.timeline.data.Posts;
+import com.hm.project_glue.main.list.data.Posts;
 import com.hm.project_glue.main.timeline.data.TimelineData;
 
 import java.util.Map;
@@ -16,6 +17,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
@@ -118,8 +120,8 @@ public interface IServerData {
     @Multipart
     @POST("/posts/post_list/{groupId}/")
     Call<Posts> postingData(@Header("Authorization") String authorization,
-                                     @Path("groupId") String groupId,
-                                     @PartMap Map<String, RequestBody> bodyMap);
+                                                                   @Path("groupId") String groupId,
+                                                                   @PartMap Map<String, RequestBody> bodyMap);
     // Post 목록 보기  QueryMap-> ex) page=2
     @GET("/posts/post_list/{groupId}/")
     Call<PostData> getListData(     @Header("Authorization") String authorization,
@@ -156,7 +158,14 @@ public interface IServerData {
     // post Detail
     @GET("/posts/post_detail/{post_id}/")
     Call<Posts> postDetailData(@Header("Authorization") String authorization,
-                               @Path("post_id") String post_id);
+                               @Path("post_id") String postId);
+
+    // 댓글 생성
+    @FormUrlEncoded
+    @POST("/posts/comment_create/{post_id}/")
+    Call<Comments> commentCreateData(@Header("Authorization") String authorization,
+                                     @Path("post_id") String postId,
+                                     @Field("content") String comment);
 
 
 }

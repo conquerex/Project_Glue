@@ -4,6 +4,22 @@
     android:layout_height="match_parent"
     tools:context="com.hm.project_glue.main.home.HomeFragment"
     android:background="@color/windowBackground">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:id="@+id/gr_linearNoGroup"
+        android:visibility="gone">
+
+        <TextView
+            android:text="구룹을 생성해 주세요."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView7" />
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/homeRecyclerView"
         android:layout_width="match_parent"
