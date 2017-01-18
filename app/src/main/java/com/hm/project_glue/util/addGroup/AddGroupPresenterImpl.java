@@ -102,11 +102,6 @@ public class AddGroupPresenterImpl implements AddGroupPresenter {
     }
 
     @Override
-    public void addHttp() {
-
-    }
-
-    @Override
     public void addGroupSave(Bitmap bitmap, String groupName) {
         progress = new ProgressDialog(context);
         progress.setMessage("Upload....");

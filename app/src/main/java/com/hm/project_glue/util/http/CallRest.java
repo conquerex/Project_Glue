@@ -20,7 +20,6 @@ import static com.hm.project_glue.main.timeline.TimelineFragment.likeChanged;
 
 public class CallRest {
 
-
     public static void callHttpLogout(){
         String authorization = "Token " + Networking.getToken();
         new AsyncTask<String, Void, String>() {
@@ -41,9 +40,6 @@ public class CallRest {
             }
         }.execute();
     }
-
-
-
 
     public static void callHttpLike(String postId, boolean likeType, TextView tvLike, TextView tvDislike){
         TimelineFragment.loadingFlag=true;

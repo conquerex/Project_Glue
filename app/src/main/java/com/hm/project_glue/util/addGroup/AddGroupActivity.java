@@ -21,7 +21,6 @@ import com.hm.project_glue.main.MainActivity;
 
 public class AddGroupActivity extends AppCompatActivity implements AddGroupPresenter.View {
     private static final String TAG = "AddGroupActivity";
-    MainActivity mainActivity = (MainActivity)MainActivity.mainContext;
     private Bitmap bitmap;
     private String imgUrl;
     private AddGroupPresenterImpl addGroupPresenter;
@@ -160,8 +159,8 @@ public class AddGroupActivity extends AppCompatActivity implements AddGroupPrese
     @Override
     public void addGroupFinish() {
 //        startActivity(new Intent(this, MainActivity.class));
-        finish();
-//        Intent intent = new Intent(AddGroupActivity.this, MainActivity.class);
-//        startActivity(intent);
+//        finish();
+        Intent intent = new Intent(AddGroupActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 }

@@ -47,7 +47,6 @@ public class ListRestAdapter {
                     .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
                     .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
                     .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
-
 //                    .cookieJar(new JavaNetCookieJar(manager)) //쿠키 저장
                     .addInterceptor(interceptor) // 로그를 출력(디버깅용)
                     .build();
