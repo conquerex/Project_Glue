@@ -6,7 +6,7 @@
 
 ## Glue 설명
 
-![Glue Trailer](https://youtu.be/jpPAG4Tlhmk)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jpPAG4Tlhmk" frameborder="0" allowfullscreen></iframe>
 
 
 ## 사용 skills
