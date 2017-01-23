@@ -6,8 +6,9 @@
 
 ## Glue 설명
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/jpPAG4Tlhmk" frameborder="0" allowfullscreen></iframe>
+[![ScreenShot](https://github.com/conquerex/Project_Glue/blob/master/app/src/main/res/drawable/glue_youtube.png?raw=true)](https://youtu.be/jpPAG4Tlhmk)
 
+영상으로 Glue를 설명합니다. 위 이미지를 클릭하면 유튜브로 이동합니다.
 
 ## 사용 skills
 
