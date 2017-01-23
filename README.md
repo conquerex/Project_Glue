@@ -6,10 +6,8 @@
 
 ## Glue 설명
 
-[![ScreenShot](https://github.com/conquerex/Project_Glue/blob/master/app/src/main/res/drawable/glue_youtube.png?raw=true)](https://youtu.be/jpPAG4Tlhmk)
-
 <a href="https://youtu.be/jpPAG4Tlhmk">
-  <img src="https://github.com/conquerex/Project_Glue/blob/master/app/src/main/res/drawable/glue_youtube2.png?raw=true" align="left" width="600" >
+  <img src="https://github.com/conquerex/Project_Glue/blob/master/app/src/main/res/drawable/glue_youtube2.png?raw=true" width="600" >
 </a>
 
 
