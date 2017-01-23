@@ -8,6 +8,11 @@
 
 [![ScreenShot](https://github.com/conquerex/Project_Glue/blob/master/app/src/main/res/drawable/glue_youtube.png?raw=true)](https://youtu.be/jpPAG4Tlhmk)
 
+<a href="https://youtu.be/jpPAG4Tlhmk">
+  <img src="https://github.com/conquerex/Project_Glue/blob/master/app/src/main/res/drawable/glue_youtube2.png?raw=true" align="left" width="600" >
+</a>
+
+
 영상으로 Glue를 설명합니다. 위 이미지를 클릭하면 유튜브로 이동합니다.
 
 ## 사용 skills
@@ -31,4 +36,5 @@
 - 정규식을 이용한 회원가입 조건 체크
 
 ### 화면전환 Flow
-![Glue Flow](https://github.com/conquerex/Project_Glue/blob/master/app/src/main/res/drawable/flow.png?raw=true)
+
+<img src="https://github.com/conquerex/Project_Glue/blob/master/app/src/main/res/drawable/flow2.png?raw=true" align="left" width="720" >
